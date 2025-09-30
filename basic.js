@@ -20,8 +20,13 @@ elements.forEach(function(){
 //
 async function testfill(){
 	console.log('attempt fill')
-	const emailEl = document.body.getElementById("input-4");
+	const emailEl = document.getElementById("input-4");
 	emailEl.value = 'fakeEmail@email.lol';
 }
 
+///need away to wait for page to load before attempting fill
+window.onload = function(){
+	console.log('page run fill after load');
+	testfill()
+}
 testfill()
