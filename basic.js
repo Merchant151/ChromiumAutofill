@@ -25,7 +25,7 @@ async function testfill(){
 }
 
 ///need away to wait for page to load before attempting fill
-window.onload = function(){
+window.document.body.onload = function(){
 	console.log('page run fill after load');
 	testfill()
 }
