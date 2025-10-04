@@ -26,14 +26,24 @@ async function testfill(){
 
 ///need away to wait for page to load before attempting fill
 //not sure this solution works... want to do a wait loop
-window.document.body.onload = function(){
-	console.log('page run fill after load');
-	testfill()
-}
+//window.document.body.onload = function(){
+	//console.log('page run fill after load');
+	//testfill()
+//}
 // wait >> CHECK for elems >> loop or run 
 // function check
+async function delaystart(){
 // 	{sleep
-// 	if elm list populated 
-// 		run project
-// 	else check}
+	console.log('running recursive delay');
+	await setTimeout(() => console.log('timeout Running'),10500)
+	if (false){
+		console.log('wait passed');
+		testfill();
+	}else{
+		console.log('wait failed');
+		delaystart();//this is a recursive function. 
+
+	}
+}
+delaystart();
 //testfill()
