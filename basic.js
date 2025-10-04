@@ -25,8 +25,15 @@ async function testfill(){
 }
 
 ///need away to wait for page to load before attempting fill
+//not sure this solution works... want to do a wait loop
 window.document.body.onload = function(){
 	console.log('page run fill after load');
 	testfill()
 }
-testfill()
+// wait >> CHECK for elems >> loop or run 
+// function check
+// 	{sleep
+// 	if elm list populated 
+// 		run project
+// 	else check}
+//testfill()
