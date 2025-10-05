@@ -32,10 +32,14 @@ async function testfill(){
 //}
 // wait >> CHECK for elems >> loop or run 
 // function check
+function promiseToWait() {
+	console.log('timeout set to return in 5000');
+	return new Promise(due => setTimeout(due,5000));
+}
 async function delaystart(){
 // 	{sleep
 	console.log('running recursive delay');
-	await setTimeout(() => console.log('timeout Running'),10500)
+	await promiseToWait();
 	if (false){
 		console.log('wait passed');
 		testfill();
