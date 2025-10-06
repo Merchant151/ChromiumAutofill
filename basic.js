@@ -40,6 +40,8 @@ async function delaystart(){
 // 	{sleep
 	console.log('running recursive delay');
 	await promiseToWait();
+	var nameList = document.getElementsByName('*');
+	console.log(nameList);
 	if (false){
 		console.log('wait passed');
 		testfill();
