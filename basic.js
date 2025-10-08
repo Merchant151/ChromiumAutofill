@@ -21,7 +21,12 @@ elements.forEach(function(){
 async function testfill(){
 	console.log('attempt fill')
 	const emailEl = document.getElementById("input-4");
-	emailEl.value = 'fakeEmail@email.lol';
+	const pass1 = document.getElementById("input-5");
+	const pass2 = document.getElementById("input-6");
+	var pass = 'fakEpass1!@';
+	emailEl.value = 'fakeEmail123@gmail.com';
+	pass1.value = pass;
+	pass2.value = pass;
 }
 
 ///need away to wait for page to load before attempting fill
