@@ -37,12 +37,11 @@ function promiseToWait() {
 	return new Promise(due => setTimeout(due,5000));
 }
 async function delaystart(){
-// 	{sleep
-	console.log('running recursive delay');
+	var nameList = document.getElementsByTagName('*');
+	console.log('list len is '+ nameList.length)
 	await promiseToWait();
-	var nameList = document.getElementsByName('*');
 	console.log(nameList);
-	if (false){
+	if (nameList.length > 100 ){//likely needs to be changed to a contains check than a count!
 		console.log('wait passed');
 		testfill();
 	}else{
