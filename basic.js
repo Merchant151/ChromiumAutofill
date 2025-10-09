@@ -27,6 +27,16 @@ async function testfill(){
 	emailEl.value = 'fakeEmail123@gmail.com';
 	pass1.value = pass;
 	pass2.value = pass;
+
+	await promiseToWait();
+	//attempt click. 
+	const submit = document.getElementsByClassName('css-6hfcb0');
+	console.log(submit);
+	await submit[0].click();
+	emailEl.value = 'fakeEmail123@gmail.com';
+	pass1.value = pass;
+	pass2.value = pass;
+	
 }
 
 ///need away to wait for page to load before attempting fill
@@ -38,15 +48,15 @@ async function testfill(){
 // wait >> CHECK for elems >> loop or run 
 // function check
 function promiseToWait() {
-	console.log('timeout set to return in 5000');
-	return new Promise(due => setTimeout(due,5000));
+	console.log('timeout set to return in 1500');
+	return new Promise(due => setTimeout(due,1500));
 }
 async function delaystart(){
 	var nameList = document.getElementsByTagName('*');
 	console.log('list len is '+ nameList.length)
 	await promiseToWait();
 	console.log(nameList);
-	if (nameList.length > 100 ){//likely needs to be changed to a contains check than a count!
+	if (nameList.length > 190 ){//likely needs to be changed to a contains check than a count!
 		console.log('wait passed');
 		testfill();
 	}else{
