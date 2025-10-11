@@ -16,7 +16,7 @@ elements.forEach(function(){
 });*/
 //identify form
 //if fourm identity in dictionary fill fourm with result.
-//
+//Made edits to include human like interactions. 
 //
 async function testfill(){
 	console.log('attempt fill')
@@ -24,19 +24,51 @@ async function testfill(){
 	const pass1 = document.getElementById("input-5");
 	const pass2 = document.getElementById("input-6");
 	var pass = 'fakEpass1!@';
-	emailEl.value = 'fakeEmail123@gmail.com';
-	pass1.value = pass;
-	pass2.value = pass;
+	emailEl.focus();
+	emailEl.click();
+	await clickAndClear(emailEl);
+	await simulateInput(emailEl,'fakeEmail123@gmail.com');
+	pass1.focus();
+	pass1.click();
+	await clickAndClear(pass1);
+	await simulateInput(pass1,pass);
+	//pass1.value = pass;
+	pass2.focus();
+	pass1.click();
+	await clickAndClear(pass2);
+	await simulateInput(pass2,pass);
+	//pass2.value = pass;
 
 	await promiseToWait();
 	//attempt click. 
 	const submit = document.getElementsByClassName('css-6hfcb0');
 	console.log(submit);
-	await submit[0].click();
-	emailEl.value = 'fakeEmail123@gmail.com';
-	pass1.value = pass;
-	pass2.value = pass;
+	//await submit[0].click();
+	//emailEl.value = 'fakeEmail123@gmail.com';
+	//pass1.value = pass;
+	//pass2.value = pass;
 	
+}
+
+async function simulateInput(elmn,output){
+	for (let i = 0; i < output.length;i++){
+		await new Promise(resolve => setTimeout(resolve,50+Math.random()*100));
+			elmn.value += output[i];
+			elmn.dispatchEvent(new Event('input',{bubbles: true}));
+			elmn.dispatchEvent(new Event('keyup',{bubbles:true}));
+	}
+	return new Promise(resolve => {console.log('simulate typekey');resolve('promised');});	
+	
+}
+
+function clickAndClear(elmn){
+	//these dispatch events did not help on thier own. 
+	elmn.dispatchEvent(new PointerEvent('pointerdown',{bubbles: true}));
+	elmn.dispatchEvent(new MouseEvent('click',{bubbles: true}));
+	elmn.dispatchEvent(new KeyboardEvent('keydown',{key: 'a',code:'KeyA',ctrlKey:true}));
+	elmn.dispatchEvent(new KeyboardEvent('keydown',{key: 'backspace',code:'KeyA',ctrlKey:true}));
+	return new Promise(resolve => {console.log('resolving click+clear'); resolve('promised');})
+
 }
 
 ///need away to wait for page to load before attempting fill
