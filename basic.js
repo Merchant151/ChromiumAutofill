@@ -47,6 +47,9 @@ async function testfill(){
 	await promiseToWait();
 	await submit[0].click();
 	submit[0].dispatchEvent(new Event('click',{bubbles: true, cancelable: true,view: window}));
+	chrome.debugger.attach(submit[0],"1.2",function(){
+		chrome.debugger.sendCommand(submit[0],"input.dispatchMouseEvent",{mousePressed});
+	})
 	
 }
 
