@@ -23,11 +23,11 @@ async function testfill(){
 	const emailEl = document.getElementById("input-4");
 	const pass1 = document.getElementById("input-5");
 	const pass2 = document.getElementById("input-6");
-	var pass = 'fakEpass1!@';
+	var pass = 'fakEpass2!@';
 	emailEl.focus();
 	emailEl.click();
 	await clickAndClear(emailEl);
-	await simulateInput(emailEl,'fakeEmail123@gmail.com');
+	await simulateInput(emailEl,'fakeEmail456@gmail.com');
 	pass1.focus();
 	pass1.click();
 	await clickAndClear(pass1);
@@ -43,10 +43,10 @@ async function testfill(){
 	//attempt click. 
 	const submit = document.getElementsByClassName('css-6hfcb0');
 	console.log(submit);
-	//await submit[0].click();
-	//emailEl.value = 'fakeEmail123@gmail.com';
-	//pass1.value = pass;
-	//pass2.value = pass;
+	submit[0].focus();
+	await promiseToWait();
+	await submit[0].click();
+	submit[0].dispatchEvent(new Event('click',{bubbles: true, cancelable: true,view: window}));
 	
 }
 
