@@ -45,9 +45,13 @@ async function testfill(){
 	console.log(submit);
 	submit[0].focus();
 	await promiseToWait();
-	await submit[0].click();
-	submit[0].dispatchEvent(new Event('click',{bubbles: true, cancelable: true,view: window}));
-	chrome.debugger.attach(submit[0],"1.2",function(){
+	//await submit[0].click();
+	//submit[0].dispatchEvent(new Event('click',{bubbles: true, cancelable: true,view: window}));
+	//chrome.debugger.sendCommand(submit[0], "Input.dispatchMouseEvent",{mousePressed});//trying without attach docs sudgesst may not be needed post ver 125
+	let x = await chrome.tabs.query({active:true});
+	await chrome.tabs.query({active: true, currentWindow:true},function(tabs) {
+	const tabId = tabs[0].id;});
+	chrome.debugger.attach({tabId},"1.3",function(){
 		chrome.debugger.sendCommand(submit[0],"input.dispatchMouseEvent",{mousePressed});
 	})
 	
