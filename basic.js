@@ -48,6 +48,8 @@ async function testfill(){
 	//await submit[0].click();
 	//submit[0].dispatchEvent(new Event('click',{bubbles: true, cancelable: true,view: window}));
 	//chrome.debugger.sendCommand(submit[0], "Input.dispatchMouseEvent",{mousePressed});//trying without attach docs sudgesst may not be needed post ver 125
+	//trying to use service worker since tabs doesn't work from content script
+	chrome.runtime.sendMessage({type: 'test', data: "click action"});
 	let x = await chrome.tabs.query({active:true});
 	await chrome.tabs.query({active: true, currentWindow:true},function(tabs) {
 	const tabId = tabs[0].id;});
