@@ -9,3 +9,9 @@ chrome.runtime.onMessage.addListener((message,sender) =>{
 	return false;
 
 });
+
+addEventListner("message",() => {
+	console.log('recieved message from extension\'s JS: ${evemt.data}');
+
+	event.source.postMessage("placeholder for debug button test!");
+})
