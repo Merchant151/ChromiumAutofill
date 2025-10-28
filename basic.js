@@ -40,7 +40,14 @@ async function testfill(){
 	//pass2.value = pass;
 
 	await promiseToWait();
-	//attempt click. 
+	//attempt click.
+	//TODO: get message submitted through event to service worker
+	//
+	//I believe service worker needs to be 
+	///registered and then triggered so I will register here for now
+	//	if(navigator.serviceWorker){//check if service workers are accessable
+	navigator.serviceWorker.register("worker.js");
+
 	const submit = document.getElementsByClassName('css-6hfcb0');
 	console.log(submit);
 	submit[0].focus();
