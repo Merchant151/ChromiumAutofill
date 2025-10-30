@@ -46,8 +46,8 @@ async function testfill(){
 	//I believe service worker needs to be 
 	///registered and then triggered so I will register here for now
 	//	if(navigator.serviceWorker){//check if service workers are accessable
-	navigator.serviceWorker.register("worker.js");
-	navigator.serviceWorker.ready.then((eventmsg) => {registration.active.postMessage("message")});
+	//navigator.serviceWorker.register("worker.js");
+	//navigator.serviceWorker.ready.then((eventmsg) => {registration.active.postMessage("message")});
 	console.log("basic.js 51: register post event to service worker listner");
 	const submit = document.getElementsByClassName('css-6hfcb0');
 	console.log(submit);
