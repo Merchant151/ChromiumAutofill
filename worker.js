@@ -5,6 +5,7 @@ chrome.runtime.onMessage.addListener((message,sender) =>{
 	if (message.type === 'test'){
 		console.log("service worker test successful",message.data);
 		//sendResponse({status: "complete"}); //LOL OK
+		//find button here and then click
 	}
 	return false;
 
