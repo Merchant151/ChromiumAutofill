@@ -8,6 +8,8 @@ chrome.runtime.onMessage.addListener((message,sender) =>{
 		//find button here and then click
 		//get tab and do action with active tab id 
 		let tabID = getTab();
+		const question = chrome.commands.getAll();//get all commands 
+		console.log(question);
 		//not actual command to send but testing debugger command to send
 		await chrome.debugger.sendCommand({tabID},"command.TODO",{
 			autoAttach: true,
