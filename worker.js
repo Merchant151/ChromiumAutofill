@@ -7,14 +7,27 @@ chrome.runtime.onMessage.addListener((message,sender) =>{
 		//sendResponse({status: "complete"}); //LOL OK
 		//find button here and then click
 		//get tab and do action with active tab id 
+		let xcord = 0;
+		let ycord = 0;
 		let tabID = getTab();
 		const question = chrome.commands.getAll();//get all commands 
 		console.log(question);
 		//not actual command to send but testing debugger command to send
-		await chrome.debugger.sendCommand({tabID},"command.TODO",{
-			autoAttach: true,
-			waitForDebuggerOnStart: false,
-			flatten: true,
+		await chrome.debugger.sendCommand({tabID},"Input.dispatchMouseEvent",{
+			type: 'mousePressed' ,
+			button: 'left',
+			x : xcord,
+			y : ycord,
+			clickCount: 1,
+			isTrusted : true
+		});
+		await chrome.debugger.sendCommand({tabID},"Input.dispatchMouseEvent",{
+			type: 'mouseReleased' ,
+			button: 'left',
+			x : xcord,
+			y : ycord,
+			clickCount: 1,
+			isTrusted : true
 		});
 
 	}
