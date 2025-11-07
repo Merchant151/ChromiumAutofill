@@ -4,14 +4,15 @@ console.log('service worker is registered and active!');
 chrome.runtime.onMessage.addListener(async (message,sender) =>{
 	if (message.type === 'test'){
 		console.log("service worker test successful",message.data);
+		console.log(message.x+','+message.y);
 		//sendResponse({status: "complete"}); //LOL OK
 		//find button here and then click
 		//get tab and do action with active tab id 
 		let xcord = 0;
 		let ycord = 0;
 		let tabID = getTab();
-		const question = chrome.commands.getAll();//get all commands 
-		console.log(question);
+		//const question = chrome.commands.getAll();//get all commands 
+		//console.log(question);
 		//not actual command to send but testing debugger command to send
 		await chrome.debugger.sendCommand({tabID},"Input.dispatchMouseEvent",{
 			type: 'mousePressed' ,

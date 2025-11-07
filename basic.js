@@ -55,7 +55,7 @@ async function testfill(){
 	await promiseToWait();
 	//GETTING location as data to send to maual mouse click
 	let rect = submit[0].getBoundingClientRect();
-	let cords = JSON.stringify({x:rect.left+rect.width/2,y:rect.top+rect.height /2});
+	let cords = {x:rect.left+rect.width/2,y:rect.top+rect.height /2};
 	console.log("testing cords grabbing");
 	console.log(cords);
 	//await submit[0].click();
@@ -63,7 +63,11 @@ async function testfill(){
 	//chrome.debugger.sendCommand(submit[0], "Input.dispatchMouseEvent",{mousePressed});//trying without attach docs sudgesst may not be needed post ver 125
 	//trying to use service worker since tabs doesn't work from content script
 	//TODO: send multiple json objects or create custom object to pass (X,Y) as cords
-	chrome.runtime.sendMessage({type: 'test', data: "click action"});
+	let buildMsg = {type:'test',data:'click action',x:cords.x,y:cords.y};
+	//let buildMsg = {type:'test',data:'click action',cords};
+	
+	console.log(buildMsg);
+	chrome.runtime.sendMessage(buildMsg);
 	// comment out this line as debugger is not available from webpage context pls remove 
 	//chrome.debugger.attach({tabId},"1.3",function(){
 	//	chrome.debugger.sendCommand(submit[0],"input.dispatchMouseEvent",{mousePressed});
