@@ -10,23 +10,25 @@ chrome.runtime.onMessage.addListener(async (message,sender) =>{
 		//get tab and do action with active tab id 
 		let xcord = 0;
 		let ycord = 0;
-		let tabID = getTab();
+		let tabID = await getTab();
+		console.log('tabID is : ',tabID);
+		await chrome.debugger.attach({tabId: tabID},"1.3");
 		//const question = chrome.commands.getAll();//get all commands 
 		//console.log(question);
 		//not actual command to send but testing debugger command to send
-		await chrome.debugger.sendCommand({tabID},"Input.dispatchMouseEvent",{
+		await chrome.debugger.sendCommand({tabId: tabID},"Input.dispatchMouseEvent",{
 			type: 'mousePressed' ,
 			button: 'left',
-			x : xcord,
-			y : ycord,
+			x : message.x,
+			y : message.y,
 			clickCount: 1,
 			isTrusted : true
 		});
-		await chrome.debugger.sendCommand({tabID},"Input.dispatchMouseEvent",{
+		await chrome.debugger.sendCommand({tabId: tabID},"Input.dispatchMouseEvent",{
 			type: 'mouseReleased' ,
 			button: 'left',
-			x : xcord,
-			y : ycord,
+			x : message.x,
+			y : message.y,
 			clickCount: 1,
 			isTrusted : true
 		});
