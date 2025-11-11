@@ -116,7 +116,20 @@ async function delaystart(){
 
 	}
 }
-//TODO replace delay start with delay
+//TODO: replace delay start with delay
+async function delay(){
+	var nameList = document.getElementsByTagName('*');
+	console.log('num elms on page: '+ nameList.length);
+	await promiseToWait();
+	if(nameList.length > 190){
+		console.log('page load wait pass');
+	}else{
+		console.log('wait failed');
+		delay();
+	}
+}
+
+
 async function pickBehavior(){
 	//TODO: build out behavior
 	//Identify page 
