@@ -116,5 +116,29 @@ async function delaystart(){
 
 	}
 }
+//TODO replace delay start with delay
+async function pickBehavior(){
+	//TODO: build out behavior
+	//Identify page 
+	switch(ident){
+	case ("login signup"):
+		testfill();
+	case("information"):
+		//TODO: implement
+		infoFill();
+	case("application"):
+		//TODO: implement
+		application():
+	case("disclosure");
+		//TODO: implement
+		disclose();
+	case("review"):
+		//TODO: implement
+		application();
+	default:
+		//TODO: implement
+		unknown();
+}
+}
 delaystart();
 //testfill()
