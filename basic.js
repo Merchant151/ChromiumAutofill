@@ -153,5 +153,14 @@ async function pickBehavior(){
 		unknown();
 }
 }
+
+async function entryPoint(){
+	//TODO: build this as start of script
+	//while loop
+	//delay start on elm count 
+	//pick behavior 
+	//Save results? 
+
+}
 delaystart();
 //testfill()
