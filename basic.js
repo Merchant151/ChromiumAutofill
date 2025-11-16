@@ -19,7 +19,7 @@ elements.forEach(function(){
 //Made edits to include human like interactions. 
 //
 async function testfill(){
-	console.log('attempt fill')
+	console.log('attempt fill');
 	const emailEl = document.getElementById("input-4");
 	const pass1 = document.getElementById("input-5");
 	const pass2 = document.getElementById("input-6");
@@ -27,7 +27,7 @@ async function testfill(){
 	emailEl.focus();
 	emailEl.click();
 	await clickAndClear(emailEl);
-	await simulateInput(emailEl,'fakeEmail457@gmail.com');
+	await simulateInput(emailEl,'fakeEmail458@gmail.com');
 	pass1.focus();
 	pass1.click();
 	await clickAndClear(pass1);
@@ -58,10 +58,6 @@ async function testfill(){
 	let cords = {x:rect.left+rect.width/2,y:rect.top+rect.height /2};
 	console.log("testing cords grabbing");
 	console.log(cords);
-	//await submit[0].click();
-	//submit[0].dispatchEvent(new Event('click',{bubbles: true, cancelable: true,view: window}));
-	//chrome.debugger.sendCommand(submit[0], "Input.dispatchMouseEvent",{mousePressed});//trying without attach docs sudgesst may not be needed post ver 125
-	//trying to use service worker since tabs doesn't work from content script
 	let buildMsg = {type:'test',data:'click action',x:cords.x,y:cords.y};
 	
 	console.log(buildMsg);
@@ -131,10 +127,13 @@ async function delay(){
 
 
 async function pickBehavior(){
+	answerData = {name: "Donald J Trump", phone: "202-456-1111",address: "1600 Pennsylvania Avenue NW; Washington, DC;District of Columbia; 20500"};
 	//TODO: build out behavior
 	//Identify page 
 	switch(ident){
 	case ("login signup"):
+		//TODO: Login will be different if I have an account on the site. 
+			// once I start using storage Login should be the first feature to tackle 
 		testfill();
 	case("information"):
 		//TODO: implement
