@@ -125,6 +125,32 @@ async function delay(){
 	}
 }
 
+//TODO: build feild identification to grab all input feilds
+//initally use after login but should also be applied on login screen
+function feildIdentification(){
+	//I want to grab all elems on page 
+	//grab all elms that are input feilds. 
+	//Filter by feild type and sort into different arrays. 
+	//get question for each feild and assocate with data
+	//
+	//Psudo code for what that may look like. 
+	/*
+	 * elmnarray = {}
+	 * allElms
+	 * for each e in allElmns
+	 *	if e is input 
+	 *		//maybe need case for type to append data
+	 *		type = e.getTypeOfInput()
+	 *		elmnarray.append(e,type)
+	 *		question = getTextAbove(e)
+	 *		elmnarray.e.question = qeustion //associate data need to read up on how array data managed again
+	 *	
+	 *
+	 * */
+
+
+}
+
 
 async function pickBehavior(){
 	answerData = {name: "Donald J Trump", phone: "202-456-1111",address: "1600 Pennsylvania Avenue NW; Washington, DC;District of Columbia; 20500"};
