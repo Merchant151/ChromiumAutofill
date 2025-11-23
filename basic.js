@@ -135,13 +135,13 @@ function feildIdentification(){
 	//
 	//Psudo code for what that may look like. 
 	/*
-	 * elmnarray = {}
-	 * allElms
+	 * inputObj = {}
+	 * allElms = document.body.getElementByTagName('*');
 	 * for each e in allElmns
 	 *	if e is input 
 	 *		//maybe need case for type to append data
 	 *		type = e.getTypeOfInput()
-	 *		elmnarray.append(e,type)
+	 *		inputObj.append(e,type)
 	 *		question = getTextAbove(e)
 	 *		elmnarray.e.question = qeustion //associate data need to read up on how array data managed again
 	 *	
