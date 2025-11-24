@@ -136,8 +136,9 @@ function feildIdentification(){
 	//Psudo code for what that may look like. 
 	/*
 	 * inputObj = {}
-	 * allElms = document.body.getElementByTagName('*');
+	 * allElms = document.body.getElementByTagName('*')
 	 * for each e in allElmns
+	 * for (let elm of allElms){ if (elm.localName === "input"){console.log(elm)}else if(elm.localName === "textarea")(console.log(elm))}
 	 *	if e is input 
 	 *		//maybe need case for type to append data
 	 *		type = e.getTypeOfInput()
