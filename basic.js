@@ -138,6 +138,7 @@ function feildIdentification(){
 	 * //data definition  ELMOBJ feilds? 
 	 * 	html Elm //elm of input 
 	 * 	parentGroup // grab parent group if exists 
+	 * 	questionInput // bool for if this is for question or other input
 	 * 	QuestionText // extract related input question
 	 * 	ElemType // what type of input
 	 *
@@ -156,7 +157,19 @@ function feildIdentification(){
 	 * */
 	var inputObj = {}
 	var allElms = document.body.getElmentsByTagName('*');
-	for (let elm of allElms){ if (elm.localName === "input"){console.log(elm)}else if(elm.localName === "textarea")(console.log(elm))}
+	for (let elm of allElms){ 
+		var qElm = {html: undefined,parentGroup: undefined,isQ: false,qText: undefined,qType: undefined};
+		if (elm.localName === "input"){
+			//radial menu singles, dropdown selection, checkbox, text input, year/month picker
+			console.log(elm);}
+		else if(elm.localName === "textarea"){
+			//text area
+			(console.log(elm);)
+		}else if (elm.localName === "button"){
+			//
+		}
+	}
+
 
 
 }
