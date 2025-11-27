@@ -135,6 +135,12 @@ function feildIdentification(){
 	//
 	//Psudo code for what that may look like. 
 	/*
+	 * //data definition  ELMOBJ feilds? 
+	 * 	html Elm //elm of input 
+	 * 	parentGroup // grab parent group if exists 
+	 * 	QuestionText // extract related input question
+	 * 	ElemType // what type of input
+	 *
 	 * inputObj = {}
 	 * allElms = document.body.getElementByTagName('*')
 	 * for each e in allElmns
@@ -148,6 +154,9 @@ function feildIdentification(){
 	 *	
 	 *
 	 * */
+	var inputObj = {}
+	var allElms = document.body.getElmentsByTagName('*');
+	for (let elm of allElms){ if (elm.localName === "input"){console.log(elm)}else if(elm.localName === "textarea")(console.log(elm))}
 
 
 }
