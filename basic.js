@@ -175,7 +175,7 @@ function feildIdentification(){
 		}
 		else if(elm.localName === "textarea"){
 			//text area
-			(console.log(elm);)
+			(console.log(elm));
 		}else if (elm.localName === "button"){
 			//
 		}
@@ -208,6 +208,7 @@ async function pickBehavior(){
 	answerData = {name: "Donald J Trump", phone: "202-456-1111",address: "1600 Pennsylvania Avenue NW; Washington, DC;District of Columbia; 20500"};
 	//TODO: build out behavior
 	//Identify page 
+	let ident = 'login signup';
 	switch(ident){
 	case ("login signup"):
 		//TODO: Login will be different if I have an account on the site. 
@@ -215,19 +216,19 @@ async function pickBehavior(){
 		testfill();
 	case("information"):
 		//TODO: implement
-		infoFill();
+		//infoFill();
 	case("application"):
 		//TODO: implement
-		application():
+		//application():
 	case("disclosure");
 		//TODO: implement
-		disclose();
+		//disclose();
 	case("review"):
 		//TODO: implement
-		application();
+		//application();
 	default:
 		//TODO: implement
-		unknown();
+		//unknown();
 }
 }
 
