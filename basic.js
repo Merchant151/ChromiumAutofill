@@ -27,7 +27,8 @@ async function testfill(){
 	emailEl.focus();
 	emailEl.click();
 	await clickAndClear(emailEl);
-	await simulateInput(emailEl,'fakeEmail458@gmail.com');
+	let fourDigits = Math.floor(Math.random() * (9000))+1000;
+	await simulateInput(emailEl,'fakeEmail'+fourDigits+'@gmail.com');
 	pass1.focus();
 	pass1.click();
 	await clickAndClear(pass1);
@@ -220,7 +221,7 @@ async function pickBehavior(){
 	case("application"):
 		//TODO: implement
 		//application():
-	case("disclosure");
+	case("disclosure"):
 		//TODO: implement
 		//disclose();
 	case("review"):
