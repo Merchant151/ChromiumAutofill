@@ -140,6 +140,7 @@ function feildIdentification(){
 	 * 	parentGroup // grab parent group if exists 
 	 * 	questionInput // bool for if this is for question or other input
 	 * 	QuestionText // extract related input question
+	 * 	QuestionTag // related question tag 
 	 * 	ElemType // what type of input
 	 *
 	 * inputObj = {}
@@ -155,13 +156,23 @@ function feildIdentification(){
 	 *	
 	 *
 	 * */
-	var inputObj = {}
+	var qArr = []
 	var allElms = document.body.getElmentsByTagName('*');
 	for (let elm of allElms){ 
-		var qElm = {html: undefined,parentGroup: undefined,isQ: false,qText: undefined,qType: undefined};
+		var qElm = {html: undefined,parentGroup: undefined,isQ: false,qText: undefined,qTag: undefined,qType: undefined};
+		qElm['html'] = elm
 		if (elm.localName === "input"){
 			//radial menu singles, dropdown selection, checkbox, text input, year/month picker
-			console.log(elm);}
+			console.log(elm);
+			if(elm.hasAttribute('type')&&elm.getAttribute('type') === 'text'){
+				qElm['parentGroup'] = elm.cloesest('[role="group"]');
+				qElm['isQ'] = true;
+				qElm['qText'] = getInputLable(elm);
+
+			}
+			qArr.push(qElm);
+
+		}
 		else if(elm.localName === "textarea"){
 			//text area
 			(console.log(elm);)
@@ -171,6 +182,24 @@ function feildIdentification(){
 	}
 
 
+
+}
+
+async function getInputLabel(elm){
+	//TODO: maybe need to add other searches if they are found or I want this code to be reuseable
+	let foundLabel = false;
+	do {
+		let cloesetDiv = elm.closest('div');
+		//let closestDiv = closestDiv.closest('div'); //two ansestors
+		let lspan = closestDiv.querySelector('label span');
+		if (lspan){
+			return lspan.textContent; 
+		}
+		elm = closestDiv;
+		console.log('searching for label span')
+	} while (closestDiv.closest('div'));
+
+	return 'unknown!';
 
 }
 
