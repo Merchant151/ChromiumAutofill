@@ -63,7 +63,13 @@ async function testfill(){
 	
 	console.log(buildMsg);
 	chrome.runtime.sendMessage(buildMsg);
-	
+	//PAGE 2 TESTING 
+	//TODO: Remove page two testing when I am ready to build a basic main page functionality. 
+	await delay(5999);
+	let getElms = fieldIdentification();
+	console.log('printing getelms');
+	console.log(getElms);
+
 }
 
 async function simulateInput(elmn,output){
@@ -95,9 +101,9 @@ function clickAndClear(elmn){
 //}
 // wait >> CHECK for elems >> loop or run 
 // function check
-function promiseToWait() {
-	console.log('timeout set to return in 1500');
-	return new Promise(due => setTimeout(due,1500));
+function promiseToWait(timeToWait = 1500) {
+	console.log('timeout set to return in '+timeToWait);
+	return new Promise(due => setTimeout(due,timeToWait));
 }
 async function delaystart(){
 	var nameList = document.getElementsByTagName('*');
@@ -114,10 +120,10 @@ async function delaystart(){
 	}
 }
 //TODO: replace delay start with delay
-async function delay(){
+async function delay(waitTime = 1500){
 	var nameList = document.getElementsByTagName('*');
 	console.log('num elms on page: '+ nameList.length);
-	await promiseToWait();
+	await promiseToWait(waitTime);
 	if(nameList.length > 190){
 		console.log('page load wait pass');
 	}else{
@@ -128,7 +134,7 @@ async function delay(){
 
 //TODO: build feild identification to grab all input feilds
 //initally use after login but should also be applied on login screen
-function feildIdentification(){
+function fieldIdentification(){
 	//I want to grab all elems on page 
 	//grab all elms that are input feilds. 
 	//Filter by feild type and sort into different arrays. 
@@ -158,7 +164,7 @@ function feildIdentification(){
 	 *
 	 * */
 	var qArr = []
-	var allElms = document.body.getElmentsByTagName('*');
+	var allElms = document.getElementsByTagName('*');
 	for (let elm of allElms){ 
 		var qElm = {html: undefined,parentGroup: undefined,isQ: false,qText: undefined,qTag: undefined,qType: undefined};
 		qElm['html'] = elm
@@ -166,9 +172,9 @@ function feildIdentification(){
 			//radial menu singles, dropdown selection, checkbox, text input, year/month picker
 			console.log(elm);
 			if(elm.hasAttribute('type')&&elm.getAttribute('type') === 'text'){
-				qElm['parentGroup'] = elm.cloesest('[role="group"]');
+				qElm['parentGroup'] = elm.closest('[role="group"]');
 				qElm['isQ'] = true;
-				qElm['qText'] = getInputLable(elm);
+				qElm['qText'] = getInputLabel(elm);
 
 			}
 			qArr.push(qElm);
@@ -181,7 +187,7 @@ function feildIdentification(){
 			//
 		}
 	}
-
+	return qArr;
 
 
 }
