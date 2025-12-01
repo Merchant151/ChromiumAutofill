@@ -195,15 +195,17 @@ function fieldIdentification(){
 async function getInputLabel(elm){
 	//TODO: maybe need to add other searches if they are found or I want this code to be reuseable
 	let foundLabel = false;
+	let closestDiv;
 	do {
-		let cloesetDiv = elm.closest('div');
+		closestDiv = elm.closest('div');
 		//let closestDiv = closestDiv.closest('div'); //two ansestors
 		let lspan = closestDiv.querySelector('label span');
 		if (lspan){
 			return lspan.textContent; 
 		}
 		elm = closestDiv;
-		console.log('searching for label span')
+		console.log('searching for label span');
+		//loop does not fail
 	} while (closestDiv.closest('div'));
 
 	return 'unknown!';
