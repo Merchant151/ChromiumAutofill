@@ -166,6 +166,8 @@ function fieldIdentification(){
 	var qArr = []
 	var allElms = document.getElementsByTagName('*');
 	for (let elm of allElms){ 
+		console.log('start of for of');
+		console.log(elm)
 		var qElm = {html: undefined,parentGroup: undefined,isQ: false,qText: undefined,qTag: undefined,qType: undefined};
 		qElm['html'] = elm
 		if (elm.localName === "input"){
@@ -196,17 +198,24 @@ async function getInputLabel(elm){
 	//TODO: maybe need to add other searches if they are found or I want this code to be reuseable
 	let foundLabel = false;
 	let closestDiv;
+	//HARD STOP 
+	let cnt = 0 ;
 	do {
+		//lets debug this infinite loop
+		console.log(closestDiv);
+		console.log(elm);
 		closestDiv = elm.closest('div');
 		//let closestDiv = closestDiv.closest('div'); //two ansestors
 		let lspan = closestDiv.querySelector('label span');
 		if (lspan){
-			return lspan.textContent; 
+			return lspan.textContent;
 		}
 		elm = closestDiv;
 		console.log('searching for label span');
 		//loop does not fail
-	} while (closestDiv.closest('div'));
+		console.log(closestDiv);
+		cnt = cnt+1;
+	} while (closestDiv.closest('div')&& cnt <10);
 
 	return 'unknown!';
 
