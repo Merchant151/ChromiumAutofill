@@ -49,9 +49,9 @@ async function testfill(){
 	//	if(navigator.serviceWorker){//check if service workers are accessable
 	//navigator.serviceWorker.register("worker.js");
 	//navigator.serviceWorker.ready.then((eventmsg) => {registration.active.postMessage("message")});
-	console.log("basic.js 51: register post event to service worker listner");
+	//console.log("basic.js 51: register post event to service worker listner");
 	const submit = document.getElementsByClassName('css-6hfcb0');
-	console.log(submit);
+	//console.log(submit);
 	submit[0].focus();
 	await promiseToWait();
 	//GETTING location as data to send to maual mouse click
@@ -67,8 +67,8 @@ async function testfill(){
 	//TODO: Remove page two testing when I am ready to build a basic main page functionality. 
 	await delay(5999);
 	let getElms = fieldIdentification();
-	console.log('printing getelms');
-	console.log(getElms);
+	//console.log('printing getelms');
+	//console.log(getElms);
 
 }
 
@@ -107,14 +107,14 @@ function promiseToWait(timeToWait = 1500) {
 }
 async function delaystart(){
 	var nameList = document.getElementsByTagName('*');
-	console.log('list len is '+ nameList.length)
+	//console.log('list len is '+ nameList.length)
 	await promiseToWait();
-	console.log(nameList);
+	//console.log(nameList);
 	if (nameList.length > 190 ){//likely needs to be changed to a contains check than a count!
-		console.log('wait passed');
+		//console.log('wait passed');
 		testfill();
 	}else{
-		console.log('wait failed');
+		//console.log('wait failed');
 		delaystart();//this is a recursive function. 
 
 	}
@@ -122,7 +122,7 @@ async function delaystart(){
 //TODO: replace delay start with delay
 async function delay(waitTime = 1500){
 	var nameList = document.getElementsByTagName('*');
-	console.log('num elms on page: '+ nameList.length);
+	//console.log('num elms on page: '+ nameList.length);
 	await promiseToWait(waitTime);
 	if(nameList.length > 190){
 		console.log('page load wait pass');
@@ -166,13 +166,11 @@ function fieldIdentification(){
 	var qArr = []
 	var allElms = document.getElementsByTagName('*');
 	for (let elm of allElms){ 
-		console.log('start of for of');
-		console.log(elm)
 		var qElm = {html: undefined,parentGroup: undefined,isQ: false,qText: undefined,qTag: undefined,qType: undefined};
 		qElm['html'] = elm
 		if (elm.localName === "input"){
 			//radial menu singles, dropdown selection, checkbox, text input, year/month picker
-			console.log(elm);
+			//console.log(elm);
 			if(elm.hasAttribute('type')&&elm.getAttribute('type') === 'text'){
 				qElm['parentGroup'] = elm.closest('[role="group"]');
 				qElm['isQ'] = true;
@@ -199,23 +197,24 @@ async function getInputLabel(elm){
 	let foundLabel = false;
 	let closestDiv;
 	//HARD STOP 
-	let cnt = 0 ;
+	//let cnt = 0 ;
 	do {
 		//lets debug this infinite loop
-		console.log(closestDiv);
-		console.log(elm);
-		closestDiv = elm.closest('div');
+		//console.log(closestDiv);
+		//console.log(elm);
+		closestDiv = elm.parentElement.closest('div');
 		//let closestDiv = closestDiv.closest('div'); //two ansestors
 		let lspan = closestDiv.querySelector('label span');
 		if (lspan){
+			console.log('got an lspan');
 			return lspan.textContent;
 		}
 		elm = closestDiv;
-		console.log('searching for label span');
+		//console.log('searching for label span');
 		//loop does not fail
-		console.log(closestDiv);
-		cnt = cnt+1;
-	} while (closestDiv.closest('div')&& cnt <10);
+		//console.log(closestDiv);
+		//cnt = cnt+1;
+	} while (closestDiv.closest('div'));
 
 	return 'unknown!';
 
