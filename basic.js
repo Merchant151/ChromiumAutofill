@@ -175,8 +175,8 @@ function fieldIdentification(){
 				qElm['parentGroup'] = elm.closest('[role="group"]');
 				qElm['isQ'] = true;
 				qElm['qText'] = getInputLabel(elm);
-				qelm['qTag'] = 'unused-fornow';
-				qtype['qtype'] = determineQType(qelm);
+				qElm['qTag'] = 'unused-fornow';
+				qElm['qtype'] = determineQType(qElm);
 			}
 			qArr.push(qElm);
 
@@ -196,6 +196,17 @@ function fieldIdentification(){
 function determineQType(qelm){
 	//TODO: current inprogress get types of input off of some distinqusing factor I guess.
 	//TODO: may need to add processing for unknown once I have a user alert or user intervention system
+	let e = qelm['html'];
+	if (e.hasAttribute('type')&&e.getAttribute('type') == "text"){
+		//basic text input elms have usually include an id while others may not vs dropdown boxes
+		if(e.hasAttribute('id')){
+			return 'basicText';
+		}else{
+			return 'dropdown';
+		}
+
+	}
+
 	return 'unknown!';
 
 
