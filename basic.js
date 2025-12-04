@@ -68,7 +68,7 @@ async function testfill(){
 	await delay(5999);
 	let getElms = fieldIdentification();
 	//console.log('printing getelms');
-	//console.log(getElms);
+	console.log(getElms);
 
 }
 
@@ -175,7 +175,8 @@ function fieldIdentification(){
 				qElm['parentGroup'] = elm.closest('[role="group"]');
 				qElm['isQ'] = true;
 				qElm['qText'] = getInputLabel(elm);
-
+				qelm['qTag'] = 'unused-fornow';
+				qtype['qtype'] = determineQType(qelm);
 			}
 			qArr.push(qElm);
 
@@ -188,6 +189,14 @@ function fieldIdentification(){
 		}
 	}
 	return qArr;
+
+}
+
+
+function determineQType(qelm){
+	//TODO: current inprogress get types of input off of some distinqusing factor I guess.
+	//TODO: may need to add processing for unknown once I have a user alert or user intervention system
+	return 'unknown!';
 
 
 }
@@ -214,6 +223,7 @@ async function getInputLabel(elm){
 		//loop does not fail
 		//console.log(closestDiv);
 		//cnt = cnt+1;
+		//console.log(cnt);
 	} while (closestDiv.closest('div'));
 
 	return 'unknown!';
