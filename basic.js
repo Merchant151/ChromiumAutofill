@@ -109,9 +109,11 @@ function clickAndClear(elmn){
 // wait >> CHECK for elems >> loop or run 
 // function check
 function promiseToWait(timeToWait = 1500) {
-	console.log('timeout set to return in '+timeToWait);
+	//console.log('timeout set to return in '+timeToWait);
 	return new Promise(due => setTimeout(due,timeToWait));
 }
+
+//TODO: REMOVE
 async function delaystart(){
 	var nameList = document.getElementsByTagName('*');
 	//console.log('list len is '+ nameList.length)
@@ -127,16 +129,25 @@ async function delaystart(){
 	}
 }
 //TODO: replace delay start with delay
-async function delay(waitTime = 1500){
+async function delay(waitTime = 1500,threashold = 190){
 	var nameList = document.getElementsByTagName('*');
 	//console.log('num elms on page: '+ nameList.length);
 	await promiseToWait(waitTime);
-	if(nameList.length > 190){
-		console.log('page load wait pass');
+	if(nameList.length > threashold){
+		//console.log('page load wait pass at len: ' + threashold);
+		return
 	}else{
-		console.log('wait failed');
-		delay();
+		//console.log('wait failed');
+		return await delay(waitTime,threashold);
 	}
+}
+
+//TODO: implement delayUntilNew as a method to load new page 
+//THROW ERROR if all required inputs are not reached 
+async function delayUntilNew(waitTIme = 1500,pageElms = document.getElementsByTagName('*')){
+	//same recursive delay function but with previous page context loaded
+
+
 }
 
 //TODO: build feild identification to grab all input feilds
@@ -268,15 +279,39 @@ async function processElms(eArray,answerData){
 
 
 async function pickBehavior(){
-	const answerData = {name: "Donald J Trump", phone: "202-456-1111",address: "1600 Pennsylvania Avenue NW; Washington, DC;District of Columbia; 20500"};
+	//currently unused
+	var answerData = {name: "Donald J Trump", phone: "202-456-1111",address: "1600 Pennsylvania Avenue NW; Washington, DC;District of Columbia; 20500"};
 	//TODO: build out behavior
-	//Identify page 
-	let ident = 'login signup';
+	//Identify page
+	
+	//var nameList = document.getElementsByTagName('*');
+	//workday stores a step label in text.
+	let stepHtml = document.getElementsByTagName('label');
+	let ident = '';
+	for (step of stepHtml){
+		let text = step.textContent;
+		//console.log('text found and testing:'+ text);
+		if(text.toLowerCase().includes('current')){
+			let sibCol = step.parentElement.children;
+			//console.log(sibCol);
+			//PLEASE FORGIVE THE SPEGHETTI 
+			//TODO REFACTOR! 
+			for (sibs of sibCol){
+				if (sibs.matches('label')&&sibs.textContent.toLowerCase().includes('create account')){
+					ident = 'start';
+				}
+			}
+
+		}
+	
+	}
 	switch(ident){
-	case ("login signup"):
+	case ("start"):
 		//TODO: Login will be different if I have an account on the site. 
 			// once I start using storage Login should be the first feature to tackle 
+		console.log('got a match!!!');
 		testfill();
+		break;
 	case("information"):
 		//TODO: implement
 		//infoFill();
@@ -292,6 +327,7 @@ async function pickBehavior(){
 	default:
 		//TODO: implement
 		//unknown();
+		console.log('not on sign up page. Script does nothing.')
 }
 }
 
@@ -302,6 +338,10 @@ async function entryPoint(){
 	//pick behavior 
 	//Save results? 
 
+	await delay();//delay script will work as delay start does except enter testfill
+	console.log('got here');
+	await pickBehavior();
 }
-delaystart();
+entryPoint();
+//delaystart();
 //testfill()
