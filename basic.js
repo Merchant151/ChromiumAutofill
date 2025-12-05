@@ -69,6 +69,13 @@ async function testfill(){
 	let getElms = fieldIdentification();
 	//console.log('printing getelms');
 	console.log(getElms);
+	
+	//this will need to be pulled from local storage and eventually file storage. 
+	//TODO: create user data storage soluiton
+	const answerData = {name: "Donald J Trump", phone: "202-456-1111",address: "1600 Pennsylvania Avenue NW; Washington, DC;District of Columbia; 20500"};
+
+	//I guess I should attempt a process elms method
+	await processElms(getElms, answerData);
 
 }
 
@@ -176,7 +183,7 @@ function fieldIdentification(){
 				qElm['isQ'] = true;
 				qElm['qText'] = getInputLabel(elm);
 				qElm['qTag'] = 'unused-fornow';
-				qElm['qtype'] = determineQType(qElm);
+				qElm['qType'] = determineQType(qElm);
 			}
 			qArr.push(qElm);
 
@@ -212,7 +219,7 @@ function determineQType(qelm){
 
 }
 
-async function getInputLabel(elm){
+function getInputLabel(elm){
 	//TODO: maybe need to add other searches if they are found or I want this code to be reuseable
 	let foundLabel = false;
 	let closestDiv;
@@ -241,9 +248,27 @@ async function getInputLabel(elm){
 
 }
 
+async function processElms(eArray,answerData){
+
+	for (eData of eArray){
+		let type = eData['qType'];
+		let question = eData['qText'];
+		if (type == 'basicText'){
+			console.log('question to answser = '+ question);
+			console.log('basic text is not implemented');
+		}else{
+			console.log(''+ type+' is not implemented');
+		}
+
+	}
+
+
+
+}
+
 
 async function pickBehavior(){
-	answerData = {name: "Donald J Trump", phone: "202-456-1111",address: "1600 Pennsylvania Avenue NW; Washington, DC;District of Columbia; 20500"};
+	const answerData = {name: "Donald J Trump", phone: "202-456-1111",address: "1600 Pennsylvania Avenue NW; Washington, DC;District of Columbia; 20500"};
 	//TODO: build out behavior
 	//Identify page 
 	let ident = 'login signup';
