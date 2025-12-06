@@ -8,12 +8,6 @@ console.log('Hello, script is active on fourm pages.');
 //fill dictionary
 	//login stuff needs to exist separately or not at all
 //for fourm item on page
-/*
-const elements = document.querySelectorAll("input");
-elements.forEach(function(){
-	console.log('found element')
-
-});*/
 //identify form
 //if fourm identity in dictionary fill fourm with result.
 //Made edits to include human like interactions. 
@@ -41,17 +35,8 @@ async function testfill(){
 	//pass2.value = pass;
 
 	await promiseToWait();
-	//attempt click.
 	//TODO: get message submitted through event to service worker
-	//
-	//I believe service worker needs to be 
-	///registered and then triggered so I will register here for now
-	//	if(navigator.serviceWorker){//check if service workers are accessable
-	//navigator.serviceWorker.register("worker.js");
-	//navigator.serviceWorker.ready.then((eventmsg) => {registration.active.postMessage("message")});
-	//console.log("basic.js 51: register post event to service worker listner");
 	const submit = document.getElementsByClassName('css-6hfcb0');
-	//console.log(submit);
 	submit[0].focus();
 	await promiseToWait();
 	//GETTING location as data to send to maual mouse click
@@ -102,10 +87,6 @@ function clickAndClear(elmn){
 
 ///need away to wait for page to load before attempting fill
 //not sure this solution works... want to do a wait loop
-//window.document.body.onload = function(){
-	//console.log('page run fill after load');
-	//testfill()
-//}
 // wait >> CHECK for elems >> loop or run 
 // function check
 function promiseToWait(timeToWait = 1500) {
@@ -150,7 +131,7 @@ async function delayUntilNew(waitTIme = 1500,pageElms = document.getElementsByTa
 
 }
 
-//TODO: build feild identification to grab all input feilds
+//TODO: build field identification to grab all input feilds
 //initally use after login but should also be applied on login screen
 function fieldIdentification(){
 	//I want to grab all elems on page 
