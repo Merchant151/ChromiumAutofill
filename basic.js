@@ -213,6 +213,7 @@ function determineQType(qelm){
 
 function getInputLabel(elm){
 	//TODO: maybe need to add other searches if they are found or I want this code to be reuseable
+	//TODO: add a search limit so we can't grab the next found span. and or insure we can't get 2nd cousins of the tree only uncles and second uncles
 	let foundLabel = false;
 	let closestDiv;
 	//HARD STOP 
@@ -224,9 +225,13 @@ function getInputLabel(elm){
 		closestDiv = elm.parentElement.closest('div');
 		//let closestDiv = closestDiv.closest('div'); //two ansestors
 		let lspan = closestDiv.querySelector('label span');
+		let lsolo = closestDiv.querySelector('label'); //have to add solo label selector for some text.
 		if (lspan){
 			console.log('got an lspan');
 			return lspan.textContent;
+		}else if(lsolo&&lsolo.textContent){
+			console.log('got a plain lable');
+			return lsolo.textContent;
 		}
 		elm = closestDiv;
 		//console.log('searching for label span');
