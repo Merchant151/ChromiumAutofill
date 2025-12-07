@@ -176,18 +176,52 @@ function fieldIdentification(){
 				qElm['qText'] = getInputLabel(elm);
 				qElm['qTag'] = 'unused-fornow';
 				qElm['qType'] = determineQType(qElm);
+			}else if(elm.hasAttribute('type')&&elm.getAttribute('type')==='radio'){
+				qElm['parentGroup'] = elm.closest('[role="group"]');
+				qElm['isQ'] = true;
+				qElm['qText'] = getInputLabel(elm);//TODO: MODIFY INCLUDE
+				qElm['qTag'] = 'unused-fornow';
+				qElm['qType'] = determineQType(qElm);//TODO: MODIFY INCLUDE
+				qElm['option'] = getRadioOption(qElm);//option added for radio type not in parent	
+	
+
 			}
 			qArr.push(qElm);
 
 		}
 		else if(elm.localName === "textarea"){
 			//text area
-			(console.log(elm));
+			console.log('textarea found input processing not implemented!');
+			console.log(elm);
 		}else if (elm.localName === "button"){
 			//
+			console.log('button found input processing not implemented!');
 		}
 	}
 	return qArr;
+
+}
+
+function getRadioOption(qelm){
+	//I noticed a design where radio type objects had matching ids with a text label.
+	let e = qelm['html'];
+	if (e.hasAttribute('id')){
+		//TODO: WIP
+		let id = e.getAttribute('id');
+		do {
+			//Pusdo code???
+			//parentDiv
+
+
+
+
+
+
+		}while()
+	}else{
+		console.log('radio id failed no ID!'); return 'unknown';
+	}
+
 
 }
 
