@@ -209,10 +209,14 @@ function getRadioOption(qelm){
 	if (e.hasAttribute('id')){
 		//TODO: WIP
 		let id = e.getAttribute('id');
-		let grandpa = e.closest('div').closest('div');
+		let grandpa = e.parentElement.closest('div').parentElement.closest('div');
 		let lsolo = grandpa.querySelector('label');
 		if(lsolo&&lsolo.textContent && id === lsolo.getAttribute('for')){
-			return solo.textContent;
+			return lsolo.textContent;
+		}else{
+			console.log('radio found not identified requires refactor!');
+			console.log('t: '+lsolo+' id: '+id+' grandpa'+ grandpa);
+			console.log(grandpa);
 		}
 
 	}else{
