@@ -209,9 +209,9 @@ function getRadioOption(qelm){
 	if (e.hasAttribute('id')){
 		//TODO: WIP
 		let id = e.getAttribute('id');
-		let grandpa = e.closest('Div').closest('Div');
-		let lsolo = closestDiv.querySelector('label');
-		if(lsolo&&lsolo.textContent && id === lsolo.getAttribute('id')){
+		let grandpa = e.closest('div').closest('div');
+		let lsolo = grandpa.querySelector('label');
+		if(lsolo&&lsolo.textContent && id === lsolo.getAttribute('for')){
 			return solo.textContent;
 		}
 
