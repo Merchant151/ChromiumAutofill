@@ -204,20 +204,17 @@ function fieldIdentification(){
 
 function getRadioOption(qelm){
 	//I noticed a design where radio type objects had matching ids with a text label.
+	//instead of looping I am just going to go to where I think the parrent is and hope it doesn't break. 
 	let e = qelm['html'];
 	if (e.hasAttribute('id')){
 		//TODO: WIP
 		let id = e.getAttribute('id');
-		do {
-			//Pusdo code???
-			//parentDiv
+		let grandpa = e.closest('Div').closest('Div');
+		let lsolo = closestDiv.querySelector('label');
+		if(lsolo&&lsolo.textContent && id === lsolo.getAttribute('id')){
+			return solo.textContent;
+		}
 
-
-
-
-
-
-		}while()
 	}else{
 		console.log('radio id failed no ID!'); return 'unknown';
 	}
