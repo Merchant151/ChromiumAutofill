@@ -94,20 +94,6 @@ function promiseToWait(timeToWait = 1500) {
 	return new Promise(due => setTimeout(due,timeToWait));
 }
 
-//TODO: REMOVE
-async function delaystart(){
-	var nameList = document.getElementsByTagName('*');
-	//console.log('list len is '+ nameList.length)
-	await promiseToWait();
-	//console.log(nameList);
-	if (nameList.length > 190 ){//likely needs to be changed to a contains check than a count!
-		//console.log('wait passed');
-		testfill();
-	}else{
-		//console.log('wait failed');
-		delaystart();//this is a recursive function. 
-
-	}
 }
 //TODO: replace delay start with delay
 async function delay(waitTime = 1500,threashold = 190){
@@ -181,8 +167,8 @@ function fieldIdentification(){
 				qElm['isQ'] = true;
 				qElm['qText'] = getInputLabel(elm);//TODO: MODIFY INCLUDE
 				qElm['qTag'] = 'unused-fornow';
-				qElm['qType'] = determineQType(qElm);//TODO: MODIFY INCLUDE
-				qElm['option'] = getRadioOption(qElm);//option added for radio type not in parent	
+				qElm['qType'] = determineQType(qElm);
+				qElm['option'] = getRadioOption(qElm);
 	
 
 			}
@@ -207,7 +193,6 @@ function getRadioOption(qelm){
 	//instead of looping I am just going to go to where I think the parrent is and hope it doesn't break. 
 	let e = qelm['html'];
 	if (e.hasAttribute('id')){
-		//TODO: WIP
 		let id = e.getAttribute('id');
 		let grandpa = e.parentElement.closest('div').parentElement.closest('div');
 		let lsolo = grandpa.querySelector('label');
@@ -239,6 +224,9 @@ function determineQType(qelm){
 			return 'dropdown';
 		}
 
+	}else if (e.hasAttribute('type')&&e.getAttribute('type') === 'radio'){
+		return 'radio';
+	
 	}
 
 	return 'unknown!';
@@ -253,10 +241,8 @@ function getInputLabel(elm){
 	let closestDiv;
 	//HARD STOP 
 	//let cnt = 0 ;
+	if (elm.hasAttribute('type')&&elm.getAttribute('type') === 'text'){
 	do {
-		//lets debug this infinite loop
-		//console.log(closestDiv);
-		//console.log(elm);
 		closestDiv = elm.parentElement.closest('div');
 		//let closestDiv = closestDiv.closest('div'); //two ansestors
 		let lspan = closestDiv.querySelector('label span');
@@ -269,13 +255,12 @@ function getInputLabel(elm){
 			return lsolo.textContent;
 		}
 		elm = closestDiv;
-		//console.log('searching for label span');
-		//loop does not fail
-		//console.log(closestDiv);
-		//cnt = cnt+1;
-		//console.log(cnt);
 	} while (closestDiv.closest('div'));
+	}else if (elm.hasAttribute('type')&&elm.getAttribute('type') === 'radio'){
+		//TODO: implement
+		return 'radio unimplemented';
 
+	} 
 	return 'unknown!';
 
 }
@@ -353,7 +338,7 @@ async function pickBehavior(){
 }
 
 async function entryPoint(){
-	//TODO: build this as start of script
+	//TODO: 
 	//while loop
 	//delay start on elm count 
 	//pick behavior 
@@ -364,5 +349,4 @@ async function entryPoint(){
 	await pickBehavior();
 }
 entryPoint();
-//delaystart();
 //testfill()
