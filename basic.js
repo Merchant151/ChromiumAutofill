@@ -58,7 +58,7 @@ async function testfill(){
 	//this will need to be pulled from local storage and eventually file storage. 
 	//TODO: create user data storage soluiton
 	const answerKey = {name: {0 : ["first", "first name","first"],1 : ["middle name"], 2 : ["last name"]}}
-	const answerData = {name: ["Donald","John","Trump"], phone: ["202-456-1111"],address: ["1600 Pennsylvania Avenue NW"],["Washington, DC"],["District of Columbia"],["20500"]};
+	const answerData = {name: ["Donald","John","Trump"], phone: ["202-456-1111"],address: ["1600 Pennsylvania Avenue NW","Washington, DC","District of Columbia","20500"]};
 	const AnswerGroups= {main: answerData, peferred: {name: ["John","","Trump"]}}
 
 	//I guess I should attempt a process elms method
@@ -161,14 +161,14 @@ function fieldIdentification(){
 			if(elm.hasAttribute('type')&&elm.getAttribute('type') === 'text'){
 				qElm['parentGroup'] = elm.closest('[role="group"]');
 				qElm['isQ'] = true;
-				qElm['qText'] = getInputLabel(elm);
-				qElm['qTag'] = 'unused-fornow';
+				qElm['qText'] = getInputLabel(qElm);
+				qElm['qTag'] = getAnswerGroup(qElm); 
 				qElm['qType'] = determineQType(qElm);
 			}else if(elm.hasAttribute('type')&&elm.getAttribute('type')==='radio'){
 				qElm['parentGroup'] = elm.closest('[role="group"]');
 				qElm['isQ'] = true;
-				qElm['qText'] = getInputLabel(elm);//TODO: MODIFY INCLUDE
-				qElm['qTag'] = 'unused-fornow';
+				qElm['qText'] = getInputLabel(qElm);
+				qElm['qTag'] = getAnswerGroup(qElm);
 				qElm['qType'] = determineQType(qElm);
 				qElm['option'] = getRadioOption(qElm);
 	
@@ -187,6 +187,14 @@ function fieldIdentification(){
 		}
 	}
 	return qArr;
+
+}
+
+function getAnswerGroup(qElm){
+	//get the answer key group for now we just use One
+	//TODO: implement multiple groups 
+	
+	return "main";
 
 }
 
@@ -237,11 +245,9 @@ function determineQType(qelm){
 }
 
 function getInputLabel(elm){
-	//TODO: maybe need to add other searches if they are found or I want this code to be reuseable
+	let elm = qElm['html'];
 	let foundLabel = false;
 	let closestDiv;
-	//HARD STOP 
-	//let cnt = 0 ;
 	if (elm.hasAttribute('type')&&elm.getAttribute('type') === 'text'){
 	do {
 		closestDiv = elm.parentElement.closest('div');
@@ -270,11 +276,12 @@ function getInputLabel(elm){
 
 }
 
-async function processElms(eArray,answerData){
+async function processElms(eArray,answerData,answerKey){
 	/// So we take a question and associate it to an answer key answers will be associated with multiple questions 
 	for (eData of eArray){
 		let type = eData['qType'];
 		let question = eData['qText'];
+		let answer = await lookupAnswer(question,answerKey);
 		if (type == 'basicText'){
 			console.log('question to answser = '+ question);
 			//console.log('basic text is not implemented');
@@ -285,6 +292,13 @@ async function processElms(eArray,answerData){
 	}
 
 
+
+}
+
+
+function lookupAnswer(question, answerKey){
+	//question is str should match one of key arry objects
+	//answer key is dict array like object name : ['1','last']
 
 }
 
