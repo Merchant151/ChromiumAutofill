@@ -57,7 +57,9 @@ async function testfill(){
 	
 	//this will need to be pulled from local storage and eventually file storage. 
 	//TODO: create user data storage soluiton
-	const answerData = {name: "Donald J Trump", phone: "202-456-1111",address: "1600 Pennsylvania Avenue NW; Washington, DC;District of Columbia; 20500"};
+	const answerKey = {name: {0 : ["first", "first name","first"],1 : ["middle name"], 2 : ["last name"]}}
+	const answerData = {name: ["Donald","John","Trump"], phone: ["202-456-1111"],address: ["1600 Pennsylvania Avenue NW"],["Washington, DC"],["District of Columbia"],["20500"]};
+	const AnswerGroups= {main: answerData, peferred: {name: ["John","","Trump"]}}
 
 	//I guess I should attempt a process elms method
 	await processElms(getElms, answerData);
@@ -94,7 +96,7 @@ function promiseToWait(timeToWait = 1500) {
 	return new Promise(due => setTimeout(due,timeToWait));
 }
 
-}
+
 //TODO: replace delay start with delay
 async function delay(waitTime = 1500,threashold = 190){
 	var nameList = document.getElementsByTagName('*');
@@ -236,7 +238,6 @@ function determineQType(qelm){
 
 function getInputLabel(elm){
 	//TODO: maybe need to add other searches if they are found or I want this code to be reuseable
-	//TODO: add a search limit so we can't grab the next found span. and or insure we can't get 2nd cousins of the tree only uncles and second uncles
 	let foundLabel = false;
 	let closestDiv;
 	//HARD STOP 
@@ -257,8 +258,12 @@ function getInputLabel(elm){
 		elm = closestDiv;
 	} while (closestDiv.closest('div'));
 	}else if (elm.hasAttribute('type')&&elm.getAttribute('type') === 'radio'){
-		//TODO: implement
-		return 'radio unimplemented';
+		//closest fieldset 
+		//child is legend l span
+		
+		let llspan = elm.closest('fieldset').querySelector('legend label span');
+		
+		return llspan.textContent;
 
 	} 
 	return 'unknown!';
@@ -266,13 +271,13 @@ function getInputLabel(elm){
 }
 
 async function processElms(eArray,answerData){
-
+	/// So we take a question and associate it to an answer key answers will be associated with multiple questions 
 	for (eData of eArray){
 		let type = eData['qType'];
 		let question = eData['qText'];
 		if (type == 'basicText'){
 			console.log('question to answser = '+ question);
-			console.log('basic text is not implemented');
+			//console.log('basic text is not implemented');
 		}else{
 			console.log(''+ type+' is not implemented');
 		}
