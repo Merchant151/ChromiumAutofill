@@ -244,7 +244,7 @@ function determineQType(qelm){
 
 }
 
-function getInputLabel(elm){
+function getInputLabel(qElm){
 	let elm = qElm['html'];
 	let foundLabel = false;
 	let closestDiv;
@@ -299,7 +299,14 @@ async function processElms(eArray,answerData,answerKey){
 function lookupAnswer(question, answerKey){
 	//question is str should match one of key arry objects
 	//answer key is dict array like object name : ['1','last']
+	for (question in answerKey){
+		for (index in question){
+			console.log('testing index'+index);
 
+
+		}
+	}
+	return [index, question];
 }
 
 
