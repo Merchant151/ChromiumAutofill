@@ -62,7 +62,7 @@ async function testfill(){
 	const AnswerGroups= {main: answerData, peferred: {name: ["John","","Trump"]}}
 
 	//I guess I should attempt a process elms method
-	await processElms(getElms, answerData);
+	await processElms(getElms, answerData,answerKey);
 
 }
 
@@ -299,14 +299,16 @@ async function processElms(eArray,answerData,answerKey){
 function lookupAnswer(question, answerKey){
 	//question is str should match one of key arry objects
 	//answer key is dict array like object name : ['1','last']
+	console.log('lookup');
 	for (question in answerKey){
+		console.log('questions');
 		for (index in question){
 			console.log('testing index'+index);
 
 
 		}
 	}
-	return [index, question];
+	return [0, question];
 }
 
 
