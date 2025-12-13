@@ -57,13 +57,14 @@ async function testfill(){
 	
 	//this will need to be pulled from local storage and eventually file storage. 
 	//TODO: create user data storage soluiton
-	const answerKey = {name: {0 : ["first", "first name","first"],1 : ["middle name"], 2 : ["last name"]}}
+	const answerKey = {
+		name: {0 : ["first", "first name","first"],1 : ["middle name"], 2 : ["last name"]},
+		address:{0: ["address line 1","address line"],1:["city"],2:["state"]}
+	}
 	const answerData = {name: ["Donald","John","Trump"], phone: ["202-456-1111"],address: ["1600 Pennsylvania Avenue NW","Washington, DC","District of Columbia","20500"]};
 	const AnswerGroups= {main: answerData, peferred: {name: ["John","","Trump"]}}
-
 	//I guess I should attempt a process elms method
 	await processElms(getElms, answerData,answerKey);
-
 }
 
 async function simulateInput(elmn,output){
@@ -96,7 +97,6 @@ function promiseToWait(timeToWait = 1500) {
 	return new Promise(due => setTimeout(due,timeToWait));
 }
 
-
 //TODO: replace delay start with delay
 async function delay(waitTime = 1500,threashold = 190){
 	var nameList = document.getElementsByTagName('*');
@@ -115,8 +115,6 @@ async function delay(waitTime = 1500,threashold = 190){
 //THROW ERROR if all required inputs are not reached 
 async function delayUntilNew(waitTIme = 1500,pageElms = document.getElementsByTagName('*')){
 	//same recursive delay function but with previous page context loaded
-
-
 }
 
 //TODO: build field identification to grab all input feilds
@@ -147,8 +145,6 @@ function fieldIdentification(){
 	 *		inputObj.append(e,type)
 	 *		question = getTextAbove(e)
 	 *		elmnarray.e.question = qeustion //associate data need to read up on how array data managed again
-	 *	
-	 *
 	 * */
 	var qArr = []
 	var allElms = document.getElementsByTagName('*');
@@ -171,8 +167,6 @@ function fieldIdentification(){
 				qElm['qTag'] = getAnswerGroup(qElm);
 				qElm['qType'] = determineQType(qElm);
 				qElm['option'] = getRadioOption(qElm);
-	
-
 			}
 			qArr.push(qElm);
 
@@ -187,7 +181,6 @@ function fieldIdentification(){
 		}
 	}
 	return qArr;
-
 }
 
 function getAnswerGroup(qElm){
@@ -195,7 +188,6 @@ function getAnswerGroup(qElm){
 	//TODO: implement multiple groups 
 	
 	return "main";
-
 }
 
 function getRadioOption(qelm){
@@ -213,12 +205,9 @@ function getRadioOption(qelm){
 			console.log('t: '+lsolo+' id: '+id+' grandpa'+ grandpa);
 			console.log(grandpa);
 		}
-
 	}else{
 		console.log('radio id failed no ID!'); return 'unknown';
 	}
-
-
 }
 
 
@@ -233,15 +222,10 @@ function determineQType(qelm){
 		}else{
 			return 'dropdown';
 		}
-
 	}else if (e.hasAttribute('type')&&e.getAttribute('type') === 'radio'){
 		return 'radio';
-	
 	}
-
 	return 'unknown!';
-
-
 }
 
 function getInputLabel(qElm){
@@ -266,11 +250,8 @@ function getInputLabel(qElm){
 	}else if (elm.hasAttribute('type')&&elm.getAttribute('type') === 'radio'){
 		//closest fieldset 
 		//child is legend l span
-		
 		let llspan = elm.closest('fieldset').querySelector('legend label span');
-		
 		return llspan.textContent;
-
 	} 
 	return 'unknown!';
 
@@ -281,14 +262,18 @@ async function processElms(eArray,answerData,answerKey){
 	for (eData of eArray){
 		let type = eData['qType'];
 		let question = eData['qText'];
-		let answer = await lookupAnswer(question,answerKey);
+		//console.log('qText FORK: ' +question);
+		let answer = undefined;
+		if (question){
+			answer = await lookupAnswer(question,answerKey);
+			console.log('ANSWER IS: ' + answer[1]);
+		}
 		if (type == 'basicText'){
 			console.log('question to answser = '+ question);
 			//console.log('basic text is not implemented');
 		}else{
 			console.log(''+ type+' is not implemented');
 		}
-
 	}
 
 
@@ -299,16 +284,26 @@ async function processElms(eArray,answerData,answerKey){
 function lookupAnswer(question, answerKey){
 	//question is str should match one of key arry objects
 	//answer key is dict array like object name : ['1','last']
-	console.log('lookup');
-	for (question in answerKey){
-		console.log('questions');
-		for (index in question){
-			console.log('testing index'+index);
-
-
+	let pos = 0;
+	let que = undefined;
+	//scrub question 
+	question = question.replace(/[?!*]/g,"").toLowerCase();
+	//console.log('lookup: '+ question);
+	for (quetype in answerKey){
+		//console.log('question is : '+quetype);
+		for (index in quetype){
+			//console.log(index);
+			//console.log('testing index: '+index);
+			if (answerKey[quetype][index]&&answerKey[quetype][index].includes(question)){
+				//console.log(answerKey[quetype][index]);
+				//console.log(answerKey[quetype][index].includes(question));
+				pos = index;
+				que = quetype;
+				return [pos,quetype];
+			}
 		}
 	}
-	return [0, question];
+	return [pos, que];
 }
 
 
