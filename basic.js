@@ -29,7 +29,7 @@ async function testfill(){
 	await simulateInput(pass1,pass);
 	//pass1.value = pass;
 	pass2.focus();
-	pass1.click();
+	pass2.click();
 	await clickAndClear(pass2);
 	await simulateInput(pass2,pass);
 	//pass2.value = pass;
@@ -62,9 +62,9 @@ async function testfill(){
 		address:{0: ["address line 1","address line"],1:["city"],2:["state"]}
 	}
 	const answerData = {name: ["Donald","John","Trump"], phone: ["202-456-1111"],address: ["1600 Pennsylvania Avenue NW","Washington, DC","District of Columbia","20500"]};
-	const AnswerGroups= {main: answerData, peferred: {name: ["John","","Trump"]}}
+	const answerGroups= {main: answerData, peferred: {name: ["John","","Trump"]}}
 	//I guess I should attempt a process elms method
-	await processElms(getElms, answerData,answerKey);
+	await processElms(getElms, answerGroups,answerKey);
 }
 
 async function simulateInput(elmn,output){
@@ -80,6 +80,7 @@ async function simulateInput(elmn,output){
 
 function clickAndClear(elmn){
 	//these dispatch events did not help on thier own. 
+	elmn.focus();//added here since this step is required for click to work. 
 	elmn.dispatchEvent(new PointerEvent('pointerdown',{bubbles: true}));
 	elmn.dispatchEvent(new MouseEvent('click',{bubbles: true}));
 	elmn.dispatchEvent(new KeyboardEvent('keydown',{key: 'a',code:'KeyA',ctrlKey:true}));
@@ -260,17 +261,31 @@ function getInputLabel(qElm){
 async function processElms(eArray,answerData,answerKey){
 	/// So we take a question and associate it to an answer key answers will be associated with multiple questions 
 	for (eData of eArray){
+		//TODO: SET answer group programattically!
+		let aGroup = "main";
 		let type = eData['qType'];
 		let question = eData['qText'];
-		//console.log('qText FORK: ' +question);
+		let elm = eData['html'];
+		let response = undefined;
 		let answer = undefined;
 		if (question){
 			answer = await lookupAnswer(question,answerKey);
 			console.log('ANSWER IS: ' + answer[1]);
+			//answer is pos, questionName
+			//Stored Response
+			if(answerData[aGroup] && answerData[aGroup][answer[1]] ){
+				response = answerData[aGroup][answer[1]][answer[0]];
+			}
+			console.log(response);
 		}
 		if (type == 'basicText'){
 			console.log('question to answser = '+ question);
 			//console.log('basic text is not implemented');
+			if (response){
+				await clickAndClear(elm);
+				await simulateInput(elm,response);
+			}
+
 		}else{
 			console.log(''+ type+' is not implemented');
 		}
