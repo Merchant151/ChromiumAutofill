@@ -59,9 +59,18 @@ async function testfill(){
 	//TODO: create user data storage soluiton
 	const answerKey = {
 		name: {0 : ["first", "first name","first"],1 : ["middle name"], 2 : ["last name"]},
-		address:{0: ["address line 1","address line"],1:["city"],2:["state"]}
+		address:{0: ["address line 1","address line"],1:["city"],2:["state"],3:["zip","zip code","postal code"]},
+		phone:{0:["phone number"],1:["phone extension"],2:["phone device type"],3:["country phone code"]},
+		prefered:{0:["i have a prefered name"]},
+		hearabout:{0:["how did you hear about us"]}, //TODO: implemnet an almost match
+		previous:{0:["if you have previously worked at..."]}
 	}
-	const answerData = {name: ["Donald","John","Trump"], phone: ["202-456-1111"],address: ["1600 Pennsylvania Avenue NW","Washington, DC","District of Columbia","20500"]};
+	const answerData = {
+		name: ["Donald","John","Trump"], 
+		phone: ["202-456-1111","","Mobile","United States of America(+1)"],
+		address: ["1600 Pennsylvania Avenue NW","Washington, DC","District of Columbia","20500"],
+		prefered:[false]
+	};
 	const answerGroups= {main: answerData, peferred: {name: ["John","","Trump"]}}
 	//I guess I should attempt a process elms method
 	await processElms(getElms, answerGroups,answerKey);
