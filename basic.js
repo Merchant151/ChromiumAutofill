@@ -321,11 +321,24 @@ async function processElms(eArray,answerData,answerKey){
 			await clickAndClear(elm); // init drop down... 
 			//find aria-activedescendant = elm.button.value
 			let descendant = '"'+elm.getAttribute("value")+'"';
+			console.log('elm:'+ elm);
+			console.log(elm);
+			console.log('descendant: '+descendant);
 			let dropdownList = document.querySelector("[aria-activedescendant]="+descendant);
 			//get children 
-			let listItems = dropdownList.child();
+			let listItems = dropdownList.children();
 			//get child with response match. 
+			let listSelection = undefined;
+			for (item of listItems){
+				if (item.textContent && item.textContent === response){
+					listSelection = item;
+					console.log('found dropdown answer in menu!');
+					break;
+				}
+
+			}
 			//if response click and clear.
+			await clickAndClear(item);
 
 		}
 		else{
