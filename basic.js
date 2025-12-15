@@ -69,7 +69,9 @@ async function testfill(){
 		name: ["Donald","John","Trump"], 
 		phone: ["202-456-1111","","Mobile","United States of America(+1)"],
 		address: ["1600 Pennsylvania Avenue NW","Washington, DC","District of Columbia","20500"],
-		prefered:[false]
+		prefered:[false],
+		hearabout:["LinkedIn"],
+		previous:["No"]
 	};
 	const answerGroups= {main: answerData, peferred: {name: ["John","","Trump"]}}
 	//I guess I should attempt a process elms method
@@ -83,7 +85,7 @@ async function simulateInput(elmn,output){
 			elmn.dispatchEvent(new Event('input',{bubbles: true}));
 			elmn.dispatchEvent(new Event('keyup',{bubbles:true}));
 	}
-	return new Promise(resolve => {console.log('simulate typekey');resolve('promised');});	
+	return new Promise(resolve => {resolve('promised');});	
 	
 }
 
@@ -94,7 +96,7 @@ function clickAndClear(elmn){
 	elmn.dispatchEvent(new MouseEvent('click',{bubbles: true}));
 	elmn.dispatchEvent(new KeyboardEvent('keydown',{key: 'a',code:'KeyA',ctrlKey:true}));
 	elmn.dispatchEvent(new KeyboardEvent('keydown',{key: 'backspace',code:'KeyA',ctrlKey:true}));
-	return new Promise(resolve => {console.log('resolving click+clear'); resolve('promised');})
+	return new Promise(resolve => {resolve('promised');})
 
 }
 
@@ -279,13 +281,13 @@ async function processElms(eArray,answerData,answerKey){
 		let answer = undefined;
 		if (question){
 			answer = await lookupAnswer(question,answerKey);
-			console.log('ANSWER IS: ' + answer[1]);
+			//console.log('ANSWER IS: ' + answer[1]);
 			//answer is pos, questionName
 			//Stored Response
 			if(answerData[aGroup] && answerData[aGroup][answer[1]] ){
 				response = answerData[aGroup][answer[1]][answer[0]];
 			}
-			console.log(response);
+			//console.log(response);
 		}
 		if (type == 'basicText'){
 			console.log('question to answser = '+ question);
@@ -333,7 +335,7 @@ function lookupAnswer(question, answerKey){
 
 async function pickBehavior(){
 	//currently unused
-	var answerData = {name: "Donald J Trump", phone: "202-456-1111",address: "1600 Pennsylvania Avenue NW; Washington, DC;District of Columbia; 20500"};
+	//var answerData = {name: "Donald J Trump", phone: "202-456-1111",address: "1600 Pennsylvania Avenue NW; Washington, DC;District of Columbia; 20500"};
 	//TODO: build out behavior
 	//Identify page
 	
