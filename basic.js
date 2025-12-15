@@ -62,8 +62,8 @@ async function testfill(){
 		address:{0: ["address line 1","address line"],1:["city"],2:["state"],3:["zip","zip code","postal code"]},
 		phone:{0:["phone number"],1:["phone extension"],2:["phone device type"],3:["country phone code"]},
 		prefered:{0:["i have a prefered name"]},
-		hearabout:{0:["how did you hear about us"]}, //TODO: implemnet an almost match
-		previous:{0:["if you have previously worked at..."]}
+		hearabout:{0:["how did you hear about us"]},
+		previous:{0:["if you have previously worked at...","fakeMatch for testing"]}
 	}
 	const answerData = {
 		name: ["Donald","John","Trump"], 
@@ -179,6 +179,7 @@ function fieldIdentification(){
 				qElm['qTag'] = getAnswerGroup(qElm);
 				qElm['qType'] = determineQType(qElm);
 				qElm['option'] = getRadioOption(qElm);
+				//console.log("elm option is = "+ qElm['option']);
 			}
 			qArr.push(qElm);
 
@@ -297,7 +298,17 @@ async function processElms(eArray,answerData,answerKey){
 				await simulateInput(elm,response);
 			}
 
-		}else{
+		}else if (type == 'radio'){
+			let option = eData['option'].toLowerCase(); //to lower is inconsistent but for selection not typed answer
+			console.log('question to answer = '+ question+ ' option: ' + option);
+			if(response.toLowerCase() == option){
+				//maybe this will work as radio selection??? 
+				console.log("response is opt: " + response.toLowerCase()+" = " + option);
+				await clickAndClear(elm);
+			}
+		}
+
+		else{
 			console.log(''+ type+' is not implemented');
 		}
 	}
@@ -320,12 +331,39 @@ function lookupAnswer(question, answerKey){
 		for (index in quetype){
 			//console.log(index);
 			//console.log('testing index: '+index);
+			//DEBUG IF
+			//if(answerKey[quetype][index]){
+				//debug specific question type;
+			//	if(quetype == "previous"){
+			//		console.log(answerKey[quetype][index].toString());
+			//	}
+				//console.log(answerKey[quetype][index]);
+			//}
 			if (answerKey[quetype][index]&&answerKey[quetype][index].includes(question)){
 				//console.log(answerKey[quetype][index]);
 				//console.log(answerKey[quetype][index].includes(question));
 				pos = index;
 				que = quetype;
 				return [pos,quetype];
+			}else if(answerKey[quetype][index]&&answerKey[quetype][index].toString().includes("...")){
+				//implement an approximation search.... 
+				let aproxSearchList = answerKey[quetype][index].filter(i => i.toString().includes("..."));//Nested arrays here would be bad!
+
+				for (myStr of aproxSearchList){ 
+					let strToSearch = myStr.substring(0,myStr.length - 3);
+				
+				//let matchLen = strToSearch.length;
+				//DEBUG
+					//console.log('SEARCHING: ' + question + "FOR: " + strToSearch);
+				//This search matches substring of search string. 
+					if(question.includes(strToSearch)){
+						console.log("lookup matched a partial answer");
+						pos = index;
+						que = quetype;
+						return [pos,quetype];
+
+					}
+				}
 			}
 		}
 	}
