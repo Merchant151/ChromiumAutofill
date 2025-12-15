@@ -167,11 +167,19 @@ function fieldIdentification(){
 			//radial menu singles, dropdown selection, checkbox, text input, year/month picker
 			//console.log(elm);
 			if(elm.hasAttribute('type')&&elm.getAttribute('type') === 'text'){
+				qElm['qType'] = determineQType(qElm);
 				qElm['parentGroup'] = elm.closest('[role="group"]');
 				qElm['isQ'] = true;
 				qElm['qText'] = getInputLabel(qElm);
 				qElm['qTag'] = getAnswerGroup(qElm); 
-				qElm['qType'] = determineQType(qElm);
+				if (qElm['qType'] === 'dropdown'){
+					let myParent = elm.parentElement;
+					let childDropdown = myParent.querySelector('button');
+					if (childDropdown.hasAttribute('aria-haspopup')&&childDropdown.getAttribute('aria-haspopup')==="listbox"){
+						console.log('Dropdown found and IDed');
+						qElm['html'] = childDropdown;
+					}else{ console.log("Dropdown found but no dropdown elm IDed!");}
+				}
 			}else if(elm.hasAttribute('type')&&elm.getAttribute('type')==='radio'){
 				qElm['parentGroup'] = elm.closest('[role="group"]');
 				qElm['isQ'] = true;
@@ -306,8 +314,20 @@ async function processElms(eArray,answerData,answerKey){
 				console.log("response is opt: " + response.toLowerCase()+" = " + option);
 				await clickAndClear(elm);
 			}
-		}
+		}else if (type == 'dropdown'){
+			console.log('question to answer = '+question);
+			//drop down there is a button to click. not the input element. 
+			//listbox opens with all options available for single drop down
+			await clickAndClear(elm); // init drop down... 
+			//find aria-activedescendant = elm.button.value
+			let descendant = '"'+elm.getAttribute("value")+'"';
+			let dropdownList = document.querySelector("[aria-activedescendant]="+descendant);
+			//get children 
+			let listItems = dropdownList.child();
+			//get child with response match. 
+			//if response click and clear.
 
+		}
 		else{
 			console.log(''+ type+' is not implemented');
 		}
