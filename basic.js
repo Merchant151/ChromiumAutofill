@@ -59,7 +59,7 @@ async function testfill(){
 	//TODO: create user data storage soluiton
 	const answerKey = {
 		name: {0 : ["first", "first name","first"],1 : ["middle name"], 2 : ["last name"]},
-		address:{0: ["address line 1","address line"],1:["city"],2:["state"],3:["zip","zip code","postal code"]},
+		address:{0: ["address line 1","address line"],1:["city"],2:["state"],3:["zip","zip code","postal code"],4:["country"]},
 		phone:{0:["phone number"],1:["phone extension"],2:["phone device type"],3:["country phone code"]},
 		prefered:{0:["i have a prefered name"]},
 		hearabout:{0:["how did you hear about us"]},
@@ -68,7 +68,7 @@ async function testfill(){
 	const answerData = {
 		name: ["Donald","John","Trump"], 
 		phone: ["202-456-1111","","Mobile","United States of America(+1)"],
-		address: ["1600 Pennsylvania Avenue NW","Washington, DC","District of Columbia","20500"],
+		address: ["1600 Pennsylvania Avenue NW","Washington, DC","District of Columbia","20500","United States of America"],
 		prefered:[false],
 		hearabout:["LinkedIn"],
 		previous:["No"]
@@ -320,13 +320,13 @@ async function processElms(eArray,answerData,answerKey){
 			//listbox opens with all options available for single drop down
 			await clickAndClear(elm); // init drop down... 
 			//find aria-activedescendant = elm.button.value
-			let descendant = '"'+elm.getAttribute("value")+'"';
-			console.log('elm:'+ elm);
-			console.log(elm);
-			console.log('descendant: '+descendant);
-			let dropdownList = document.querySelector("[aria-activedescendant]="+descendant);
+			//let descendant = '"'+elm.getAttribute("value")+'"';
+			//console.log('elm:'+ elm);
+			//console.log(elm);
+			//console.log('descendant: '+descendant);
+			let dropdownList = document.querySelector("[aria-activedescendant]");
 			//get children 
-			let listItems = dropdownList.children();
+			let listItems = dropdownList.children;
 			//get child with response match. 
 			let listSelection = undefined;
 			for (item of listItems){
@@ -338,8 +338,18 @@ async function processElms(eArray,answerData,answerKey){
 
 			}
 			//if response click and clear.
-			await clickAndClear(item);
+			if (listSelection){
+				console.log(listSelection);
+				await clickAndClear(listSelection);
+			}else{
+				console.log('dropdown found but no known response found!');
+				//await clickAndClear(elm);// Deseelct attempt 
+				let randomcords = {x:30,y:150};
+				let deselect = {type:'test',data:'click action',x:randomcords.x,y:randomcords.y};
+				chrome.runtime.sendMessage(deselect);
+				await promiseToWait(2000); //let debugger delselect box value shuold be reduced after testing
 
+			}
 		}
 		else{
 			console.log(''+ type+' is not implemented');

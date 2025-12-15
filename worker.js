@@ -32,7 +32,7 @@ chrome.runtime.onMessage.addListener(async (message,sender) =>{
 			clickCount: 1,
 			isTrusted : true
 		});
-		await chrome.debugger.detach({tabId: tabID},"1.3");
+		await chrome.debugger.detach({tabId: tabID});
 	}
 	return false;
 
