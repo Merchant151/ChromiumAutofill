@@ -50,7 +50,9 @@ async function testfill(){
 	chrome.runtime.sendMessage(buildMsg);
 	//PAGE 2 TESTING 
 	//TODO: Remove page two testing when I am ready to build a basic main page functionality. 
-	await delay(9999);
+	await delay(8999);
+	//TODO: Need a new way to check for added objects before submit
+	await promiseToWait(1500); //adding an extra wait after load since all objects don't always load on pageload
 	let getElms = fieldIdentification();
 	//console.log('printing getelms');
 	console.log(getElms);
@@ -302,6 +304,7 @@ async function processElms(eArray,answerData,answerKey){
 			console.log('question to answser = '+ question);
 			//console.log('basic text is not implemented');
 			if (response){
+				await promiseToWait(500); //Adding a delay to avoid misclicks after processing dropdowns
 				await clickAndClear(elm);
 				await simulateInput(elm,response);
 			}
@@ -341,13 +344,14 @@ async function processElms(eArray,answerData,answerKey){
 			if (listSelection){
 				console.log(listSelection);
 				await clickAndClear(listSelection);
+				await promiseToWait(500);// DELAY FOR BASIC TEXT missclick issue
 			}else{
 				console.log('dropdown found but no known response found!');
 				//await clickAndClear(elm);// Deseelct attempt 
 				let randomcords = {x:30,y:150};
 				let deselect = {type:'test',data:'click action',x:randomcords.x,y:randomcords.y};
 				chrome.runtime.sendMessage(deselect);
-				await promiseToWait(2000); //let debugger delselect box value shuold be reduced after testing
+				await promiseToWait(1500); //let debugger delselect box value shuold be reduced after testing
 
 			}
 		}
