@@ -50,7 +50,7 @@ async function testfill(){
 	chrome.runtime.sendMessage(buildMsg);
 	//PAGE 2 TESTING 
 	//TODO: Remove page two testing when I am ready to build a basic main page functionality. 
-	await delay(5999);
+	await delay(9999);
 	let getElms = fieldIdentification();
 	//console.log('printing getelms');
 	console.log(getElms);
