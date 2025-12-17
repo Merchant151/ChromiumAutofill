@@ -71,7 +71,7 @@ async function testfill(){
 		name: ["Donald","John","Trump"], 
 		phone: ["202-456-1111","","Mobile","United States of America(+1)"],
 		address: ["1600 Pennsylvania Avenue NW","Washington, DC","District of Columbia","20500","United States of America"],
-		prefered:[false],
+		prefered:[true],
 		hearabout:["LinkedIn"],
 		previous:["No"]
 	};
@@ -362,6 +362,13 @@ async function processElms(eArray,answerData,answerKey){
 				chrome.runtime.sendMessage(deselect);
 				await promiseToWait(1500); //let debugger delselect box value shuold be reduced after testing
 
+			}
+		}else if (type == 'checkbox'){
+			//if checkbox question anser is bool clickAndClear
+			console.log('checkbox response is + ' + response);
+			if (response){
+				promiseToWait(500);
+				clickAndClear(elm);
 			}
 		}
 		else{
