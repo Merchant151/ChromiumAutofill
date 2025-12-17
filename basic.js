@@ -168,7 +168,14 @@ function fieldIdentification(){
 		if (elm.localName === "input"){
 			//radial menu singles, dropdown selection, checkbox, text input, year/month picker
 			//console.log(elm);
-			if(elm.hasAttribute('type')&&elm.getAttribute('type') === 'text'){
+			if (elm.hasAttribute('type')&&elm.getAttribute('type') === 'checkbox'){
+				qElm['qType'] = determineQType(qElm);
+				qElm['parentGroup'] = elm.closest('[role="group"]');
+				qElm['isQ'] = true;
+				qElm['qText'] = getInputLabel(qElm);
+				qElm['qTag'] = getAnswerGroup(qElm);
+
+			}else if(elm.hasAttribute('type')&&elm.getAttribute('type') === 'text'){
 				qElm['qType'] = determineQType(qElm);
 				qElm['parentGroup'] = elm.closest('[role="group"]');
 				qElm['isQ'] = true;
@@ -247,6 +254,8 @@ function determineQType(qelm){
 		}
 	}else if (e.hasAttribute('type')&&e.getAttribute('type') === 'radio'){
 		return 'radio';
+	}else if (e.hasAttribute('type')&&e.getAttribute('type') === 'checkbox'){
+		return 'checkbox';
 	}
 	return 'unknown!';
 }
@@ -255,7 +264,7 @@ function getInputLabel(qElm){
 	let elm = qElm['html'];
 	let foundLabel = false;
 	let closestDiv;
-	if (elm.hasAttribute('type')&&elm.getAttribute('type') === 'text'){
+	if (elm.hasAttribute('type')&&(elm.getAttribute('type') === 'text' || elm.getAttribute('type') === 'checkbox')){
 	do {
 		closestDiv = elm.parentElement.closest('div');
 		//let closestDiv = closestDiv.closest('div'); //two ansestors
