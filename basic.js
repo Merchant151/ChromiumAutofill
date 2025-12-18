@@ -63,7 +63,7 @@ async function testfill(){
 		name: {0 : ["first", "first name","first"],1 : ["middle name"], 2 : ["last name"]},
 		address:{0: ["address line 1","address line"],1:["city"],2:["state"],3:["zip","zip code","postal code"],4:["country"]},
 		phone:{0:["phone number"],1:["phone extension"],2:["phone device type"],3:["country phone code"]},
-		prefered:{0:["i have a prefered name"]},
+		prefered:{0:["i have a preferred name"]},
 		hearabout:{0:["how did you hear about us"]},
 		previous:{0:["if you have previously worked at...","fakeMatch for testing"]}
 	}
@@ -301,7 +301,7 @@ async function processElms(eArray,answerData,answerKey){
 		let answer = undefined;
 		if (question){
 			answer = await lookupAnswer(question,answerKey);
-			//console.log('ANSWER IS: ' + answer[1]);
+			console.log('bux ANSWER IS: ' + answer[1]);
 			//answer is pos, questionName
 			//Stored Response
 			if(answerData[aGroup] && answerData[aGroup][answer[1]] ){
@@ -366,7 +366,7 @@ async function processElms(eArray,answerData,answerKey){
 		}else if (type == 'checkbox'){
 			//if checkbox question anser is bool clickAndClear
 			console.log('checkbox response is + ' + response);
-			if (response){
+			if (response === true){
 				promiseToWait(500);
 				clickAndClear(elm);
 			}
@@ -388,21 +388,20 @@ function lookupAnswer(question, answerKey){
 	let que = undefined;
 	//scrub question 
 	question = question.replace(/[?!*]/g,"").toLowerCase();
-	//console.log('lookup: '+ question);
+	//console.log('bux lookup: '+ question);
 	for (quetype in answerKey){
 		//console.log('question is : '+quetype);
 		for (index in quetype){
-			//console.log(index);
-			//console.log('testing index: '+index);
 			//DEBUG IF
 			//if(answerKey[quetype][index]){
 				//debug specific question type;
-			//	if(quetype == "previous"){
-			//		console.log(answerKey[quetype][index].toString());
+			//	if(quetype == "checkbox"){
+			//		console.log("bux "+answerKey[quetype][index].toString());
 			//	}
 				//console.log(answerKey[quetype][index]);
 			//}
 			if (answerKey[quetype][index]&&answerKey[quetype][index].includes(question)){
+				//console.log('bux matched! for que + ' + question);
 				//console.log(answerKey[quetype][index]);
 				//console.log(answerKey[quetype][index].includes(question));
 				pos = index;
