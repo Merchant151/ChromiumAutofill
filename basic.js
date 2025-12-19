@@ -287,8 +287,11 @@ function getInputLabel(qElm){
 	let elm = qElm['html'];
 	let foundLabel = false;
 	let closestDiv;
+	let maxHops = 3;
+	let hop = 0;
 	if (elm.hasAttribute('type')&&(elm.getAttribute('type') === 'text' || elm.getAttribute('type') === 'checkbox')){
 	do {
+		
 		closestDiv = elm.parentElement.closest('div');
 		//let closestDiv = closestDiv.closest('div'); //two ansestors
 		let lspan = closestDiv.querySelector('label span');
@@ -301,6 +304,8 @@ function getInputLabel(qElm){
 			return lsolo.textContent;
 		}
 		elm = closestDiv;
+		if(hop >=maxHops){ break;}
+		hop = hop + 1;
 	} while (closestDiv.closest('div'));
 	}else if (elm.hasAttribute('type')&&elm.getAttribute('type') === 'radio'){
 		//closest fieldset 
