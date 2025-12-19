@@ -206,8 +206,19 @@ function fieldIdentification(){
 			console.log('textarea found input processing not implemented!');
 			console.log(elm);
 		}else if (elm.localName === "button"){
-			//
-			console.log('button found input processing not implemented!');
+			//createing save and continue for button. 
+			if(elm.textcontent){
+				
+				qElm['qType'] = determineQType(qElm);//REDUNDANT CODE 
+				//OK gotten button
+				//
+				qElm['parentGroup'] = elm.closest('[role="group"]'); //TODO: FOR BUTTON
+				qElm['isQ'] = false;
+				qElm['qText'] = getInputLabel(qElm); //TODO: FOR BUTTON
+				qElm['qTag'] = getAnswerGroup(qElm); //TODO: FOR BUTTON
+			}else{
+				console.log('text free button found and ignored!');
+			}
 		}
 	}
 	return qArr;
@@ -256,6 +267,15 @@ function determineQType(qelm){
 		return 'radio';
 	}else if (e.hasAttribute('type')&&e.getAttribute('type') === 'checkbox'){
 		return 'checkbox';
+	}else if (e.tagName === "BUTTON"){
+		if (e.textcontent.toLowerCase() === "add"){
+			return "add";
+		}else if (e.textcontent.toLowerCase() === 'back'){
+			return "back";
+		} else if (e.textcontent.toLowerCase() === "save and quit"){
+			return "next";
+		}
+		return 'button'; //at least I know this :) 
 	}
 	return 'unknown!';
 }
