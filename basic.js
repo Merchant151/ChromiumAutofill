@@ -207,14 +207,18 @@ function fieldIdentification(){
 			console.log(elm);
 		}else if (elm.localName === "button"){
 			//createing save and continue for button. 
-			if(elm.textcontent){
+			if(elm.textContent){
 				
 				qElm['qType'] = determineQType(qElm);//REDUNDANT CODE 
 				//OK gotten button
-				//
-				qElm['parentGroup'] = elm.closest('[role="group"]'); //TODO: FOR BUTTON
-				qElm['isQ'] = false;
-				qElm['qText'] = getInputLabel(qElm); //TODO: FOR BUTTON
+				if(qElm['qType'] === 'add'){
+					qElm['parentGroup'] = elm.closest('[role="group"]'); 
+					qElm['isQ'] = true;
+				}else if (qElm['qType'] === 'back' || qElm['qType'] === 'next'){
+					qElm['isQ'] = false;
+					qElm['parentGroup'] = 'page'
+				}
+				qElm['qText'] = elm.textContent
 				qElm['qTag'] = getAnswerGroup(qElm); //TODO: FOR BUTTON
 			}else{
 				console.log('text free button found and ignored!');
@@ -268,14 +272,13 @@ function determineQType(qelm){
 	}else if (e.hasAttribute('type')&&e.getAttribute('type') === 'checkbox'){
 		return 'checkbox';
 	}else if (e.tagName === "BUTTON"){
-		if (e.textcontent.toLowerCase() === "add"){
+		if (e.textContent.toLowerCase() === "add"){
 			return "add";
-		}else if (e.textcontent.toLowerCase() === 'back'){
+		}else if (e.textContent.toLowerCase() === 'back'){
 			return "back";
-		} else if (e.textcontent.toLowerCase() === "save and quit"){
+		} else if (e.textContent.toLowerCase() === "save and quit"){
 			return "next";
 		}
-		return 'button'; //at least I know this :) 
 	}
 	return 'unknown!';
 }
