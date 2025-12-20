@@ -287,8 +287,8 @@ function getInputLabel(qElm){
 	let elm = qElm['html'];
 	let foundLabel = false;
 	let closestDiv;
-	let maxHops = 3;
-	let hop = 0;
+	let maxHops = 100;
+	let home = elm;
 	if (elm.hasAttribute('type')&&(elm.getAttribute('type') === 'text' || elm.getAttribute('type') === 'checkbox')){
 	do {
 		
@@ -296,16 +296,57 @@ function getInputLabel(qElm){
 		//let closestDiv = closestDiv.closest('div'); //two ansestors
 		let lspan = closestDiv.querySelector('label span');
 		let lsolo = closestDiv.querySelector('label'); //have to add solo label selector for some text.
+		//calculate closest common ansestor. 
+		let distance = 0; 
+		let hop = 0;
+		//hops to closest
+		let par = home;
+		do {
+			console.log('closestDiv = '+ closestDiv);
+			console.log('par = '+ par);
+			par = par.parentElement;
+			hop = hop + 1;
+			if(!par){
+				console.error('ERROR found no ansestor');
+				break;
+				}
+		} while (closestDiv !== par);
+		distance  = hop;
+		hop = 0;
+		par = lspan;
+		do {
+			par = par.parentElement;
+			hop = hop + 1;
+			if(!par){
+				break;
+				}
+		} while (closestDiv !== par);
+			
+		let spanDistance = distance + hop;	
+		hop = 0;
+		par = lsolo;
+		do {
+			par = par.parentElement;
+			hop = hop + 1;
+			if(!par){
+				break;
+				}
+		} while (closestDiv !== par);
+		let soloDistance = distance + hop;
+
 		if (lspan){
+			console.log('span distance = ' + spanDistance);
+			if(spanDistance >=maxHops){ break;}
 			console.log('got an lspan');
 			return lspan.textContent;
 		}else if(lsolo&&lsolo.textContent){
+			console.log('solo distance = ' + soloDistance);
+			if(soloDistance >=maxHops){ break;}
 			console.log('got a plain lable');
 			return lsolo.textContent;
 		}
 		elm = closestDiv;
-		if(hop >=maxHops){ break;}
-		hop = hop + 1;
+		
 	} while (closestDiv.closest('div'));
 	}else if (elm.hasAttribute('type')&&elm.getAttribute('type') === 'radio'){
 		//closest fieldset 
