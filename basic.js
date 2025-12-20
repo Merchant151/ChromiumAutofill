@@ -12,7 +12,7 @@ console.log('Hello, script is active on fourm pages.');
 //if fourm identity in dictionary fill fourm with result.
 //Made edits to include human like interactions. 
 //
-async function testfill(){
+async function testfill(answerGroups,answerKey){
 	console.log('attempt fill');
 	const emailEl = document.getElementById("input-4");
 	const pass1 = document.getElementById("input-5");
@@ -59,24 +59,25 @@ async function testfill(){
 	
 	//this will need to be pulled from local storage and eventually file storage. 
 	//TODO: create user data storage soluiton
+	//
 	//PLEASE COMMENT THIS OUT SO I DON"T HAVE TWO COPPIES 
-	const answerKey = {
-		name: {0 : ["first", "first name","first"],1 : ["middle name"], 2 : ["last name"]},
-		address:{0: ["address line 1","address line"],1:["city"],2:["state"],3:["zip","zip code","postal code"],4:["country"]},
-		phone:{0:["phone number"],1:["phone extension"],2:["phone device type"],3:["country phone code"]},
-		prefered:{0:["i have a preferred name"]},
-		hearabout:{0:["how did you hear about us"]},
-		previous:{0:["if you have previously worked at...","fakeMatch for testing"]}
-	}
-	const answerData = {
-		name: ["Donald","John","Trump"], 
-		phone: ["202-456-1111","","Mobile","United States of America(+1)"],
-		address: ["1600 Pennsylvania Avenue NW","Washington, DC","District of Columbia","20500","United States of America"],
-		prefered:[true],
-		hearabout:["LinkedIn"],
-		previous:["No"]
-	};
-	const answerGroups= {main: answerData, peferred: {name: ["John","","Trump"]}}
+	//const answerKey = {
+	//	name: {0 : ["first", "first name","first"],1 : ["middle name"], 2 : ["last name"]},
+	//	address:{0: ["address line 1","address line"],1:["city"],2:["state"],3:["zip","zip code","postal code"],4:["country"]},
+	//	phone:{0:["phone number"],1:["phone extension"],2:["phone device type"],3:["country phone code"]},
+	//	prefered:{0:["i have a preferred name"]},
+	//	hearabout:{0:["how did you hear about us"]},
+	//	previous:{0:["if you have previously worked at...","fakeMatch for testing"]}
+	//}
+	//const answerData = {
+	//	name: ["Donald","John","Trump"], 
+	//	phone: ["202-456-1111","","Mobile","United States of America(+1)"],
+	//	address: ["1600 Pennsylvania Avenue NW","Washington, DC","District of Columbia","20500","United States of America"],
+	//	prefered:[true],
+	//	hearabout:["LinkedIn"],
+	//	previous:["No"]
+	//};
+	//const answerGroups= {main: answerData, peferred: {name: ["John","","Trump"]}}
 	//I guess I should attempt a process elms method
 	await processElms(getElms, answerGroups,answerKey);
 }
@@ -199,6 +200,7 @@ function fieldIdentification(){
 				qElm['option'] = getRadioOption(qElm);
 				//console.log("elm option is = "+ qElm['option']);
 			}
+			if (qElm['qText'] === 'unknown!'){ qElm['isQ'] = false;}
 			qArr.push(qElm);
 
 		}
@@ -209,18 +211,18 @@ function fieldIdentification(){
 		}else if (elm.localName === "button"){
 			//createing save and continue for button. 
 			if(elm.textContent){
-				
+				qElm['qText'] = elm.textContent;
 				qElm['qType'] = determineQType(qElm);//REDUNDANT CODE 
 				//OK gotten button
 				if(qElm['qType'] === 'add'){
 					qElm['parentGroup'] = elm.closest('[role="group"]'); 
 					qElm['isQ'] = true;
 				}else if (qElm['qType'] === 'back' || qElm['qType'] === 'next'){
-					qElm['isQ'] = false;
+					qElm['isQ'] = false;//redundant set by default
 					qElm['parentGroup'] = 'page'
 				}
-				qElm['qText'] = elm.textContent
 				qElm['qTag'] = getAnswerGroup(qElm); //TODO: FOR BUTTON
+				qArr.push(qElm);
 			}else{
 				console.log('text free button found and ignored!');
 			}
@@ -277,7 +279,7 @@ function determineQType(qelm){
 			return "add";
 		}else if (e.textContent.toLowerCase() === 'back'){
 			return "back";
-		} else if (e.textContent.toLowerCase() === "save and quit"){
+		} else if (e.textContent.toLowerCase() === "save and continue"){
 			return "next";
 		}
 	}
@@ -440,6 +442,13 @@ async function processElms(eArray,answerData,answerKey){
 				promiseToWait(500);
 				clickAndClear(elm);
 			}
+		}else if (type == 'next'){
+			console.log('goto next');
+			promiseToWait(500);
+			let cords = elmCords(elm);
+			let buildMsg = {type:'test',data:'click action',x:cords.x,y:cords.y};
+			chrome.runtime.sendMessage(buildMsg);
+			promiseToWait(500);
 		}
 		else{
 			console.log(''+ type+' is not implemented');
@@ -450,6 +459,12 @@ async function processElms(eArray,answerData,answerKey){
 
 }
 
+function elmCords(elm){
+	let rect = elm.getBoundingClientRect();
+	let cords = {x:rect.left+rect.width/2,y:rect.top+rect.height /2};
+	return cords;
+	
+}
 
 function lookupAnswer(question, answerKey){
 	//question is str should match one of key arry objects
@@ -557,7 +572,7 @@ async function pickBehavior(){
 		//TODO: Login will be different if I have an account on the site. 
 			// once I start using storage Login should be the first feature to tackle 
 		console.log('got a match!!!');
-		testfill();
+		testfill(answerGroups, answerKey);
 		break;
 	case("information"):
 		await promiseToWait(1500); //adding an extra wait after load since all objects don't always load on pageload
