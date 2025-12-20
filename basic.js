@@ -59,6 +59,7 @@ async function testfill(){
 	
 	//this will need to be pulled from local storage and eventually file storage. 
 	//TODO: create user data storage soluiton
+	//PLEASE COMMENT THIS OUT SO I DON"T HAVE TWO COPPIES 
 	const answerKey = {
 		name: {0 : ["first", "first name","first"],1 : ["middle name"], 2 : ["last name"]},
 		address:{0: ["address line 1","address line"],1:["city"],2:["state"],3:["zip","zip code","postal code"],4:["country"]},
@@ -287,7 +288,7 @@ function getInputLabel(qElm){
 	let elm = qElm['html'];
 	let foundLabel = false;
 	let closestDiv;
-	let maxHops = 100;
+	let maxHops = 7;
 	let home = elm;
 	if (elm.hasAttribute('type')&&(elm.getAttribute('type') === 'text' || elm.getAttribute('type') === 'checkbox')){
 	do {
@@ -302,8 +303,6 @@ function getInputLabel(qElm){
 		//hops to closest
 		let par = home;
 		do {
-			console.log('closestDiv = '+ closestDiv);
-			console.log('par = '+ par);
 			par = par.parentElement;
 			hop = hop + 1;
 			if(!par){
@@ -315,34 +314,36 @@ function getInputLabel(qElm){
 		hop = 0;
 		par = lspan;
 		do {
-			par = par.parentElement;
-			hop = hop + 1;
 			if(!par){
+				hop = 1000;
 				break;
 				}
+			par = par.parentElement;
+			hop = hop + 1;
 		} while (closestDiv !== par);
 			
 		let spanDistance = distance + hop;	
 		hop = 0;
 		par = lsolo;
 		do {
-			par = par.parentElement;
-			hop = hop + 1;
 			if(!par){
+				hop = 1000;//force any unfound ansestors to be outofRange
 				break;
 				}
+			par = par.parentElement;
+			hop = hop + 1;
 		} while (closestDiv !== par);
 		let soloDistance = distance + hop;
 
 		if (lspan){
-			console.log('span distance = ' + spanDistance);
+			//console.log('span distance = ' + spanDistance);
 			if(spanDistance >=maxHops){ break;}
-			console.log('got an lspan');
+			//console.log('got an lspan');
 			return lspan.textContent;
 		}else if(lsolo&&lsolo.textContent){
-			console.log('solo distance = ' + soloDistance);
+			//console.log('solo distance = ' + soloDistance);
 			if(soloDistance >=maxHops){ break;}
-			console.log('got a plain lable');
+			//console.log('got a plain lable');
 			return lsolo.textContent;
 		}
 		elm = closestDiv;
@@ -370,7 +371,7 @@ async function processElms(eArray,answerData,answerKey){
 		let answer = undefined;
 		if (question){
 			answer = await lookupAnswer(question,answerKey);
-			console.log('bux ANSWER IS: ' + answer[1]);
+			//console.log('bux ANSWER IS: ' + answer[1]);
 			//answer is pos, questionName
 			//Stored Response
 			if(answerData[aGroup] && answerData[aGroup][answer[1]] ){
@@ -420,7 +421,7 @@ async function processElms(eArray,answerData,answerKey){
 			}
 			//if response click and clear.
 			if (listSelection){
-				console.log(listSelection);
+				//console.log(listSelection);
 				await clickAndClear(listSelection);
 				await promiseToWait(500);// DELAY FOR BASIC TEXT missclick issue
 			}else{
@@ -505,6 +506,24 @@ function lookupAnswer(question, answerKey){
 async function pickBehavior(){
 	//currently unused
 	//var answerData = {name: "Donald J Trump", phone: "202-456-1111",address: "1600 Pennsylvania Avenue NW; Washington, DC;District of Columbia; 20500"};
+	const answerKey = {
+		name: {0 : ["first", "first name","first"],1 : ["middle name"], 2 : ["last name"]},
+		address:{0: ["address line 1","address line"],1:["city"],2:["state"],3:["zip","zip code","postal code"],4:["country"]},
+		phone:{0:["phone number"],1:["phone extension"],2:["phone device type"],3:["country phone code"]},
+		prefered:{0:["i have a preferred name"]},
+		hearabout:{0:["how did you hear about us"]},
+		previous:{0:["if you have previously worked at...","fakeMatch for testing"]}
+	}
+	const answerData = {
+		name: ["Donald","John","Trump"], 
+		phone: ["202-456-1111","","Mobile","United States of America(+1)"],
+		address: ["1600 Pennsylvania Avenue NW","Washington, DC","District of Columbia","20500","United States of America"],
+		prefered:[true],
+		hearabout:["LinkedIn"],
+		previous:["No"]
+	};
+	const answerGroups= {main: answerData, peferred: {name: ["John","","Trump"]}}
+	//I guess I should attempt a process elms method
 	//TODO: build out behavior
 	//Identify page
 	
@@ -523,6 +542,10 @@ async function pickBehavior(){
 			for (sibs of sibCol){
 				if (sibs.matches('label')&&sibs.textContent.toLowerCase().includes('create account')){
 					ident = 'start';
+				}else if (sibs.matches('label')&&sibs.textContent.toLowerCase().includes('my information')){
+					if (sibs.parentElement.getAttribute("data-automation-id").toLowerCase() === 'progressbaractivestep'){
+						ident = 'information';
+					}
 				}
 			}
 
@@ -537,7 +560,11 @@ async function pickBehavior(){
 		testfill();
 		break;
 	case("information"):
-		//TODO: implement
+		await promiseToWait(1500); //adding an extra wait after load since all objects don't always load on pageload
+		let getElms = fieldIdentification();
+
+		console.log('loading information page when already signed in');
+		await processElms(getElms, answerGroups,answerKey);//avoid reloading to login on refresh.
 		//infoFill();
 	case("application"):
 		//TODO: implement
