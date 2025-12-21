@@ -80,6 +80,10 @@ async function testfill(answerGroups,answerKey){
 	//const answerGroups= {main: answerData, peferred: {name: ["John","","Trump"]}}
 	//I guess I should attempt a process elms method
 	await processElms(getElms, answerGroups,answerKey);
+	await delay(4999);
+	await promiseToWait(1000);
+	getElms = fieldIdentification();
+	console.log(getElms);//Re-id page three
 }
 
 async function simulateInput(elmn,output){
