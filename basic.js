@@ -35,7 +35,6 @@ async function testfill(answerGroups,answerKey){
 	//pass2.value = pass;
 
 	await promiseToWait();
-	//TODO: get message submitted through event to service worker
 	const submit = document.getElementsByClassName('css-6hfcb0');
 	submit[0].focus();
 	await promiseToWait();
