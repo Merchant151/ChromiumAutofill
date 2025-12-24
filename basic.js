@@ -233,11 +233,27 @@ function fieldIdentification(){
 	}
 	return qArr;
 }
-
-function getAnswerGroup(qElm){
+let globalGroupArray = {}//GLOBAL GROUP ARRAY TODO: MOVE TO TOP OF FILE AFTER TESTING
+function getAnswerGroup(qElm,qType, groupElm , allGroups){
 	//get the answer key group for now we just use One
 	//TODO: implement multiple groups 
 	//TODO: create Global group state object so when retriggered I can set group +1 for a total
+	//
+	let selectedGroup = 'main';
+	let match = 0; 
+	let groupList = [];
+	if (true){ // likely add a question type filter here
+		//GET QUESTION MATCHES
+		for group in allGroups: 
+			if(group.contains(qType)){
+				match = match + 1; 
+				groupList.push(group);
+			}
+	}else {
+		console.log('add button grouping not implemented!!!');
+		
+	}
+	//GLOBALGROUP_OBJ { GROUP_ELM_TXT , ANSKEYGROUP , NUMBER }
 	//
 	//I have an idea about my implementation goes as follows: 
 	//
@@ -245,10 +261,16 @@ function getAnswerGroup(qElm){
 	//IF question has multiple answers 
 	// Associate parent or group by parent or group ELM  TODO: get from field ID process may need modification.
 	// 	Associate Group Process - Assoicate with num
-	// 
+	groupObject = {}
+	if (match > 1){
+		//CHECK IF GROUP KEY is in OJBECT 
+		if (!globalGroupArray[groupElm]){
+			groupObject[groupElm] = 0;
+		}
+	}
 	// Set bool Rolover if number of groups exceedes number of answer groups
+	let rollover = false;
 	// return valid group of index and rollover bool 
-	
 	return "main";
 }
 
