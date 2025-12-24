@@ -224,7 +224,7 @@ function fieldIdentification(){
 					qElm['isQ'] = false;//redundant set by default
 					qElm['parentGroup'] = 'page'
 				}
-				qElm['qTag'] = getAnswerGroup(qElm); //TODO: FOR BUTTON
+				qElm['qTag'] = getAnswerGroup(qElm); //TODO: FOR BUTTON LIKELY DOESN"T NEED TO BE DONE HERE 
 				qArr.push(qElm);
 			}else{
 				console.log('text free button found and ignored!');
@@ -237,6 +237,17 @@ function fieldIdentification(){
 function getAnswerGroup(qElm){
 	//get the answer key group for now we just use One
 	//TODO: implement multiple groups 
+	//TODO: create Global group state object so when retriggered I can set group +1 for a total
+	//
+	//I have an idea about my implementation goes as follows: 
+	//
+	//input question (from lookup answer will be passed in) 
+	//IF question has multiple answers 
+	// Associate parent or group by parent or group ELM  TODO: get from field ID process may need modification.
+	// 	Associate Group Process - Assoicate with num
+	// 
+	// Set bool Rolover if number of groups exceedes number of answer groups
+	// return valid group of index and rollover bool 
 	
 	return "main";
 }
