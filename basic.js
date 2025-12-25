@@ -178,14 +178,14 @@ function fieldIdentification(){
 				qElm['parentGroup'] = elm.closest('[role="group"]');
 				qElm['isQ'] = true;
 				qElm['qText'] = getInputLabel(qElm);
-				qElm['qTag'] = getAnswerGroup(qElm);
+				//qElm['qTag'] = getAnswerGroup(qElm);
 
 			}else if(elm.hasAttribute('type')&&elm.getAttribute('type') === 'text'){
 				qElm['qType'] = determineQType(qElm);
 				qElm['parentGroup'] = elm.closest('[role="group"]');
 				qElm['isQ'] = true;
 				qElm['qText'] = getInputLabel(qElm);
-				qElm['qTag'] = getAnswerGroup(qElm); 
+				//qElm['qTag'] = getAnswerGroup(qElm); 
 				if (qElm['qType'] === 'dropdown'){
 					let myParent = elm.parentElement;
 					let childDropdown = myParent.querySelector('button');
@@ -198,7 +198,7 @@ function fieldIdentification(){
 				qElm['parentGroup'] = elm.closest('[role="group"]');
 				qElm['isQ'] = true;
 				qElm['qText'] = getInputLabel(qElm);
-				qElm['qTag'] = getAnswerGroup(qElm);
+				//qElm['qTag'] = getAnswerGroup(qElm);
 				qElm['qType'] = determineQType(qElm);
 				qElm['option'] = getRadioOption(qElm);
 				//console.log("elm option is = "+ qElm['option']);
@@ -224,7 +224,7 @@ function fieldIdentification(){
 					qElm['isQ'] = false;//redundant set by default
 					qElm['parentGroup'] = 'page'
 				}
-				qElm['qTag'] = getAnswerGroup(qElm); //TODO: FOR BUTTON LIKELY DOESN"T NEED TO BE DONE HERE 
+				//qElm['qTag'] = getAnswerGroup(qElm); //TODO: FOR BUTTON LIKELY DOESN"T NEED TO BE DONE HERE 
 				qArr.push(qElm);
 			}else{
 				console.log('text free button found and ignored!');
@@ -233,7 +233,7 @@ function fieldIdentification(){
 	}
 	return qArr;
 }
-let globalGroupArray = {}//GLOBAL GROUP ARRAY TODO: MOVE TO TOP OF FILE AFTER TESTING
+let globalGroupArray = []//GLOBAL GROUP ARRAY TODO: MOVE TO TOP OF FILE AFTER TESTING
 function getAnswerGroup(qElm,qType, groupElm , allGroups){
 	//get the answer key group for now we just use One
 	//TODO: implement multiple groups 
@@ -241,14 +241,17 @@ function getAnswerGroup(qElm,qType, groupElm , allGroups){
 	//
 	let selectedGroup = 'main';
 	let match = 0; 
-	let groupList = [];
+	let groupArray = globalGroupArray;
 	if (true){ // likely add a question type filter here
 		//GET QUESTION MATCHES
-		for group in allGroups: 
+		for (group in allGroups){ 
+			console.log('printing Group!');
+			console.log(group);
 			if(group.contains(qType)){
 				match = match + 1; 
 				groupList.push(group);
 			}
+		}
 	}else {
 		console.log('add button grouping not implemented!!!');
 		
@@ -271,6 +274,7 @@ function getAnswerGroup(qElm,qType, groupElm , allGroups){
 	// Set bool Rolover if number of groups exceedes number of answer groups
 	let rollover = false;
 	// return valid group of index and rollover bool 
+	globalGroupArray = groupArray; //potentially redundent but import for my logic
 	return "main";
 }
 
@@ -412,10 +416,15 @@ async function processElms(eArray,answerData,answerKey){
 			//console.log('bux ANSWER IS: ' + answer[1]);
 			//answer is pos, questionName
 			//Stored Response
+			aGroup = getAnswerGroup(eData,false,false,answerData);
 			if(answerData[aGroup] && answerData[aGroup][answer[1]] ){
 				response = answerData[aGroup][answer[1]][answer[0]];
 			}
 			//console.log(response);
+		}else if (type == 'add'){
+			//adding an option for nonquestion add buttons
+			aGroup = getAnswerGroup(eData,false,false,answerData);
+
 		}
 		if (type == 'basicText'){
 			console.log('question to answser = '+ question);
