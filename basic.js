@@ -247,7 +247,7 @@ function getAnswerGroup(qElm,qType, groupElm , allGroups){
 		for (group in allGroups){ 
 			console.log('printing Group!');
 			console.log(group);
-			if(group.contains(qType)){
+			if(group.includes(qType)){
 				match = match + 1; 
 				groupList.push(group);
 			}
