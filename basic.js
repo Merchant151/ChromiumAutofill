@@ -234,7 +234,7 @@ function fieldIdentification(){
 	return qArr;
 }
 let globalGroupArray = []//GLOBAL GROUP ARRAY TODO: MOVE TO TOP OF FILE AFTER TESTING
-function getAnswerGroup(qElm,qType, groupElm , allGroups){
+function getAnswerGroup(qElm,ans, groupElm , allGroups,lookupType = 'add'){
 	//get the answer key group for now we just use One
 	//TODO: implement multiple groups 
 	//TODO: create Global group state object so when retriggered I can set group +1 for a total
@@ -242,17 +242,18 @@ function getAnswerGroup(qElm,qType, groupElm , allGroups){
 	let selectedGroup = 'main';
 	let match = 0; 
 	let groupArray = globalGroupArray;
-	if (true){ // likely add a question type filter here
+	if (lookupType === 'question'){ // likely add a question type filter here
 		//GET QUESTION MATCHES
 		for (group in allGroups){ 
-			console.log('printing Group!');
-			console.log(group);
-			if(group.includes(qType)){
+			//console.log('printing Group! for matching');
+			//console.log(group);
+			if(ans in allGroups[''+group]){
+				console.log('found match g: '+group+' q: '+ans);
 				match = match + 1; 
-				groupList.push(group);
+				groupArray.push(group);
 			}
 		}
-	}else {
+	}else if (lookupType === 'add'){
 		console.log('add button grouping not implemented!!!');
 		
 	}
@@ -416,14 +417,14 @@ async function processElms(eArray,answerData,answerKey){
 			//console.log('bux ANSWER IS: ' + answer[1]);
 			//answer is pos, questionName
 			//Stored Response
-			aGroup = getAnswerGroup(eData,false,false,answerData);
+			aGroup = getAnswerGroup(eData,answer[1],false,answerData,'question');
 			if(answerData[aGroup] && answerData[aGroup][answer[1]] ){
 				response = answerData[aGroup][answer[1]][answer[0]];
 			}
 			//console.log(response);
 		}else if (type == 'add'){
 			//adding an option for nonquestion add buttons
-			aGroup = getAnswerGroup(eData,false,false,answerData);
+			aGroup = getAnswerGroup(eData,false,false,answerData,type);
 
 		}
 		if (type == 'basicText'){
