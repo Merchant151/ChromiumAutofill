@@ -242,6 +242,7 @@ function getAnswerGroup(qElm,ans, groupElm , allGroups,lookupType = 'add'){
 	let selectedGroup = 'main';
 	let match = 0; 
 	let groupArray = globalGroupArray;
+	let validGroups = []
 	if (lookupType === 'question'){ // likely add a question type filter here
 		//GET QUESTION MATCHES
 		for (group in allGroups){ 
@@ -250,7 +251,7 @@ function getAnswerGroup(qElm,ans, groupElm , allGroups,lookupType = 'add'){
 			if(ans in allGroups[''+group]){
 				console.log('found match g: '+group+' q: '+ans);
 				match = match + 1; 
-				groupArray.push(group);
+				validGroups.push(group);
 			}
 		}
 	}else if (lookupType === 'add'){
@@ -268,10 +269,16 @@ function getAnswerGroup(qElm,ans, groupElm , allGroups,lookupType = 'add'){
 	groupObject = {}
 	if (match > 1){
 		//CHECK IF GROUP KEY is in OJBECT 
-		if (!globalGroupArray[groupElm]){
+		if (!groupArray[groupElm]){
 			groupObject[groupElm] = 0;
+		}else {
+			//return current validGroup[groupObject['number']]
+			console.log('not implemented')
 		}
+	}else {
+		return validGroups[0]
 	}
+	
 	// Set bool Rolover if number of groups exceedes number of answer groups
 	let rollover = false;
 	// return valid group of index and rollover bool 
