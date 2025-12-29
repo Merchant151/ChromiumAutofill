@@ -260,8 +260,6 @@ function getAnswerGroup(qElm,ans, groupElm , allGroups,lookupType = 'add'){
 	}
 	//GLOBALGROUP_OBJ { GROUP_ELM_TXT , ANSKEYGROUP , NUMBER }
 	//
-	//I have an idea about my implementation goes as follows: 
-	//
 	//input question (from lookup answer will be passed in) 
 	//IF question has multiple answers 
 	// Associate parent or group by parent or group ELM  TODO: get from field ID process may need modification.
@@ -270,6 +268,11 @@ function getAnswerGroup(qElm,ans, groupElm , allGroups,lookupType = 'add'){
 	if (match > 1){
 		//CHECK IF GROUP KEY is in OJBECT 
 		if (!groupArray[groupElm]){
+			//CEHCK all other groups for matching group time
+			//If group is matching create group with next iteration
+			//if group is not matching create nerw group object with 0th iteratrion 
+
+			//create a group object! 
 			groupObject[groupElm] = 0;
 		}else {
 			//return current validGroup[groupObject['number']]
