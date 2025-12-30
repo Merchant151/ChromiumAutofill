@@ -271,7 +271,28 @@ function getAnswerGroup(qElm,ans, groupElm , allGroups,lookupType = 'add'){
 			//CEHCK all other groups for matching group time
 			//If group is matching create group with next iteration
 			//if group is not matching create nerw group object with 0th iteratrion 
+			gMatch = -1
+			for (each in groupArray){
+				if(each['firstMatch'] == ans){
+					gMatch = gMatch + 1
+				}
+			}
 
+			//Attributes
+			
+			//iteration / gmatch + 1
+			//firstMatch = matching question...
+			//lookup type
+			//rollover set
+			groupObject['iteration'] = gMatch + 1
+			groupObject['lookup'] = lookupType 
+			groupObject['firstMatch'] = ans
+			//maybe add last match
+			groupObject['rollover'] = false
+			//groupElm = elm key
+			groupArray[groupElm] = groupObject
+
+			}
 			//create a group object! 
 			groupObject[groupElm] = 0;
 		}else {
