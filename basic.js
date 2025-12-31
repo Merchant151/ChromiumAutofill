@@ -291,12 +291,13 @@ function getAnswerGroup(qElm,ans, groupElm , allGroups,lookupType = 'add'){
 			groupObject['rollover'] = false
 			//groupElm = elm key
 			groupArray[groupElm] = groupObject
-
-			}
-			//create a group object! 
-			groupObject[groupElm] = 0;
+			
+			console.log(groupArray)
+			throw new Error('Throwing Error after adding: ' + grouObject)
+			
 		}else {
 			//return current validGroup[groupObject['number']]
+			throw new Error('error is thrown as add button is found but no group returned!')
 			console.log('not implemented')
 		}
 	}else {
