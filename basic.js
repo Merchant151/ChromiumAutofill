@@ -292,8 +292,9 @@ function getAnswerGroup(qElm,ans, groupElm , allGroups,lookupType = 'add'){
 			//groupElm = elm key
 			groupArray[groupElm] = groupObject
 			
+			console.log(groupElm)
 			console.log(groupArray)
-			throw new Error('Throwing Error after adding: ' + grouObject)
+			throw new Error('Throwing Error after adding: ' + groupObject)
 			
 		}else {
 			//return current validGroup[groupObject['number']]
@@ -449,14 +450,14 @@ async function processElms(eArray,answerData,answerKey){
 			//console.log('bux ANSWER IS: ' + answer[1]);
 			//answer is pos, questionName
 			//Stored Response
-			aGroup = getAnswerGroup(eData,answer[1],false,answerData,'question');
+			aGroup = getAnswerGroup(eData,answer[1],eData['parentGroup'],answerData,'question');
 			if(answerData[aGroup] && answerData[aGroup][answer[1]] ){
 				response = answerData[aGroup][answer[1]][answer[0]];
 			}
 			//console.log(response);
 		}else if (type == 'add'){
 			//adding an option for nonquestion add buttons
-			aGroup = getAnswerGroup(eData,false,false,answerData,type);
+			aGroup = getAnswerGroup(eData,false,eData['parentGroup'],answerData,type);
 
 		}
 		if (type == 'basicText'){
