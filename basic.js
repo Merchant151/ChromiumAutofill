@@ -266,7 +266,7 @@ function getAnswerGroup(qElm,ans, groupElm , allGroups,lookupType = 'add'){
 	// 	Associate Group Process - Assoicate with num
 	groupObject = {}
 	if (match > 1){
-		//CHECK IF GROUP KEY is in OJBECT 
+		//CHECK IF GROUP KEY is in OJBECT // THis check is for specific group in the global list 
 		if (!groupArray[groupElm]){
 			//CEHCK all other groups for matching group time
 			//If group is matching create group with next iteration
@@ -288,16 +288,24 @@ function getAnswerGroup(qElm,ans, groupElm , allGroups,lookupType = 'add'){
 			groupObject['lookup'] = lookupType 
 			groupObject['firstMatch'] = ans
 			//maybe add last match
-			groupObject['rollover'] = false
+			groupObject['rollover'] = false // this needs to become a ternary
 			//groupElm = elm key
 			groupArray[groupElm] = groupObject
 			
 			console.log(groupElm)
 			console.log(groupArray)
 			throw new Error('Throwing Error after adding: ' + groupObject)
+			//take the number of items 
+			//take the itteration 
+			//if itteration is less than number of items or equal 
+			//return itteration as index starting at zero 
+			//if itteration is greater than number of items 
+			//return numbers index
 			
 		}else {
 			//return current validGroup[groupObject['number']]
+			//note this is not actually the add throw but this is the 
+			//already found the list throw for a second input of a preadded group so we just need to grab the group 
 			throw new Error('error is thrown as add button is found but no group returned!')
 			console.log('not implemented')
 		}
