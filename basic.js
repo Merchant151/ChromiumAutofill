@@ -271,7 +271,7 @@ function getAnswerGroup(qElm,ans, groupElm , allGroups,lookupType = 'add'){
 			//CEHCK all other groups for matching group time
 			//If group is matching create group with next iteration
 			//if group is not matching create nerw group object with 0th iteratrion 
-			gMatch = -1
+			let gMatch = 0
 			for (each in groupArray){
 				if(each['firstMatch'] == ans){
 					gMatch = gMatch + 1
@@ -284,23 +284,34 @@ function getAnswerGroup(qElm,ans, groupElm , allGroups,lookupType = 'add'){
 			//firstMatch = matching question...
 			//lookup type
 			//rollover set
-			groupObject['iteration'] = gMatch + 1
+			groupObject['iteration'] = gMatch
 			groupObject['lookup'] = lookupType 
 			groupObject['firstMatch'] = ans
 			//maybe add last match
 			groupObject['rollover'] = false // this needs to become a ternary
 			//groupElm = elm key
-			groupArray[groupElm] = groupObject
 			
-			console.log(groupElm)
-			console.log(groupArray)
+			console.log(groupElm);
+			console.log(groupArray);
 			throw new Error('Throwing Error after adding: ' + groupObject)
-			//take the number of items 
-			//take the itteration 
+			//take the number of matches
+			//MATCHES is gMatches + 1
+			let num_of_matched_groups = gMatch + 1;
+			//take the itteration Iteration is gMatches + 1
 			//if itteration is less than number of items or equal 
+			let num_of_valid_groups = validGroups.length();
 			//return itteration as index starting at zero 
-			//if itteration is greater than number of items 
+			//if itteration is greater than number of items
 			//return numbers index
+			if (num_of_matched_groups >= num_of_valid_groups){
+				groupObject['rollover'] = true;
+				groupArray[groupElm] = groupObject
+				throw new Error('ROLLOVER Scenario NOT implemented!');
+			}else{
+				groupArray[groupElm] = groupObject;
+				return validGroups[gMatch]
+				
+			}
 			
 		}else {
 			//return current validGroup[groupObject['number']]
