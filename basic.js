@@ -291,15 +291,15 @@ function getAnswerGroup(qElm,ans, groupElm , allGroups,lookupType = 'add'){
 			groupObject['rollover'] = false // this needs to become a ternary
 			//groupElm = elm key
 			
-			console.log(groupElm);
-			console.log(groupArray);
-			throw new Error('Throwing Error after adding: ' + groupObject)
+			//console.log(groupElm);
+			//console.log(groupArray);
+			//throw new Error('Throwing Error after adding: ' + groupObject)
 			//take the number of matches
 			//MATCHES is gMatches + 1
 			let num_of_matched_groups = gMatch + 1;
 			//take the itteration Iteration is gMatches + 1
 			//if itteration is less than number of items or equal 
-			let num_of_valid_groups = validGroups.length();
+			let num_of_valid_groups = validGroups.length;
 			//return itteration as index starting at zero 
 			//if itteration is greater than number of items
 			//return numbers index
@@ -315,10 +315,11 @@ function getAnswerGroup(qElm,ans, groupElm , allGroups,lookupType = 'add'){
 			
 		}else {
 			//return current validGroup[groupObject['number']]
-			//note this is not actually the add throw but this is the 
-			//already found the list throw for a second input of a preadded group so we just need to grab the group 
-			throw new Error('error is thrown as add button is found but no group returned!')
-			console.log('not implemented')
+			if(!groupArray[groupElm]['rollover']){
+				return validGroups[groupArray[groupElm]['iteration']]
+			}else{
+				throw new Error('ROLLOVER GROUP NOT Implemented')
+			}
 		}
 	}else {
 		return validGroups[0]
