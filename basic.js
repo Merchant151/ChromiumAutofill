@@ -168,7 +168,7 @@ function fieldIdentification(){
 	var qArr = []
 	var allElms = document.getElementsByTagName('*');
 	for (let elm of allElms){ 
-		var qElm = {html: undefined,parentGroup: undefined,isQ: false,qText: undefined,qTag: undefined,qType: undefined};
+		var qElm = {html: undefined,parentGroup: undefined,isQ: false,qText: undefined,qTag: undefined,qType: undefined,answered: false};
 		qElm['html'] = elm
 		if (elm.localName === "input"){
 			//radial menu singles, dropdown selection, checkbox, text input, year/month picker
