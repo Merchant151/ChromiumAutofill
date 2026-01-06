@@ -487,6 +487,7 @@ async function processElms(eArray,answerData,answerKey){
 				await promiseToWait(500); //Adding a delay to avoid misclicks after processing dropdowns
 				await clickAndClear(elm);
 				await simulateInput(elm,response);
+				eData['answered'] = true;
 			}
 
 		}else if (type == 'radio'){
@@ -496,12 +497,14 @@ async function processElms(eArray,answerData,answerKey){
 				//maybe this will work as radio selection??? 
 				console.log("response is opt: " + response.toLowerCase()+" = " + option);
 				await clickAndClear(elm);
+				eData['answered'] = true;
 			}
 		}else if (type == 'dropdown'){
 			console.log('question to answer = '+question);
 			//drop down there is a button to click. not the input element. 
 			//listbox opens with all options available for single drop down
 			await clickAndClear(elm); // init drop down... 
+			eData['answered'] = true;
 			//find aria-activedescendant = elm.button.value
 			//let descendant = '"'+elm.getAttribute("value")+'"';
 			//console.log('elm:'+ elm);
@@ -525,6 +528,7 @@ async function processElms(eArray,answerData,answerKey){
 				//console.log(listSelection);
 				await clickAndClear(listSelection);
 				await promiseToWait(500);// DELAY FOR BASIC TEXT missclick issue
+				eData['answered'] = true;
 			}else{
 				console.log('dropdown found but no known response found!');
 				//await clickAndClear(elm);// Deseelct attempt 
@@ -540,6 +544,7 @@ async function processElms(eArray,answerData,answerKey){
 			if (response === true){
 				promiseToWait(500);
 				clickAndClear(elm);
+				eData['answered'] = true;
 			}
 		}else if (type == 'next'){
 			console.log('goto next');
