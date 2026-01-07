@@ -138,7 +138,7 @@ async function delayUntilNew(waitTIme = 1500,pageElms = document.getElementsByTa
 
 //TODO: build field identification to grab all input feilds
 //initally use after login but should also be applied on login screen
-function fieldIdentification(){
+function fieldIdentification(prevArr = undefined){
 	//I want to grab all elems on page 
 	//grab all elms that are input feilds. 
 	//Filter by feild type and sort into different arrays. 
@@ -165,7 +165,12 @@ function fieldIdentification(){
 	 *		question = getTextAbove(e)
 	 *		elmnarray.e.question = qeustion //associate data need to read up on how array data managed again
 	 * */
-	var qArr = []
+	var qArr;
+	if (!prevArr){
+		qArr = [];
+	}else{
+		qArr = prevArr;
+	}
 	var allElms = document.getElementsByTagName('*');
 	for (let elm of allElms){ 
 		var qElm = {html: undefined,parentGroup: undefined,isQ: false,qText: undefined,qTag: undefined,qType: undefined,answered: false};
