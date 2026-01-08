@@ -175,6 +175,11 @@ function fieldIdentification(prevArr = undefined){
 	for (let elm of allElms){ 
 		var qElm = {html: undefined,parentGroup: undefined,isQ: false,qText: undefined,qTag: undefined,qType: undefined,answered: false};
 		qElm['html'] = elm
+		// Check for elm in qArr
+		if(qArr.some(qArr => qArr.html === elm)){
+			console.log('element match prev elm in list breaking id process');
+			break;
+		}
 		if (elm.localName === "input"){
 			//radial menu singles, dropdown selection, checkbox, text input, year/month picker
 			//console.log(elm);
