@@ -545,6 +545,7 @@ async function processElms(eArray,answerData,answerKey){
 				let randomcords = {x:30,y:150};
 				let deselect = {type:'test',data:'click action',x:randomcords.x,y:randomcords.y};
 				chrome.runtime.sendMessage(deselect);
+				eData['answered'] = true;
 				await promiseToWait(1500); //let debugger delselect box value shuold be reduced after testing
 
 			}
@@ -565,11 +566,23 @@ async function processElms(eArray,answerData,answerKey){
 			promiseToWait(500);
 		}
 		else{
+			eData['answered'] = true;
 			console.log(''+ type+' is not implemented');
 		}
 	}
 
 
+
+}
+
+function remainderCheck(curlist){
+	let newList = fieldIdentification(curlist);
+	for ( data of newList){
+		if(data['answer'] === false){
+			return true;
+		}
+	}
+	return false;
 
 }
 
