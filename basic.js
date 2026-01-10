@@ -475,6 +475,10 @@ async function processElms(eArray,answerData,answerKey){
 		let elm = eData['html'];
 		let response = undefined;
 		let answer = undefined;
+		if (eData['answered'] === true){
+			console.log('not reprocessing elm:' + elm);
+			continue;
+		}
 		if (question){
 			answer = await lookupAnswer(question,answerKey);
 			//console.log('bux ANSWER IS: ' + answer[1]);
@@ -558,6 +562,11 @@ async function processElms(eArray,answerData,answerKey){
 				eData['answered'] = true;
 			}
 		}else if (type == 'next'){
+			let remainder = await remainderCheck(eArray);
+			if (remainder){
+				console.log('page requires reprocessing before goto next');
+				break;
+			}
 			console.log('goto next');
 			promiseToWait(500);
 			let cords = elmCords(elm);
@@ -578,7 +587,7 @@ async function processElms(eArray,answerData,answerKey){
 function remainderCheck(curlist){
 	let newList = fieldIdentification(curlist);
 	for ( data of newList){
-		if(data['answer'] === false){
+		if(data['answered'] === false){
 			return true;
 		}
 	}
