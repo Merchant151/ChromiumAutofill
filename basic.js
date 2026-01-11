@@ -50,35 +50,16 @@ async function testfill(answerGroups,answerKey){
 	//PAGE 2 TESTING 
 	//TODO: Remove page two testing when I am ready to build a basic main page functionality. 
 	await delay(8999);
-	//TODO: Need a new way to check for added objects before submit
+	//TODO: still need to create some sort of reload check but for now we are checking for missing process 
 	await promiseToWait(1500); //adding an extra wait after load since all objects don't always load on pageload
 	let getElms = fieldIdentification();
 	//console.log('printing getelms');
 	console.log(getElms);
-	
-	//this will need to be pulled from local storage and eventually file storage. 
-	//TODO: create user data storage soluiton
-	//
-	//PLEASE COMMENT THIS OUT SO I DON"T HAVE TWO COPPIES 
-	//const answerKey = {
-	//	name: {0 : ["first", "first name","first"],1 : ["middle name"], 2 : ["last name"]},
-	//	address:{0: ["address line 1","address line"],1:["city"],2:["state"],3:["zip","zip code","postal code"],4:["country"]},
-	//	phone:{0:["phone number"],1:["phone extension"],2:["phone device type"],3:["country phone code"]},
-	//	prefered:{0:["i have a preferred name"]},
-	//	hearabout:{0:["how did you hear about us"]},
-	//	previous:{0:["if you have previously worked at...","fakeMatch for testing"]}
-	//}
-	//const answerData = {
-	//	name: ["Donald","John","Trump"], 
-	//	phone: ["202-456-1111","","Mobile","United States of America(+1)"],
-	//	address: ["1600 Pennsylvania Avenue NW","Washington, DC","District of Columbia","20500","United States of America"],
-	//	prefered:[true],
-	//	hearabout:["LinkedIn"],
-	//	previous:["No"]
-	//};
-	//const answerGroups= {main: answerData, peferred: {name: ["John","","Trump"]}}
-	//I guess I should attempt a process elms method
-	await processElms(getElms, answerGroups,answerKey);
+	let processed = undefined;
+	do{
+		processed = await processElms(getElms, answerGroups,answerKey);
+		if (!processed){ getElms = fieldIdentification(getElms)}
+	}while (!processed);
 	await delay(4999);
 	await promiseToWait(1000);
 	getElms = fieldIdentification();
@@ -565,7 +546,7 @@ async function processElms(eArray,answerData,answerKey){
 			let remainder = await remainderCheck(eArray);
 			if (remainder){
 				console.log('page requires reprocessing before goto next');
-				break;
+				return false;
 			}
 			console.log('goto next');
 			promiseToWait(500);
@@ -573,6 +554,7 @@ async function processElms(eArray,answerData,answerKey){
 			let buildMsg = {type:'test',data:'click action',x:cords.x,y:cords.y};
 			chrome.runtime.sendMessage(buildMsg);
 			promiseToWait(500);
+			return true;
 		}
 		else{
 			eData['answered'] = true;
