@@ -148,8 +148,10 @@ function fieldIdentification(prevArr = undefined){
 	 * */
 	var qArr;
 	if (!prevArr){
+		console.log('processing a new page!')
 		qArr = [];
 	}else{
+		console.log('reprocessing a page!')
 		qArr = prevArr;
 	}
 	var allElms = document.getElementsByTagName('*');
@@ -159,7 +161,7 @@ function fieldIdentification(prevArr = undefined){
 		// Check for elm in qArr
 		if(qArr.some(qArr => qArr.html === elm)){
 			console.log('element match prev elm in list breaking id process');
-			break;
+			continue;
 		}
 		if (elm.localName === "input"){
 			//radial menu singles, dropdown selection, checkbox, text input, year/month picker
@@ -506,7 +508,7 @@ async function processElms(eArray,answerData,answerKey){
 			//console.log(elm);
 			//console.log('descendant: '+descendant);
 			let dropdownList = document.querySelector("[aria-activedescendant]");
-			//get children 
+			//get children
 			let listItems = dropdownList.children;
 			//get child with response match. 
 			let listSelection = undefined;
@@ -561,8 +563,6 @@ async function processElms(eArray,answerData,answerKey){
 			console.log(''+ type+' is not implemented');
 		}
 	}
-
-
 
 }
 
