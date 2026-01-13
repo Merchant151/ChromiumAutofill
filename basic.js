@@ -224,6 +224,8 @@ function fieldIdentification(prevArr = undefined){
 			}
 		}
 	}
+	console.log('logging elms found: ');
+	console.log(qArr);
 	return qArr;
 }
 let globalGroupArray = []//GLOBAL GROUP ARRAY TODO: MOVE TO TOP OF FILE AFTER TESTING
