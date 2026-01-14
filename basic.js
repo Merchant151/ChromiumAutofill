@@ -483,10 +483,10 @@ async function processElms(eArray,answerData,answerKey){
 			console.log('question to answser = '+ question);
 			//console.log('basic text is not implemented');
 			if (response){
+				eData['answered'] = true;
 				await promiseToWait(500); //Adding a delay to avoid misclicks after processing dropdowns
 				await clickAndClear(elm);
 				await simulateInput(elm,response);
-				eData['answered'] = true;
 			}
 
 		}else if (type == 'radio'){
@@ -572,6 +572,9 @@ function remainderCheck(curlist){
 	let newList = fieldIdentification(curlist);
 	for ( data of newList){
 		if(data['answered'] === false){
+			console.log('FAIL REMAINDER CHECK!');
+			console.log(data);
+			console.log(data['elm']);
 			return true;
 		}
 	}
