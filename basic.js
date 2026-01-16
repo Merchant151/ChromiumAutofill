@@ -147,11 +147,12 @@ function fieldIdentification(prevArr = undefined){
 	 *		elmnarray.e.question = qeustion //associate data need to read up on how array data managed again
 	 * */
 	var qArr;
-	if(qArr.keys().length > 300){
+	if(prevArr && Object.keys(prevArr).length > 300){
 		console.error('previous question limit!');
-		console.error(qArr);
+		console.error(prevArr);
 		throw new Error("previous qustion id limit.");
 	}
+
 	if (!prevArr){
 		console.log('processing a new page!')
 		qArr = [];
