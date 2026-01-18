@@ -163,7 +163,7 @@ function fieldIdentification(prevArr = undefined){
 	var allElms = document.getElementsByTagName('*');
 	for (let elm of allElms){ 
 		var qElm = {html: undefined,parentGroup: undefined,isQ: false,qText: undefined,qTag: undefined,qType: undefined,answered: false};
-		qElm['html'] = elm
+		qElm['html'] = elm;
 		// Check for elm in qArr
 		if(qArr.some(qArr => qArr.html === elm)){
 			console.log('element match prev elm in list breaking id process');
@@ -191,6 +191,10 @@ function fieldIdentification(prevArr = undefined){
 					if (childDropdown.hasAttribute('aria-haspopup')&&childDropdown.getAttribute('aria-haspopup')==="listbox"){
 						console.log('Dropdown found and IDed');
 						qElm['html'] = childDropdown;
+						if(qArr.some(qArr => qArr.html === childDropdown)){
+							console.log('later elment match prev elm in list dropdown');
+							continue;
+						}
 					}else{ console.log("Dropdown found but no dropdown elm IDed!");}
 				}
 			}else if(elm.hasAttribute('type')&&elm.getAttribute('type')==='radio'){
@@ -488,8 +492,8 @@ async function processElms(eArray,answerData,answerKey){
 		if (type == 'basicText'){
 			console.log('question to answser = '+ question);
 			//console.log('basic text is not implemented');
+			eData['answered'] = true;
 			if (response){
-				eData['answered'] = true;
 				await promiseToWait(500); //Adding a delay to avoid misclicks after processing dropdowns
 				await clickAndClear(elm);
 				await simulateInput(elm,response);
@@ -498,14 +502,14 @@ async function processElms(eArray,answerData,answerKey){
 		}else if (type == 'radio'){
 			let option = eData['option'].toLowerCase(); //to lower is inconsistent but for selection not typed answer
 			console.log('question to answer = '+ question+ ' option: ' + option);
+			eData['answered'] = true;
 			if(response.toLowerCase() == option){
 				//maybe this will work as radio selection??? 
 				console.log("response is opt: " + response.toLowerCase()+" = " + option);
 				await clickAndClear(elm);
-				eData['answered'] = true;
 			}
 		}else if (type == 'dropdown'){
-			console.log('question to answer = '+question);
+			console.log('(dropdown) question to answer = '+question);
 			//drop down there is a button to click. not the input element. 
 			//listbox opens with all options available for single drop down
 			await clickAndClear(elm); // init drop down... 
@@ -546,11 +550,11 @@ async function processElms(eArray,answerData,answerKey){
 			}
 		}else if (type == 'checkbox'){
 			//if checkbox question anser is bool clickAndClear
+			eData['answered'] = true;
 			console.log('checkbox response is + ' + response);
 			if (response === true){
 				promiseToWait(500);
 				clickAndClear(elm);
-				eData['answered'] = true;
 			}
 		}else if (type == 'next'){
 			let remainder = await remainderCheck(eArray);
