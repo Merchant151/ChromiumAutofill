@@ -581,7 +581,7 @@ async function processElms(eArray,answerData,answerKey){
 function remainderCheck(curlist){
 	let newList = fieldIdentification(curlist);
 	for ( data of newList){
-		if(data['answered'] === false){
+		if(data['answered'] === false && data['qText'] != 'Save and Continue'){
 			console.log('FAIL REMAINDER CHECK!');
 			console.log(data);
 			console.log(data['elm']);
