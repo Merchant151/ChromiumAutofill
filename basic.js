@@ -583,8 +583,10 @@ function remainderCheck(curlist){
 	for ( data of newList){
 		if(data['answered'] === false && data['qText'] != 'Save and Continue'){
 			console.log('FAIL REMAINDER CHECK!');
+			console.log(data['qText']);
 			console.log(data);
 			console.log(data['elm']);
+			throw new Error('kill it here');
 			return true;
 		}
 	}
