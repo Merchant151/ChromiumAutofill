@@ -579,7 +579,7 @@ async function processElms(eArray,answerData,answerKey){
 }
 
 function remainderCheck(curlist){
-	let orgLen = Object.keys(curlist).getLength;//for debugging pls remove when needed
+	let orgLen = Object.keys(curlist).length;//for debugging pls remove when needed
 	let newList = fieldIdentification(curlist);
 	for ( data of newList){
 		if(data['answered'] === false && data['qText'] != 'Save and Continue'){
@@ -589,7 +589,7 @@ function remainderCheck(curlist){
 			console.log(data['elm']);
 			if( orgLen == Object.keys(newList).length){
 				throw new Error('kill it here');
-			}
+			}else {console.log('BOTH LENS: ORG:'+orgLen+' newList:'+Object.keys(newList).length);}
 			return true;
 		}
 	}
