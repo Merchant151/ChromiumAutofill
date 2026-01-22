@@ -579,6 +579,7 @@ async function processElms(eArray,answerData,answerKey){
 }
 
 function remainderCheck(curlist){
+	let orgLen = Object.keys(curlist).getLength;//for debugging pls remove when needed
 	let newList = fieldIdentification(curlist);
 	for ( data of newList){
 		if(data['answered'] === false && data['qText'] != 'Save and Continue'){
@@ -586,7 +587,9 @@ function remainderCheck(curlist){
 			console.log(data['qText']);
 			console.log(data);
 			console.log(data['elm']);
-			throw new Error('kill it here');
+			if( orgLen == Object.keys(newList).length){
+				throw new Error('kill it here');
+			}
 			return true;
 		}
 	}
