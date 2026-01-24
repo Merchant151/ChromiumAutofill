@@ -580,6 +580,7 @@ async function processElms(eArray,answerData,answerKey){
 
 function remainderCheck(curlist){
 	let orgLen = Object.keys(curlist).length;//for debugging pls remove when needed
+	console.log('BOTH LENS: CURONLY'+curlist );
 	let newList = fieldIdentification(curlist);
 	for ( data of newList){
 		if(data['answered'] === false && data['qText'] != 'Save and Continue'){
