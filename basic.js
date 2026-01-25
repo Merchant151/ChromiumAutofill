@@ -189,10 +189,10 @@ function fieldIdentification(prevArr = undefined){
 					let myParent = elm.parentElement;
 					let childDropdown = myParent.querySelector('button');
 					if (childDropdown.hasAttribute('aria-haspopup')&&childDropdown.getAttribute('aria-haspopup')==="listbox"){
-						console.log('Dropdown found and IDed');
+						//console.log('Dropdown found and IDed');
 						qElm['html'] = childDropdown;
 						if(qArr.some(qArr => qArr.html === childDropdown)){
-							console.log('later elment match prev elm in list dropdown');
+							//console.log('later element match prev elm in list dropdown');
 							continue;
 						}
 					}else{ console.log("Dropdown found but no dropdown elm IDed!");}
@@ -229,9 +229,7 @@ function fieldIdentification(prevArr = undefined){
 				}
 				//qElm['qTag'] = getAnswerGroup(qElm); //TODO: FOR BUTTON LIKELY DOESN"T NEED TO BE DONE HERE 
 				qArr.push(qElm);
-			}else{
-				console.log('text free button found and ignored!');
-			}
+			}//else{//console.log('text free button found and ignored!');}
 		}
 	}
 	console.log('logging elms found: ');
