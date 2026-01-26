@@ -53,7 +53,8 @@ async function testfill(answerGroups,answerKey){
 	let processed = undefined;
 	do{
 		console.log('LOGING OBJECT KEYS IN PROCESS LOOP:');
-		console.log('getELms ')
+		console.log('        getELms ');
+		console.log(getElms);
 		processed = await processElms(getElms, answerGroups,answerKey);
 		if (!processed){ getElms = fieldIdentification(getElms)}
 	}while (!processed);
@@ -552,7 +553,7 @@ async function processElms(eArray,answerData,answerKey){
 		}else if (type == 'next'){
 			let remainder = await remainderCheck(eArray);
 			if (remainder){
-				return false;
+				continue;
 			}
 			promiseToWait(500);
 			let cords = elmCords(elm);
@@ -566,6 +567,7 @@ async function processElms(eArray,answerData,answerKey){
 			//console.log(''+ type+' is not implemented');
 		}
 	}
+	return False;
 
 }
 
