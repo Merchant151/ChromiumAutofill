@@ -13,7 +13,6 @@ console.log('Hello, script is active on fourm pages.');
 //Made edits to include human like interactions. 
 //
 async function testfill(answerGroups,answerKey){
-	console.log('attempt fill');
 	const emailEl = document.getElementById("input-4");
 	const pass1 = document.getElementById("input-5");
 	const pass2 = document.getElementById("input-6");
@@ -41,8 +40,6 @@ async function testfill(answerGroups,answerKey){
 	//GETTING location as data to send to maual mouse click
 	let rect = submit[0].getBoundingClientRect();
 	let cords = {x:rect.left+rect.width/2,y:rect.top+rect.height /2};
-	console.log("testing cords grabbing");
-	console.log(cords);
 	let buildMsg = {type:'test',data:'click action',x:cords.x,y:cords.y};
 	
 	console.log(buildMsg);
@@ -50,13 +47,13 @@ async function testfill(answerGroups,answerKey){
 	//PAGE 2 TESTING 
 	//TODO: Remove page two testing when I am ready to build a basic main page functionality. 
 	await delay(8999);
-	//TODO: still need to create some sort of reload check but for now we are checking for missing process 
 	await promiseToWait(1500); //adding an extra wait after load since all objects don't always load on pageload
 	let getElms = fieldIdentification();
 	//console.log('printing getelms');
-	console.log(getElms);
 	let processed = undefined;
 	do{
+		console.log('LOGING OBJECT KEYS IN PROCESS LOOP:');
+		console.log('getELms ')
 		processed = await processElms(getElms, answerGroups,answerKey);
 		if (!processed){ getElms = fieldIdentification(getElms)}
 	}while (!processed);
@@ -166,7 +163,7 @@ function fieldIdentification(prevArr = undefined){
 		qElm['html'] = elm;
 		// Check for elm in qArr
 		if(qArr.some(qArr => qArr.html === elm)){
-			console.log('element match prev elm in list breaking id process');
+			//console.log('element match prev elm in list breaking id process');
 			continue;
 		}
 		if (elm.localName === "input"){
@@ -252,7 +249,7 @@ function getAnswerGroup(qElm,ans, groupElm , allGroups,lookupType = 'add'){
 			//console.log('printing Group! for matching');
 			//console.log(group);
 			if(ans in allGroups[''+group]){
-				console.log('found match g: '+group+' q: '+ans);
+				//console.log('found match g: '+group+' q: '+ans);
 				match = match + 1; 
 				validGroups.push(group);
 			}
@@ -461,7 +458,6 @@ function getInputLabel(qElm){
 async function processElms(eArray,answerData,answerKey){
 	/// So we take a question and associate it to an answer key answers will be associated with multiple questions 
 	for (eData of eArray){
-		//TODO: SET answer group programattically!
 		let aGroup = "main";
 		let type = eData['qType'];
 		let question = eData['qText'];
@@ -469,12 +465,12 @@ async function processElms(eArray,answerData,answerKey){
 		let response = undefined;
 		let answer = undefined;
 		if (eData['answered'] === true){
-			console.log('not reprocessing elm:' + elm);
 			continue;
+		}else{
+			console.log(eData)
 		}
 		if (question){
 			answer = await lookupAnswer(question,answerKey);
-			//console.log('bux ANSWER IS: ' + answer[1]);
 			//answer is pos, questionName
 			//Stored Response
 			aGroup = getAnswerGroup(eData,answer[1],eData['parentGroup'],answerData,'question');
@@ -488,7 +484,7 @@ async function processElms(eArray,answerData,answerKey){
 
 		}
 		if (type == 'basicText'){
-			console.log('question to answser = '+ question);
+			//console.log('question to answser = '+ question);
 			//console.log('basic text is not implemented');
 			eData['answered'] = true;
 			if (response){
@@ -499,15 +495,15 @@ async function processElms(eArray,answerData,answerKey){
 
 		}else if (type == 'radio'){
 			let option = eData['option'].toLowerCase(); //to lower is inconsistent but for selection not typed answer
-			console.log('question to answer = '+ question+ ' option: ' + option);
+			//console.log('question to answer = '+ question+ ' option: ' + option);
 			eData['answered'] = true;
 			if(response.toLowerCase() == option){
 				//maybe this will work as radio selection??? 
-				console.log("response is opt: " + response.toLowerCase()+" = " + option);
+				//console.log("response is opt: " + response.toLowerCase()+" = " + option);
 				await clickAndClear(elm);
 			}
 		}else if (type == 'dropdown'){
-			console.log('(dropdown) question to answer = '+question);
+			//console.log('(dropdown) question to answer = '+question);
 			//drop down there is a button to click. not the input element. 
 			//listbox opens with all options available for single drop down
 			await clickAndClear(elm); // init drop down... 
@@ -525,7 +521,6 @@ async function processElms(eArray,answerData,answerKey){
 			for (item of listItems){
 				if (item.textContent && item.textContent === response){
 					listSelection = item;
-					console.log('found dropdown answer in menu!');
 					break;
 				}
 
@@ -537,7 +532,7 @@ async function processElms(eArray,answerData,answerKey){
 				await promiseToWait(500);// DELAY FOR BASIC TEXT missclick issue
 				eData['answered'] = true;
 			}else{
-				console.log('dropdown found but no known response found!');
+				//console.log('dropdown found but no known response found!');
 				//await clickAndClear(elm);// Deseelct attempt 
 				let randomcords = {x:30,y:150};
 				let deselect = {type:'test',data:'click action',x:randomcords.x,y:randomcords.y};
@@ -549,7 +544,7 @@ async function processElms(eArray,answerData,answerKey){
 		}else if (type == 'checkbox'){
 			//if checkbox question anser is bool clickAndClear
 			eData['answered'] = true;
-			console.log('checkbox response is + ' + response);
+			//console.log('checkbox response is + ' + response);
 			if (response === true){
 				promiseToWait(500);
 				clickAndClear(elm);
@@ -557,10 +552,8 @@ async function processElms(eArray,answerData,answerKey){
 		}else if (type == 'next'){
 			let remainder = await remainderCheck(eArray);
 			if (remainder){
-				console.log('page requires reprocessing before goto next');
 				return false;
 			}
-			console.log('goto next');
 			promiseToWait(500);
 			let cords = elmCords(elm);
 			let buildMsg = {type:'test',data:'click action',x:cords.x,y:cords.y};
@@ -570,7 +563,7 @@ async function processElms(eArray,answerData,answerKey){
 		}
 		else{
 			eData['answered'] = true;
-			console.log(''+ type+' is not implemented');
+			//console.log(''+ type+' is not implemented');
 		}
 	}
 
@@ -578,14 +571,12 @@ async function processElms(eArray,answerData,answerKey){
 
 function remainderCheck(curlist){
 	let orgLen = Object.keys(curlist).length;//for debugging pls remove when needed
-	console.log('BOTH LENS: CURONLY'+curlist );
+	//console.log('BOTH LENS: CURONLY'+Object.Keys(curlist).length );
 	let newList = fieldIdentification(curlist);
 	for ( data of newList){
 		if(data['answered'] === false && data['qText'] != 'Save and Continue'){
 			console.log('FAIL REMAINDER CHECK!');
-			console.log(data['qText']);
 			console.log(data);
-			console.log(data['elm']);
 			if( orgLen == Object.keys(newList).length){
 				throw new Error('kill it here');
 			}else {console.log('BOTH LENS: ORG:'+orgLen+' newList:'+Object.keys(newList).length);}
@@ -641,7 +632,7 @@ function lookupAnswer(question, answerKey){
 					//console.log('SEARCHING: ' + question + "FOR: " + strToSearch);
 				//This search matches substring of search string. 
 					if(question.includes(strToSearch)){
-						console.log("lookup matched a partial answer");
+						//console.log("lookup matched a partial answer");
 						pos = index;
 						que = quetype;
 						return [pos,quetype];
@@ -708,7 +699,6 @@ async function pickBehavior(){
 	case ("start"):
 		//TODO: Login will be different if I have an account on the site. 
 			// once I start using storage Login should be the first feature to tackle 
-		console.log('got a match!!!');
 		testfill(answerGroups, answerKey);
 		break;
 	case("information"):
@@ -742,7 +732,6 @@ async function entryPoint(){
 	//Save results? 
 
 	await delay();//delay script will work as delay start does except enter testfill
-	console.log('got here');
 	await pickBehavior();
 }
 entryPoint();
