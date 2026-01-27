@@ -145,6 +145,7 @@ function fieldIdentification(prevArr = undefined){
 	 *		elmnarray.e.question = qeustion //associate data need to read up on how array data managed again
 	 * */
 	var qArr;
+	var reprossing = false
 	if(prevArr && Object.keys(prevArr).length > 300){
 		console.error('previous question limit!');
 		console.error(prevArr);
@@ -156,6 +157,7 @@ function fieldIdentification(prevArr = undefined){
 		qArr = [];
 	}else{
 		console.log('reprocessing a page!')
+		reprossing = true
 		qArr = prevArr;
 	}
 	var allElms = document.getElementsByTagName('*');
@@ -166,6 +168,9 @@ function fieldIdentification(prevArr = undefined){
 		if(qArr.some(qArr => qArr.html === elm)){
 			//console.log('element match prev elm in list breaking id process');
 			continue;
+		}else if (reprocessing){
+			console.log('Not makred as reprocessed.');
+			console.log(elm);
 		}
 		if (elm.localName === "input"){
 			//radial menu singles, dropdown selection, checkbox, text input, year/month picker
