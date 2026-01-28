@@ -145,7 +145,7 @@ function fieldIdentification(prevArr = undefined){
 	 *		elmnarray.e.question = qeustion //associate data need to read up on how array data managed again
 	 * */
 	var qArr;
-	var reprossing = false
+	var reprocessing = false
 	if(prevArr && Object.keys(prevArr).length > 300){
 		console.error('previous question limit!');
 		console.error(prevArr);
@@ -157,7 +157,7 @@ function fieldIdentification(prevArr = undefined){
 		qArr = [];
 	}else{
 		console.log('reprocessing a page!')
-		reprossing = true
+		reproecessing = true
 		qArr = prevArr;
 	}
 	var allElms = document.getElementsByTagName('*');
