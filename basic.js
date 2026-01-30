@@ -572,7 +572,7 @@ async function processElms(eArray,answerData,answerKey){
 			//console.log(''+ type+' is not implemented');
 		}
 	}
-	return False;
+	return false;
 
 }
 
