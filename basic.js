@@ -54,7 +54,7 @@ async function testfill(answerGroups,answerKey){
 	do{
 		console.log('LOGING OBJECT KEYS IN PROCESS LOOP:');
 		console.log('        getELms ');
-		console.log(getElms);
+		console.log(JSON.parse(JSON.stringify(getElms)));
 		processed = await processElms(getElms, answerGroups,answerKey);
 		if (!processed){ getElms = fieldIdentification(getElms)}
 	}while (!processed);
@@ -236,7 +236,7 @@ function fieldIdentification(prevArr = undefined){
 		}
 	}
 	console.log('logging elms found: ');
-	console.log(qArr);
+	console.log(JSON.parse(JSON.stringify(qArr)));
 	return qArr;
 }
 let globalGroupArray = []//GLOBAL GROUP ARRAY TODO: MOVE TO TOP OF FILE AFTER TESTING
@@ -473,7 +473,7 @@ async function processElms(eArray,answerData,answerKey){
 		if (eData['answered'] === true){
 			continue;
 		}else{
-			console.log(eData)
+			console.log(JSON.parse(JSON.stringify(eData)));
 		}
 		if (question){
 			answer = await lookupAnswer(question,answerKey);
