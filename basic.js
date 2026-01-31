@@ -157,7 +157,7 @@ function fieldIdentification(prevArr = undefined){
 		qArr = [];
 	}else{
 		console.log('reprocessing a page!')
-		reproecessing = true
+		reprocessing = true
 		qArr = prevArr;
 	}
 	var allElms = document.getElementsByTagName('*');
