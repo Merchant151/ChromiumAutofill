@@ -164,13 +164,18 @@ function fieldIdentification(prevArr = undefined){
 	for (let elm of allElms){ 
 		var qElm = {html: undefined,parentGroup: undefined,isQ: false,qText: undefined,qTag: undefined,qType: undefined,answered: false};
 		qElm['html'] = elm;
+		var advanced_compairison = compaireElmAdvanced(elm,qArr);
 		// Check for elm in qArr
 		if(qArr.some(qArr => qArr.html === elm)){
 			//console.log('element match prev elm in list breaking id process');
 			continue;
+		}else if (advanced_compairison){
+			console.log('advanced catch')
+			continue;
 		}else if (reprocessing){
-			console.log('Not makred as reprocessed.');
-			console.log(elm);
+			//This log is not useful
+			//console.log(elm);
+			let do_nothing = 0
 		}
 		if (elm.localName === "input"){
 			//radial menu singles, dropdown selection, checkbox, text input, year/month picker
@@ -336,6 +341,12 @@ function getAnswerGroup(qElm,ans, groupElm , allGroups,lookupType = 'add'){
 	// return valid group of index and rollover bool 
 	globalGroupArray = groupArray; //potentially redundent but import for my logic
 	return "main";
+}
+
+function  compaireElmAdvanced(elm,qArr){
+	//TODO: get this method made to properly return if elm match previously looked at. 
+	return false;
+
 }
 
 function getRadioOption(qelm){
