@@ -345,6 +345,19 @@ function getAnswerGroup(qElm,ans, groupElm , allGroups,lookupType = 'add'){
 
 function  compaireElmAdvanced(elm,qArr){
 	//TODO: get this method made to properly return if elm match previously looked at. 
+	
+	//to get all of the attributes compaired while ignoring text value I need a for loop for each elm
+	//stringify the old
+	for (old of qArr){
+		console.log(old);
+		//I need to stringify each elm
+		//grab the opening tag. 
+		//select the attributes into a list including the name
+		//compaire the list minus the value attribute 
+		//if matches then return true 
+		//
+		//TODO: add any matches not cought by this match
+	}
 	return false;
 
 }
