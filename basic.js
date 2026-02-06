@@ -244,6 +244,7 @@ function fieldIdentification(prevArr = undefined){
 	console.log(JSON.parse(JSON.stringify(qArr)));
 	return qArr;
 }
+
 let globalGroupArray = []//GLOBAL GROUP ARRAY TODO: MOVE TO TOP OF FILE AFTER TESTING
 function getAnswerGroup(qElm,ans, groupElm , allGroups,lookupType = 'add'){
 	//get the answer key group for now we just use One
@@ -347,10 +348,12 @@ function  compaireElmAdvanced(elm,qArr){
 	//TODO: get this method made to properly return if elm match previously looked at. 
 	
 	//to get all of the attributes compaired while ignoring text value I need a for loop for each elm
+	const strElm1 = elm.outerHTML
 	//stringify the old
 	for (old of qArr){
 		console.log(old);
 		//I need to stringify each elm
+		const strElm2 = elm.outerHTML
 		//grab the opening tag. 
 		//select the attributes into a list including the name
 		//compaire the list minus the value attribute 
