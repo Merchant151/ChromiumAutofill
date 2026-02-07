@@ -349,11 +349,13 @@ function  compaireElmAdvanced(elm,qArr){
 	
 	//to get all of the attributes compaired while ignoring text value I need a for loop for each elm
 	const strElm1 = elm.outerHTML
+	let elm1Parts = strElm1.split(' ')
 	//stringify the old
 	for (old of qArr){
 		console.log(old);
 		//I need to stringify each elm
 		const strElm2 = elm.outerHTML
+		let elm2Parts = strElm2.split(' ')
 		//grab the opening tag. 
 		//select the attributes into a list including the name
 		//compaire the list minus the value attribute 
