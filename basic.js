@@ -361,18 +361,39 @@ function  compaireElmAdvanced(elm,qArr){
 			///ELM is the same type. 
 			//start at 1 to skip 0 as above is checked
 			for (let i = 1; i < elm2Parts.length;i++){
-				elm2Parts[i]
+				let keyValPair = elm2Parts[i].split(' ');
+				let endQuoteIndex = keyValPair[1].indexOf('"',1);
+				keyValPair[1] = keyValPair[1].substring(0,endQuoteIndex);
+				if(keyValPair[0].toUpperCase() === "VALUE"){
+					//Add al skipps here everything else should be exact match
+					continue;
+				}else{
+					for(let j = 1; j < elm1Parts.length; j++){
+						let keyValPair1 = elm1Part[j].split(' ');
+						endQuoteIndex = elm1Parts[j].indexOf('"',1);
+						keyValuePair1[1] = keyValPair1[j].substring(0,endQuoteIndex);
+						if(keyValPair[0] === keyValPair1[0]){
+							if(keyValPair[1] === keyValPair1[1]){
+								continue;
+							}else{
+								console.log("mismatch on elm attribute");
+								return false;
+							}
+						}
 
+					}
+				}
 			}
 
+		}else{
+			console.log('mismatch elm type');
+			return false;
 		}
 		//select the attributes into a list including the name
 		//compaire the list minus the value attribute 
 		//if matches then return true 
-		//
-		//TODO: add any matches not cought by this match
 	}
-	return false;
+	return true;
 
 }
 
