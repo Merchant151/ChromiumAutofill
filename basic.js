@@ -357,6 +357,15 @@ function  compaireElmAdvanced(elm,qArr){
 		const strElm2 = elm.outerHTML
 		let elm2Parts = strElm2.split(' ')
 		//grab the opening tag. 
+		if(elm1Parts[0] === elm2Parts[0]){
+			///ELM is the same type. 
+			//start at 1 to skip 0 as above is checked
+			for (let i = 1; i < elm2Parts.length;i++){
+				elm2Parts[i]
+
+			}
+
+		}
 		//select the attributes into a list including the name
 		//compaire the list minus the value attribute 
 		//if matches then return true 
