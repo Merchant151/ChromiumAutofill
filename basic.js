@@ -170,7 +170,7 @@ function fieldIdentification(prevArr = undefined){
 			//console.log('element match prev elm in list breaking id process');
 			continue;
 		}else if (advanced_compairison){
-			console.log('advanced catch')
+			console.log('advanced catch');
 			continue;
 		}else if (reprocessing){
 			//This log is not useful
@@ -345,12 +345,11 @@ function getAnswerGroup(qElm,ans, groupElm , allGroups,lookupType = 'add'){
 }
 
 function  compaireElmAdvanced(elm,qArr){
-	//TODO: get this method made to properly return if elm match previously looked at. 
-	
 	//to get all of the attributes compaired while ignoring text value I need a for loop for each elm
 	const strElm1 = elm.outerHTML
 	let elm1Parts = strElm1.split(' ')
 	//stringify the old
+	if (qArr == false){return false}
 	for (old of qArr){
 		console.log(old);
 		//I need to stringify each elm
