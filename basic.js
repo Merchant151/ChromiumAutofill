@@ -347,14 +347,14 @@ function getAnswerGroup(qElm,ans, groupElm , allGroups,lookupType = 'add'){
 function  compaireElmAdvanced(elm,qArr){
 	//to get all of the attributes compaired while ignoring text value I need a for loop for each elm
 	const strElm1 = elm.outerHTML
-	let elm1Parts = strElm1.split(' ')
+	let elm1Parts = strElm1.split(/ +(?=(?:(?:[^"]*"){2})*[^"]*$)/);
 	//stringify the old
 	if (qArr.length == false){return false}
 	for (old of qArr){
-		console.log(old);
+		//console.log(old);
 		//I need to stringify each elm
 		const strElm2 = elm.outerHTML
-		let elm2Parts = strElm2.split(' ')
+		let elm2Parts = strElm2.split(/ +(?=(?:(?:[^"]*"){2})*[^"]*$)/);
 		//grab the opening tag. 
 		if(elm1Parts[0] === elm2Parts[0]){
 			///ELM is the same type. 
@@ -363,19 +363,20 @@ function  compaireElmAdvanced(elm,qArr){
 				console.log('printing ELM2parts');
 				console.log(elm2Parts[i]);
 				let keyValPair = elm2Parts[i].split('=');
-				console.log('keyValPair');
-				console.log(keyValPair);
-
 				let endQuoteIndex = keyValPair[1].indexOf('"',1);
 				keyValPair[1] = keyValPair[1].substring(0,endQuoteIndex);
 				if(keyValPair[0].toUpperCase() === "VALUE"){
 					//Add al skipps here everything else should be exact match
 					continue;
 				}else{
+					console.log('elm1');
+					console.log(strElm1);
 					for(let j = 1; j < elm1Parts.length; j++){
 						let keyValPair1 = elm1Parts[j].split('=');
 						endQuoteIndex = elm1Parts[j].indexOf('"',1);
-						keyValuePair1[1] = keyValPair1[j].substring(0,endQuoteIndex);
+						console.log('printing ELM1parts');
+						console.log(elm1Parts[j]);
+						keyValPair1[1] = keyValPair1[1].substring(0,endQuoteIndex);
 						if(keyValPair[0] === keyValPair1[0]){
 							if(keyValPair[1] === keyValPair1[1]){
 								continue;
