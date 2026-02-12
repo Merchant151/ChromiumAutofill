@@ -359,9 +359,11 @@ function  compaireElmAdvanced(elm,qArr){
 		if(elm1Parts[0] === elm2Parts[0]){
 			///ELM is the same type. 
 			//start at 1 to skip 0 as above is checked
-			for (let i = 1; i < elm2Parts.length;i++){
+			let elmbound = true;
+			for (let i = 1; i < elm2Parts.length&&elmbound;i++){
 				console.log('printing ELM2parts');
 				console.log(elm2Parts[i]);
+				if(elm2Parts[i].includes(">")){elmbound = false;}
 				let keyValPair = elm2Parts[i].split('=');
 				let endQuoteIndex = keyValPair[1].indexOf('"',1);
 				keyValPair[1] = keyValPair[1].substring(0,endQuoteIndex);
@@ -371,7 +373,9 @@ function  compaireElmAdvanced(elm,qArr){
 				}else{
 					console.log('elm1');
 					console.log(strElm1);
-					for(let j = 1; j < elm1Parts.length; j++){
+					let elmbound2 = true;
+					for(let j = 1; j < elm1Parts.length&&elmbound2; j++){
+						if(elm1Parts[j].includes(">")){console.log('      END OF ELM HIT!!!!!');elmbound2 = false;}
 						let keyValPair1 = elm1Parts[j].split('=');
 						endQuoteIndex = elm1Parts[j].indexOf('"',1);
 						console.log('printing ELM1parts');
