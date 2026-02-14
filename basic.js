@@ -345,6 +345,7 @@ function getAnswerGroup(qElm,ans, groupElm , allGroups,lookupType = 'add'){
 }
 
 function  compaireElmAdvanced(elm,qArr){
+	let breakpoint = 0;//del me when not needed TODO: 
 	//to get all of the attributes compaired while ignoring text value I need a for loop for each elm
 	const strElm1 = elm.outerHTML
 	let elm1Parts = strElm1.split(/ +(?=(?:(?:[^"]*"){2})*[^"]*$)/);
@@ -385,7 +386,7 @@ function  compaireElmAdvanced(elm,qArr){
 					for(let j = 1; j < elm1Parts.length&&elmbound2; j++){
 						if(elm1Parts[j].includes(">")){console.log('      END OF ELM HIT!!!!!');elmbound2 = false;}
 						let keyValPair1 = elm1Parts[j].split('=');
-						endQuoteIndex = elm1Parts[j].indexOf('"',1);
+						endQuoteIndex = keyValPair1[1].indexOf('"',1);
 						console.log('printing ELM1parts');
 						console.log(elm1Parts[j]);
 						keyValPair1[1] = keyValPair1[1].substring(0,endQuoteIndex);
@@ -394,21 +395,20 @@ function  compaireElmAdvanced(elm,qArr){
 								continue;
 							}else{
 								console.log("mismatch on elm attribute");
+								console.log(keyValPair[1]);console.log(keyValPair1[1]);
+								breakpoint +=1;
+								if (breakpoint >= 10){ console.error('STOP HERE')}
 								return false;
 							}
 						}
-
 					}
 				}
 			}
-
 		}else{
 			console.log('mismatch elm type');
 			return false;
 		}
-		//select the attributes into a list including the name
-		//compaire the list minus the value attribute 
-		//if matches then return true 
+		//select the attributes into a list including the name//compaire the list minus the value attribute //if matches then return true 
 	}
 	return true;
 
