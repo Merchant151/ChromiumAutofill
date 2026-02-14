@@ -353,17 +353,25 @@ function  compaireElmAdvanced(elm,qArr){
 	for (old of qArr){
 		//console.log(old);
 		//I need to stringify each elm
-		const strElm2 = elm.outerHTML
+		let strElm2 = elm.outerHTML;
 		let elm2Parts = strElm2.split(/ +(?=(?:(?:[^"]*"){2})*[^"]*$)/);
 		//grab the opening tag. 
+		console.log('elm2'); console.log(strElm2);
 		if(elm1Parts[0] === elm2Parts[0]){
+			console.log(elm1Parts[0]);console.log(elm2Parts[0]);
+			if(elm1Parts[0].includes(">")){
+				return true;
+			}
 			///ELM is the same type. 
 			//start at 1 to skip 0 as above is checked
 			let elmbound = true;
 			for (let i = 1; i < elm2Parts.length&&elmbound;i++){
 				console.log('printing ELM2parts');
 				console.log(elm2Parts[i]);
-				if(elm2Parts[i].includes(">")){elmbound = false;}
+				if(elm2Parts[i].includes(">")){
+					elmbound = false;
+					console.log('false');
+				}
 				let keyValPair = elm2Parts[i].split('=');
 				let endQuoteIndex = keyValPair[1].indexOf('"',1);
 				keyValPair[1] = keyValPair[1].substring(0,endQuoteIndex);
