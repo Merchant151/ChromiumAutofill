@@ -344,8 +344,10 @@ function getAnswerGroup(qElm,ans, groupElm , allGroups,lookupType = 'add'){
 	return "main";
 }
 
+let breakpoint = 0;//del me when not needed TODO: 
 function  compaireElmAdvanced(elm,qArr){
-	let breakpoint = 0;//del me when not needed TODO: 
+	if (breakpoint >= 250){ throw new Error('STOP HERE')}
+	breakpoint +=1;
 	//to get all of the attributes compaired while ignoring text value I need a for loop for each elm
 	const strElm1 = elm.outerHTML
 	let elm1Parts = strElm1.split(/ +(?=(?:(?:[^"]*"){2})*[^"]*$)/);
@@ -354,7 +356,7 @@ function  compaireElmAdvanced(elm,qArr){
 	for (old of qArr){
 		//console.log(old);
 		//I need to stringify each elm
-		let strElm2 = elm.outerHTML;
+		let strElm2 = old.outerHTML;
 		let elm2Parts = strElm2.split(/ +(?=(?:(?:[^"]*"){2})*[^"]*$)/);
 		//grab the opening tag. 
 		console.log('elm2'); console.log(strElm2);
@@ -396,8 +398,6 @@ function  compaireElmAdvanced(elm,qArr){
 							}else{
 								console.log("mismatch on elm attribute");
 								console.log(keyValPair[1]);console.log(keyValPair1[1]);
-								breakpoint +=1;
-								if (breakpoint >= 10){ console.error('STOP HERE')}
 								return false;
 							}
 						}
