@@ -356,7 +356,7 @@ function  compaireElmAdvanced(elm,qArr){
 	for (old of qArr){
 		//console.log(old);
 		//I need to stringify each elm
-		let strElm2 = old.outerHTML;
+		let strElm2 = old['html'].outerHTML;
 		let elm2Parts = strElm2.split(/ +(?=(?:(?:[^"]*"){2})*[^"]*$)/);
 		//grab the opening tag. 
 		console.log('elm2'); console.log(strElm2);
