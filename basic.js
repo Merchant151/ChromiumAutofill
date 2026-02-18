@@ -346,7 +346,7 @@ function getAnswerGroup(qElm,ans, groupElm , allGroups,lookupType = 'add'){
 
 let breakpoint = 0;//del me when not needed TODO: 
 function  compaireElmAdvanced(elm,qArr){
-	if (breakpoint >= 250){ throw new Error('STOP HERE')}
+	if (breakpoint >= 1250){ throw new Error('STOP HERE')}
 	breakpoint +=1;
 	//to get all of the attributes compaired while ignoring text value I need a for loop for each elm
 	const strElm1 = elm.outerHTML
