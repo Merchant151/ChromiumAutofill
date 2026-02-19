@@ -347,6 +347,9 @@ function getAnswerGroup(qElm,ans, groupElm , allGroups,lookupType = 'add'){
 let breakpoint = 0;//del me when not needed TODO: 
 function  compaireElmAdvanced(elm,qArr){
 	if (breakpoint >= 1250){ throw new Error('STOP HERE')}
+	console.log('compaire elm to oldList');
+	console.log(elm);
+	console.log(JSON.parse(JSON.stringify(qArr)));
 	breakpoint +=1;
 	//to get all of the attributes compaired while ignoring text value I need a for loop for each elm
 	const strElm1 = elm.outerHTML
@@ -359,9 +362,9 @@ function  compaireElmAdvanced(elm,qArr){
 		let strElm2 = old['html'].outerHTML;
 		let elm2Parts = strElm2.split(/ +(?=(?:(?:[^"]*"){2})*[^"]*$)/);
 		//grab the opening tag. 
-		console.log('elm2'); console.log(strElm2);
+		//console.log('elm2'); console.log(strElm2);
 		if(elm1Parts[0] === elm2Parts[0]){
-			console.log(elm1Parts[0]);console.log(elm2Parts[0]);
+			//console.log(elm1Parts[0]);console.log(elm2Parts[0]);
 			if(elm1Parts[0].includes(">")){
 				return true;
 			}
@@ -369,11 +372,10 @@ function  compaireElmAdvanced(elm,qArr){
 			//start at 1 to skip 0 as above is checked
 			let elmbound = true;
 			for (let i = 1; i < elm2Parts.length&&elmbound;i++){
-				console.log('printing ELM2parts');
-				console.log(elm2Parts[i]);
+				//console.log('printing ELM2parts');console.log(elm2Parts[i]);
 				if(elm2Parts[i].includes(">")){
 					elmbound = false;
-					console.log('false');
+					//console.log('false');
 				}
 				let keyValPair = elm2Parts[i].split('=');
 				let endQuoteIndex = keyValPair[1].indexOf('"',1);
@@ -382,22 +384,23 @@ function  compaireElmAdvanced(elm,qArr){
 					//Add al skipps here everything else should be exact match
 					continue;
 				}else{
-					console.log('elm1');
-					console.log(strElm1);
+					//console.log('elm1');	console.log(strElm1);
 					let elmbound2 = true;
 					for(let j = 1; j < elm1Parts.length&&elmbound2; j++){
-						if(elm1Parts[j].includes(">")){console.log('      END OF ELM HIT!!!!!');elmbound2 = false;}
+						if(elm1Parts[j].includes(">")){
+							//console.log('      END OF ELM HIT!!!!!');
+							elmbound2 = false;}
 						let keyValPair1 = elm1Parts[j].split('=');
 						endQuoteIndex = keyValPair1[1].indexOf('"',1);
-						console.log('printing ELM1parts');
-						console.log(elm1Parts[j]);
+						//console.log('printing ELM1parts');
+						//console.log(elm1Parts[j]);
 						keyValPair1[1] = keyValPair1[1].substring(0,endQuoteIndex);
 						if(keyValPair[0] === keyValPair1[0]){
 							if(keyValPair[1] === keyValPair1[1]){
 								continue;
 							}else{
 								console.log("mismatch on elm attribute");
-								console.log(keyValPair[1]);console.log(keyValPair1[1]);
+								//console.log(keyValPair[1]);console.log(keyValPair1[1]);
 								return false;
 							}
 						}
