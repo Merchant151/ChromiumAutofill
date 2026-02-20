@@ -372,7 +372,7 @@ function  compaireElmAdvanced(elm,qArr){
 			//start at 1 to skip 0 as above is checked
 			let elmbound = true;
 			for (let i = 1; i < elm2Parts.length&&elmbound;i++){
-				//console.log('printing ELM2parts');console.log(elm2Parts[i]);
+				console.log('printing ELM2parts');console.log(elm2Parts[i]);
 				if(elm2Parts[i].includes(">")){
 					elmbound = false;
 					//console.log('false');
