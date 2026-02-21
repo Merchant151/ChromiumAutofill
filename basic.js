@@ -401,7 +401,7 @@ function  compaireElmAdvanced(elm,qArr){
 							}else{
 								console.log("mismatch on elm attribute");
 								//console.log(keyValPair[1]);console.log(keyValPair1[1]);
-								return false;
+								//return false;
 							}
 						}
 					}
@@ -409,7 +409,7 @@ function  compaireElmAdvanced(elm,qArr){
 			}
 		}else{
 			console.log('mismatch elm type');
-			return false;
+			//return false;
 		}
 		//select the attributes into a list including the name//compaire the list minus the value attribute //if matches then return true 
 	}
