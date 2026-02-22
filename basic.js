@@ -171,6 +171,7 @@ function fieldIdentification(prevArr = undefined){
 			continue;
 		}else if (advanced_compairison){
 			console.log('advanced catch');
+			//TODO: advanced Catch requires further processing to allow for duplicate iding
 			continue;
 		}else if (reprocessing){
 			//This log is not useful
@@ -397,11 +398,15 @@ function  compaireElmAdvanced(elm,qArr){
 						keyValPair1[1] = keyValPair1[1].substring(0,endQuoteIndex);
 						if(keyValPair[0] === keyValPair1[0]){
 							if(keyValPair[1] === keyValPair1[1]){
+								if(!elmbound2&&!elmbound){
+									console.log("found match for match verification!");
+									return true;
+								} 
 								continue;
+								
 							}else{
 								console.log("mismatch on elm attribute");
-								//console.log(keyValPair[1]);console.log(keyValPair1[1]);
-								//return false;
+								break;
 							}
 						}
 					}
@@ -409,11 +414,12 @@ function  compaireElmAdvanced(elm,qArr){
 			}
 		}else{
 			console.log('mismatch elm type');
+			continue;//redundant! 
 			//return false;
 		}
 		//select the attributes into a list including the name//compaire the list minus the value attribute //if matches then return true 
 	}
-	return true;
+	return false;
 
 }
 
