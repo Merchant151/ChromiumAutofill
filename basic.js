@@ -405,7 +405,6 @@ function  compaireElmAdvanced(elm,qArr){
 									console.log("found match for match verification!");
 									return true;
 								} 
-								//TODO: change to break and better track outcome
 								continue;
 								
 							}else{
@@ -413,6 +412,8 @@ function  compaireElmAdvanced(elm,qArr){
 								breaktwice = true;
 								break;
 							}
+						}else{
+							break;//break non matches for default return
 						}
 					}
 				}
