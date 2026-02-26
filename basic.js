@@ -1,5 +1,6 @@
 console.log('Hello, script is active on fourm pages.');
 
+
 //TODO: 
 //Identify what type of page I am on. Serch or application
 //	-- later can determine multiple types of application pages like resume or EEO
@@ -412,8 +413,6 @@ function  compaireElmAdvanced(elm,qArr){
 								breaktwice = true;
 								break;
 							}
-						}else{
-							break;//break non matches for default return
 						}
 					}
 				}
