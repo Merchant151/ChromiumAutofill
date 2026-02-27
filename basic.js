@@ -1,6 +1,5 @@
 console.log('Hello, script is active on fourm pages.');
 
-
 //TODO: 
 //Identify what type of page I am on. Serch or application
 //	-- later can determine multiple types of application pages like resume or EEO
@@ -385,6 +384,11 @@ function  compaireElmAdvanced(elm,qArr){
 				let endQuoteIndex = keyValPair[1].indexOf('"',1);
 				keyValPair[1] = keyValPair[1].substring(0,endQuoteIndex);
 				if(keyValPair[0].toUpperCase() === "VALUE"){
+					if(!elmbound){
+						//console.log('      END OF ELM HIT!!!!!');
+						console.log('value match')
+						break;
+					}
 					//Add al skipps here everything else should be exact match
 					continue;
 				}else{
