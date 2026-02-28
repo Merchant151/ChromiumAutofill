@@ -353,7 +353,7 @@ function  compaireElmAdvanced(elm,qArr){
 	console.log(JSON.parse(JSON.stringify(qArr)));
 	breakpoint +=1;
 	//to get all of the attributes compaired while ignoring text value I need a for loop for each elm
-	const strElm1 = elm.outerHTML
+	const strElm1 = elm.outerHTML;
 	let elm1Parts = strElm1.split(/ +(?=(?:(?:[^"]*"){2})*[^"]*$)/);
 	//stringify the old
 	if (qArr.length == false){return false}
@@ -386,8 +386,8 @@ function  compaireElmAdvanced(elm,qArr){
 				if(keyValPair[0].toUpperCase() === "VALUE"){
 					if(!elmbound){
 						//console.log('      END OF ELM HIT!!!!!');
-						console.log('value match')
-						break;
+						console.log('value match');
+						return true;
 					}
 					//Add al skipps here everything else should be exact match
 					continue;
