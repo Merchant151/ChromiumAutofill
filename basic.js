@@ -393,6 +393,7 @@ function  compaireElmAdvanced(elm,qArr){
 					continue;
 				}else{
 					//console.log('elm1');	console.log(strElm1);
+					//
 					let elmbound2 = true;
 					for(let j = 1; j < elm1Parts.length&&elmbound2; j++){
 						if(elm1Parts[j].includes(">")){
