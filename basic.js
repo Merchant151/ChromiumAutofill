@@ -347,7 +347,7 @@ function getAnswerGroup(qElm,ans, groupElm , allGroups,lookupType = 'add'){
 
 let breakpoint = 0;//del me when not needed TODO: 
 function  compaireElmAdvanced(elm,qArr){
-	if (breakpoint >= 1250){ throw new Error('STOP HERE')}
+	if (breakpoint >= 4250){ throw new Error('STOP HERE')}
 	console.log('compaire elm to oldList');
 	console.log(elm);
 	console.log(JSON.parse(JSON.stringify(qArr)));
@@ -375,7 +375,7 @@ function  compaireElmAdvanced(elm,qArr){
 			let breaktwice = false;
 			for (let i = 1; i < elm2Parts.length&&elmbound;i++){
 				if (breaktwice){break;}
-				console.log('printing ELM2parts');console.log(elm2Parts[i]);
+				//console.log('printing ELM2parts');console.log(elm2Parts[i]);
 				if(elm2Parts[i].includes(">")){
 					elmbound = false;
 					//console.log('false');
@@ -408,13 +408,13 @@ function  compaireElmAdvanced(elm,qArr){
 						if(keyValPair[0] === keyValPair1[0]){
 							if(keyValPair[1] === keyValPair1[1]){
 								if(!elmbound2&&!elmbound){
-									console.log("found match for match verification!");
+									//console.log("found match for match verification!");
 									return true;
 								} 
 								continue;
 								
 							}else{
-								console.log("mismatch on elm attribute");
+								//console.log("mismatch on elm attribute");
 								breaktwice = true;
 								break;
 							}
@@ -423,7 +423,7 @@ function  compaireElmAdvanced(elm,qArr){
 				}
 			}
 		}else{
-			console.log('mismatch elm type');
+			//console.log('mismatch elm type');
 			continue;//redundant! 
 			//return false;
 		}
