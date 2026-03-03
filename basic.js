@@ -347,7 +347,7 @@ function getAnswerGroup(qElm,ans, groupElm , allGroups,lookupType = 'add'){
 
 let breakpoint = 0;//del me when not needed TODO: 
 function  compaireElmAdvanced(elm,qArr){
-	if (breakpoint >= 4250){ throw new Error('STOP HERE')}
+	if (breakpoint >= 8250){ throw new Error('STOP HERE')}
 	console.log('compaire elm to oldList');
 	console.log(elm);
 	console.log(JSON.parse(JSON.stringify(qArr)));
