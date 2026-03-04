@@ -677,9 +677,11 @@ function remainderCheck(curlist){
 	let newList = fieldIdentification(curlist);
 	for ( data of newList){
 		if(data['answered'] === false && data['qText'] != 'Save and Continue'){
+			//we reach here if if some new questions are not answared but are not save and continued
 			console.log('FAIL REMAINDER CHECK!');
 			console.log(data);
 			if( orgLen == Object.keys(newList).length){
+				// we reach here if there are no new questions when field is id'd
 				throw new Error('kill it here');
 			}else {console.log('BOTH LENS: ORG:'+orgLen+' newList:'+Object.keys(newList).length);}
 			return true;
