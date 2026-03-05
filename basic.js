@@ -661,6 +661,8 @@ async function processElms(eArray,answerData,answerKey){
 			chrome.runtime.sendMessage(buildMsg);
 			promiseToWait(500);
 			return true;
+		}else if (qText == 'unknown!'){
+			eData['answered'] = true;
 		}
 		else{
 			eData['answered'] = true;
