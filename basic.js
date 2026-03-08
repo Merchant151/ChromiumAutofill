@@ -565,6 +565,10 @@ async function processElms(eArray,answerData,answerKey){
 		let elm = eData['html'];
 		let response = undefined;
 		let answer = undefined;
+
+		if (eData['qText'] == 'unknown!'){
+			eData['answered'] = true;
+		}
 		if (eData['answered'] === true){
 			continue;
 		}else{
@@ -661,8 +665,6 @@ async function processElms(eArray,answerData,answerKey){
 			chrome.runtime.sendMessage(buildMsg);
 			promiseToWait(500);
 			return true;
-		}else if (eData['qText'] == 'unknown!'){
-			eData['answered'] = true;
 		}
 		else{
 			eData['answered'] = true;
@@ -684,7 +686,8 @@ function remainderCheck(curlist){
 			console.log(data);
 			if( orgLen == Object.keys(newList).length){
 				// we reach here if there are no new questions when field is id'd
-				throw new Error('kill it here');
+				return true;
+				//throw new Error('kill it here');
 			}else {console.log('BOTH LENS: ORG:'+orgLen+' newList:'+Object.keys(newList).length);}
 			return true;
 		}
