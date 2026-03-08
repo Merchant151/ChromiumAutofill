@@ -469,6 +469,10 @@ function determineQType(qelm){
 		return 'radio';
 	}else if (e.hasAttribute('type')&&e.getAttribute('type') === 'checkbox'){
 		return 'checkbox';
+	
+	}else if (e.hasAttribute('type')&&e.getAttribute('type')==='button'&&e.hasAttribute('aria-haspopup')&&e.getAttribute('aria-haspopup')==='listbox'){
+		return 'dropdown';
+
 	}else if (e.tagName === "BUTTON"){
 		if (e.textContent.toLowerCase() === "add"){
 			return "add";
