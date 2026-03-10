@@ -235,10 +235,14 @@ function fieldIdentification(prevArr = undefined){
 				}else if (qElm['qType'] === 'back' || qElm['qType'] === 'next'){
 					qElm['isQ'] = false;//redundant set by default
 					qElm['parentGroup'] = 'page'
+				}else if(qElm['qType'] === 'dropdown'){
+					let myParent = elm.parentElement;
+					let childDropdown = myParent.querySelector('button');
 				}
 				//qElm['qTag'] = getAnswerGroup(qElm); //TODO: FOR BUTTON LIKELY DOESN"T NEED TO BE DONE HERE 
 				qArr.push(qElm);
-			}//else{//console.log('text free button found and ignored!');}
+			}
+			//else{//console.log('text free button found and ignored!');}
 		}
 	}
 	console.log('logging elms found: ');
