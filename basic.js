@@ -236,6 +236,9 @@ function fieldIdentification(prevArr = undefined){
 					qElm['isQ'] = false;//redundant set by default
 					qElm['parentGroup'] = 'page'
 				}else if(qElm['qType'] === 'dropdown'){
+					qElm['parentGroup'] = elm.closest('[role="group"]');
+					qElm['isQ'] = true;
+					qElm['qText'] = getInputLabel(qElm);
 					let myParent = elm.parentElement;
 					let childDropdown = myParent.querySelector('button');
 				}
