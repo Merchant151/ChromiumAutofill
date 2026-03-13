@@ -239,6 +239,7 @@ function fieldIdentification(prevArr = undefined){
 					qElm['parentGroup'] = elm.closest('[role="group"]');
 					qElm['isQ'] = true;
 					qElm['qText'] = getInputLabel(qElm);
+					qElm['qText'] = 'dropdownTEST';
 					let myParent = elm.parentElement;
 					let childDropdown = myParent.querySelector('button');
 				}
