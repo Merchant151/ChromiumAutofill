@@ -499,7 +499,7 @@ function getInputLabel(qElm){
 	let closestDiv;
 	let maxHops = 7;
 	let home = elm;
-	if (elm.hasAttribute('type')&&(elm.getAttribute('type') === 'text' || elm.getAttribute('type') === 'checkbox')){
+	if (elm.hasAttribute('type')&&(elm.getAttribute('type') === 'text' || elm.getAttribute('type') === 'checkbox' || elm.getAttribute('type') === 'Button')){
 	do {
 		
 		closestDiv = elm.parentElement.closest('div');
