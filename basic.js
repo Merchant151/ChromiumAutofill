@@ -563,11 +563,11 @@ function getInputLabel(qElm){
 		//child is legend l span
 		let llspan = elm.closest('fieldset').querySelector('legend label span');
 		return llspan.textContent;
-	}else if (elm.hasAttribute('type')&&elm.getAttribute('type') === 'button'){
+	}//else if (elm.hasAttribute('type')&&elm.getAttribute('type') === 'button'){
 		//TODO:: IF qType drop down get previous question same method as above parent and then how did. 
 		//MAYBE add as a condition to the previous if don't rewrite code! 
-		return 'buttonType'
-	} 
+	//	return 'buttonType'
+	//} 
 	return 'unknown!';
 
 }
