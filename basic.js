@@ -170,7 +170,7 @@ function fieldIdentification(prevArr = undefined){
 			//console.log('element match prev elm in list breaking id process');
 			continue;
 		}else if (advanced_compairison){
-			console.log('advanced catch');
+			//console.log('advanced catch');
 			//TODO: advanced Catch requires further processing to allow for duplicate iding
 			continue;
 		}else if (reprocessing){
@@ -394,7 +394,7 @@ function  compaireElmAdvanced(elm,qArr){
 				if(keyValPair[0].toUpperCase() === "VALUE"){
 					if(!elmbound){
 						//console.log('      END OF ELM HIT!!!!!');
-						console.log('value match');
+						//console.log('value match');
 						return true;
 					}
 					//Add al skipps here everything else should be exact match
