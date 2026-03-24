@@ -254,6 +254,10 @@ function fieldIdentification(prevArr = undefined){
 	return qArr;
 }
 
+async function deleteTextValue(){
+	return null;
+}
+
 let globalGroupArray = []//GLOBAL GROUP ARRAY TODO: MOVE TO TOP OF FILE AFTER TESTING
 function getAnswerGroup(qElm,ans, groupElm , allGroups,lookupType = 'add'){
 	//get the answer key group for now we just use One
