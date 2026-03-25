@@ -254,7 +254,17 @@ function fieldIdentification(prevArr = undefined){
 	return qArr;
 }
 
-async function deleteTextValue(){
+async function deleteTextValue(elm){
+	clickandclear(elm);
+	let len = 0;
+	if(elm.hasAttribute('value')){
+		len = elm.getAttribute('value').length();
+	}
+	//hit key backspace
+	while (len >0){
+		//HIT KEY BACKSPACE;
+		len = len - 1; 
+	}
 	return null;
 }
 
