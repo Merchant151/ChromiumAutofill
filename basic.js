@@ -255,7 +255,7 @@ function fieldIdentification(prevArr = undefined){
 }
 
 async function deleteTextValue(elm){
-	clickandclear(elm);
+	clickAndClear(elm);
 	let len = 0;
 	if(elm.hasAttribute('value')){
 		len = elm.getAttribute('value').length();
@@ -263,6 +263,8 @@ async function deleteTextValue(elm){
 	//hit key backspace
 	while (len >0){
 		//HIT KEY BACKSPACE;
+		console.log('backspace char!')
+		elm.dispatchEvent(new KeyboardEvent('keydown',{key: 'backspace',code:'KeyA',ctrlKey:true}));
 		len = len - 1; 
 	}
 	return null;
