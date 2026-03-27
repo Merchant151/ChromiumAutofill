@@ -626,6 +626,7 @@ async function processElms(eArray,answerData,answerKey){
 			eData['answered'] = true;
 			if (response){
 				await promiseToWait(500); //Adding a delay to avoid misclicks after processing dropdowns
+				await deleteTextValue(elm);
 				await clickAndClear(elm);
 				await simulateInput(elm,response);
 			}
