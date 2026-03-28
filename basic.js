@@ -258,7 +258,7 @@ async function deleteTextValue(elm){
 	clickAndClear(elm);
 	let len = 0;
 	if(elm.hasAttribute('value')){
-		len = elm.getAttribute('value').length();
+		len = elm.getAttribute('value').length;
 	}
 	//hit key backspace
 	while (len >0){
