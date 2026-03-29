@@ -66,6 +66,7 @@ async function testfill(answerGroups,answerKey){
 
 async function simulateInput(elmn,output){
 	for (let i = 0; i < output.length;i++){
+
 		await new Promise(resolve => setTimeout(resolve,50+Math.random()*100));
 			elmn.value += output[i];
 			elmn.dispatchEvent(new Event('input',{bubbles: true}));
