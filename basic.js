@@ -261,14 +261,18 @@ async function deleteTextValue(elm){
 	if(elm.hasAttribute('value')){
 		len = elm.getAttribute('value').length;
 	}
+	//for now we are doing poof
+	elm.value = '';
 	//hit key backspace
-	while (len >0){
+	//TODO:
+	//replace with dispacth event and delete one by one to simulate keypresses
+	//while (len >0){
 		//HIT KEY BACKSPACE;
-		console.log('backspace char!');
-		console.log(elm)/// VERIFY ELM is the textbox
-		elm.dispatchEvent(new KeyboardEvent('keydown',{key: 'backspace',code:'KeyA',ctrlKey:false}));
-		len = len - 1; 
-	}
+		//console.log('backspace char!');
+		//console.log(elm)/// VERIFY ELM is the textbox
+		//elm.dispatchEvent(new KeyboardEvent('keydown',{key: 'backspace',code:'KeyA',ctrlKey:false}));
+		//len = len - 1; 
+	//}
 	return null;
 }
 
