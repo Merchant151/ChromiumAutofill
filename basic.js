@@ -618,6 +618,7 @@ async function processElms(eArray,answerData,answerKey){
 			//answer is pos, questionName
 			//Stored Response
 			aGroup = getAnswerGroup(eData,answer[1],eData['parentGroup'],answerData,'question');
+			console.log(aGroup);
 			if(answerData[aGroup] && answerData[aGroup][answer[1]] ){
 				response = answerData[aGroup][answer[1]][answer[0]];
 			}
