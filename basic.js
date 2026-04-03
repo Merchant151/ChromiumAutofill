@@ -290,10 +290,10 @@ function getAnswerGroup(qElm,ans, groupElm , allGroups,lookupType = 'add'){
 	if (lookupType === 'question'){ // likely add a question type filter here
 		//GET QUESTION MATCHES
 		for (group in allGroups){ 
-			//console.log('printing Group! for matching');
-			//console.log(group);
+			console.log('printing Group! for matching');
+			console.log(group);
 			if(ans in allGroups[''+group]){
-				//console.log('found match g: '+group+' q: '+ans);
+				console.log('found match g: '+group+' q: '+ans);
 				match = match + 1; 
 				validGroups.push(group);
 			}
