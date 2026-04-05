@@ -1,4 +1,5 @@
 console.log('Hello, script is active on fourm pages.');
+console.log('header Test');
 
 //TODO: 
 //Identify what type of page I am on. Serch or application
