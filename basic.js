@@ -280,6 +280,7 @@ async function deleteTextValue(elm){
 let globalGroupArray = []//GLOBAL GROUP ARRAY TODO: MOVE TO TOP OF FILE AFTER TESTING
 function getAnswerGroup(qElm,ans, groupElm , allGroups,lookupType = 'add'){
 	console.log('Run:getAnswerGroup');
+	console.log(qElm+ans,groupElm , allGroups,lookupType);
 	//get the answer key group for now we just use One
 	//TODO: implement multiple groups 
 	//TODO: create Global group state object so when retriggered I can set group +1 for a total
